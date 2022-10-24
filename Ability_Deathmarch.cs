@@ -37,6 +37,7 @@ namespace MakaiTechPsycast.DestinedDeath
                     if (pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul))
                     {
                         hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear += Mathf.FloorToInt(pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().SoulCount * 100f);
+                        hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear *= 2;
                     }
                     targetPawn.health.AddHediff(hediff);
                 }
@@ -47,10 +48,11 @@ namespace MakaiTechPsycast.DestinedDeath
             {
                 if (targets[0].Thing is Pawn targetPawn)
                 {
-                    Hediff hediff = MakaiUtility.ApplyCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenFail, modExtension.hours, modExtension.ticks, modExtension.multiplier);
+                    Hediff hediff = MakaiUtility.ApplyCustomHediffWithDuration(targetPawn,modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
                     if (pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul))
                     {
                         hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear += Mathf.FloorToInt(pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().SoulCount * 100f);
+                        hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear /= 2;
                     }
                     targetPawn.health.AddHediff(hediff);
                 }
