@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6D8C801-C8CE-48CE-AB8B-4716A39D7837}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MakaiTechPsycast</RootNamespace>
+    <AssemblyName>MakaiTechPsycast</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\MakaiTech Psycast\Assemblies\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VanillaPsycastsExpanded">
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\2842502659\1.4\Assemblies\VanillaPsycastsExpanded.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VFECore">
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\2023507013\1.3\Assemblies\VFECore.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ability_SpawnThingWithRoll.cs" />
+    <Compile Include="AbilityExtension_Thing.cs" />
+    <Compile Include="AbilityExtension_Skill.cs" />
+    <Compile Include="Ability_TransferSkill.cs" />
+    <Compile Include="Ability_StealIntellectual.cs" />
+    <Compile Include="Ability_SwapSkill.cs" />
+    <Compile Include="Ability_XpToCaster.cs" />
+    <Compile Include="AbilityExtension_WordOfBond.cs" />
+    <Compile Include="Ability_GroupLink.cs" />
+    <Compile Include="Ability_AffectedByBondLink.cs" />
+    <Compile Include="AbilityExtension_ApplyToPawnWithHediff.cs" />
+    <Compile Include="Ability_SetJoyNeedWithRoll.cs" />
+    <Compile Include="AbilityExtension_needDef.cs" />
+    <Compile Include="AbilityExtension_MindCleanse.cs" />
+    <Compile Include="AbilityExtension_Roll1D20.cs" />
+    <Compile Include="Ability_SelfBuffWithRoll.cs" />
+    <Compile Include="Ability_ThunderboltRoll.cs" />
+    <Compile Include="Ability_RelationMend.cs" />
+    <Compile Include="Bullet_Impact_TD_AffectPawn.cs" />
+    <Compile Include="Ability_BondAffectFactionRelation.cs" />
+    <Compile Include="Ability_Roll1D20.cs" />
+    <Compile Include="Ability_GainTaint.cs" />
+    <Compile Include="Ability_TargetCorrupted.cs" />
+    <Compile Include="Ability_SiphonFocus.cs" />
+    <Compile Include="Ability_NightmareClaw.cs" />
+    <Compile Include="Ability_TempFate.cs" />
+    <Compile Include="Ability_ShootRollTaint.cs" />
+    <Compile Include="Ability_SpawnThingWithRollTaintCost.cs" />
+    <Compile Include="Ability_MindBreak.cs" />
+    <Compile Include="Ability_NightmarePillar.cs" />
+    <Compile Include="Ability_LichSoul.cs" />
+    <Compile Include="Ability_Shoot.cs" />
+    <Compile Include="Ability_PullTowardCenter.cs" />
+    <Compile Include="Ability_CollectSoul.cs" />
+    <Compile Include="Ability_PlaceBlueprint.cs" />
+    <Compile Include="Ability_ReEducate.cs" />
+    <Compile Include="Ability_SoulErupt.cs" />
+    <Compile Include="Ability_DeathWard.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="RollInfo.cs" />
+    <Compile Include="HediffCompProperties_ImmunityBuff.cs" />
+    <Compile Include="HediffComp_ImmunityBuff.cs" />
+    <Compile Include="Dialog_ChooseTraitToRemove.cs" />
+    <Compile Include="StatPart_PsycastSoulConsumed.cs" />
+    <Compile Include="Hediff_LevelWithComp.cs" />
+    <Compile Include="HediffCompProperties_SoulCollection.cs" />
+    <Compile Include="HediffComp_SoulCollection.cs" />
+    <Compile Include="HediffExtension_LichSoul.cs" />
+    <Compile Include="PawnCapacityMinLevel.cs" />
+    <Compile Include="Recipe_AdministerLichSoul.cs" />
+    <Compile Include="CompProperties_UseEffectHealAll.cs" />
+    <Compile Include="CompUseEffectHealAll.cs" />
+    <Compile Include="CompProperties_ProjectileExtraEffect.cs" />
+    <Compile Include="CompProjectileExtraEffect.cs" />
+    <Compile Include="CompFleckEmitter.cs" />
+    <Compile Include="CompProperties_FleckEmitter.cs" />
+    <Compile Include="HediffCompProperties_Decay.cs" />
+    <Compile Include="HediffComp_Decay.cs" />
+    <Compile Include="MakaiCP_PillarBeam.cs" />
+    <Compile Include="MakaiPsy_CP_PillarStrike.cs" />
+    <Compile Include="MakaiPsyCompProperties_PillarBeam.cs" />
+    <Compile Include="MakaiPsy_CP_CompPillarBeam.cs" />
+    <Compile Include="HediffComp_MindBreak.cs" />
+    <Compile Include="CompCorruptedTower.cs" />
+    <Compile Include="CompProperties_CorruptedTower.cs" />
+    <Compile Include="PawnFlyer_Pulled.cs" />
+    <Compile Include="MakaiPsy_ExpandableProjectile.cs" />
+    <Compile Include="MakaiCP_PowerBeam.cs" />
+    <Compile Include="Verb_CallStrike.cs" />
+    <Compile Include="Verb_ShootingOffset.cs" />
+    <Compile Include="Pawn_PreApplyDamage_ThornArmorPatch.cs" />
+    <Compile Include="Pawn_PostApplyDamage_ThornArmorPatch.cs" />
+    <Compile Include="MakaiUtility.cs" />
+    <Compile Include="HediffCompProperties_ReverseSeverity.cs" />
+    <Compile Include="HediffComp_ReverseSeverity.cs" />
+    <Compile Include="MakaiPsy_CP_OrbitalStrike.cs" />
+    <Compile Include="MakaiPsy_CP_CompOrbitalBeam.cs" />
+    <Compile Include="MakaiPsyCompProperties_OrbitalBeam.cs" />
+    <Compile Include="Pawn_Undead_Patch.cs" />
+    <Compile Include="Recipe_RestoreSoul.cs" />
+    <Compile Include="Soul.cs" />
+    <Compile Include="Projectile_Testing.cs" />
+    <Compile Include="ModExtension_TestingProjectile.cs" />
+    <Compile Include="CompProperties_TD_Turret.cs" />
+    <Compile Include="CompTDturret.cs" />
+    <Compile Include="MakaitechPsyCastStartPatch.cs" />
+    <Compile Include="CompProperties_UnBondingTower.cs" />
+    <Compile Include="CompUnBondingTower.cs" />
+    <Compile Include="CompBondingTower.cs" />
+    <Compile Include="CompProperties_BondingTower.cs" />
+    <Compile Include="CompProperties_TeleportTower.cs" />
+    <Compile Include="CompTeleportTower.cs" />
+    <Compile Include="MakaiTD_PowerBeam.cs" />
+    <Compile Include="CompProperties_LightningTower.cs" />
+    <Compile Include="CompLightningTower.cs" />
+    <Compile Include="WeatherEvent_LightningStrikeGreen.cs" />
+    <Compile Include="Hediff_BondLink.cs" />
+    <Compile Include="CompProperties_SkillGiver.cs" />
+    <Compile Include="CompSkillGiver.cs" />
+    <Compile Include="MakaiTechPsy_DefOf.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
