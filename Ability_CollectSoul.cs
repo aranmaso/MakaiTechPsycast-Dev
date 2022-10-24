@@ -52,7 +52,7 @@ namespace MakaiTechPsycast.DestinedDeath
 				rollBonusUnLucky = -20;
 			}
 			roll += rollBonus + rollBonusLucky + rollBonusUnLucky;
-			int cocumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
+			int cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
 			if(roll >= modExtension.successThreshold && roll < modExtension.greatSuccessThreshold)
             {
                 foreach (GlobalTargetInfo globalTargetInfo in targets)
@@ -114,7 +114,7 @@ namespace MakaiTechPsycast.DestinedDeath
                         Messages.Message("Makai_PassArollcheckCollectSoul".Translate(pawn.LabelShort, name, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                     }
                 }*/
-                Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, baseRoll, cocumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+                Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 			}
 			if (roll >= modExtension.greatSuccessThreshold)
 			{
@@ -149,7 +149,7 @@ namespace MakaiTechPsycast.DestinedDeath
 						continue;
                     }
                 }
-                Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cocumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+                Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 			}
 			if (roll < modExtension.successThreshold)
 			{
@@ -184,7 +184,7 @@ namespace MakaiTechPsycast.DestinedDeath
                         continue;
                     }
                 }
-                Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, baseRoll, cocumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
+                Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
 			}
 		}
     }
