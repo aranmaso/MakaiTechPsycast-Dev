@@ -23,7 +23,7 @@ namespace MakaiTechPsycast
         {
             base.CompPostMake();
             intervalTick = Find.TickManager.TicksGame + Props.checkInterval;
-            intervalTickShort = Find.TickManager.TicksGame + 5;
+            intervalTickShort = Find.TickManager.TicksGame + Props.checkIntervalShort;
         }
         public override string CompDescriptionExtra
         {
@@ -55,7 +55,7 @@ namespace MakaiTechPsycast
             if(Find.TickManager.TicksGame == intervalTickShort)
             {
                 TryImmuneHediff(parent.pawn);
-                intervalTickShort += 5;
+                intervalTickShort += Props.checkIntervalShort;
             }
         }
 

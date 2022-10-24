@@ -194,6 +194,14 @@ namespace MakaiTechPsycast
             Rinfo.cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
             return Rinfo;
         }
+        public static Hediff ApplyCustomHediffWithDuration(Pawn pawn, HediffDef hediffDef, float hours, int ticks,StatDef statDef = null)
+        {
+            float num = hours * 2500f + (float)ticks;
+            num *= pawn.GetStatValue(statDef ?? StatDefOf.PsychicSensitivity);
+            Hediff hediff = HediffMaker.MakeHediff(hediffDef, pawn);
+            hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num);
+            return hediff;
+        }
         public static Soul GetPawnCopy(Thing thing ,Pawn pawn)
         {
             if(thing is Soul soul)

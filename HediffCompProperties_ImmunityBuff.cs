@@ -11,6 +11,8 @@ namespace MakaiTechPsycast
         public List<HediffDef> immunityList;
 
         public int checkInterval = 60;
+
+        public int checkIntervalShort = 60;
         public HediffCompProperties_ImmunityBuff()
         {
             compClass = typeof(HediffComp_ImmunityBuff);

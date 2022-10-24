@@ -103,7 +103,8 @@
     <Compile Include="Ability_ReEducate.cs" />
     <Compile Include="Ability_SoulErupt.cs" />
     <Compile Include="Ability_DeathWard.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="Ability_Template.cs" />
+    <Compile Include="Ability_Deathmarch.cs" />
     <Compile Include="RollInfo.cs" />
     <Compile Include="HediffCompProperties_ImmunityBuff.cs" />
     <Compile Include="HediffComp_ImmunityBuff.cs" />
