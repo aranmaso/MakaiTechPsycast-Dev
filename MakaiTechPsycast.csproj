@@ -104,7 +104,14 @@
     <Compile Include="Ability_SoulErupt.cs" />
     <Compile Include="Ability_DeathWard.cs" />
     <Compile Include="Ability_Template.cs" />
-    <Compile Include="Ability_Deathmarch.cs" />
+    <Compile Include="Ability_HelheimStrength.cs" />
+    <Compile Include="Ability_LifeLink.cs" />
+    <Compile Include="Ability_LifeLinkDetonation.cs" />
+    <Compile Include="HediffCompProperties_LifeLink.cs" />
+    <Compile Include="HediffComp_LifeLink.cs" />
+    <Compile Include="Pawn_PreApplyDamage_HelHeimStrengthPatch.cs" />
+    <Compile Include="HediffComp_HelheimStrength.cs" />
+    <Compile Include="HediffCompProperties_HelheimStrength.cs" />
     <Compile Include="RollInfo.cs" />
     <Compile Include="HediffCompProperties_ImmunityBuff.cs" />
     <Compile Include="HediffComp_ImmunityBuff.cs" />

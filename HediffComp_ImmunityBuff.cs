@@ -7,24 +7,18 @@ namespace MakaiTechPsycast
 {
     public class HediffComp_ImmunityBuff : HediffComp
     {
-        public int intervalTick;
-
-        public int intervalTickShort;
-
-        private string desc;
 
         public HediffCompProperties_ImmunityBuff Props => (HediffCompProperties_ImmunityBuff)props;
-        public override void CompExposeData()
+        /*public override void CompExposeData()
         {
             Scribe_Values.Look(ref intervalTick, "intervalTick", 0);
-            Scribe_Values.Look(ref intervalTickShort, "intervalTickShort", 0);
-        }
-        public override void CompPostMake()
+        }*/
+        /*public override void CompPostMake()
         {
             base.CompPostMake();
             intervalTick = Find.TickManager.TicksGame + Props.checkInterval;
             intervalTickShort = Find.TickManager.TicksGame + Props.checkIntervalShort;
-        }
+        }*/
         public override string CompDescriptionExtra
         {
             get
@@ -46,32 +40,25 @@ namespace MakaiTechPsycast
         }
         public override void CompPostTick(ref float severityAdjustment)
         {
-            base.CompPostTick(ref severityAdjustment);
-            if(Find.TickManager.TicksGame == intervalTick)
-            {
-                TryReplaceHediff(parent.pawn);
-                intervalTick += Props.checkInterval;
-            }
-            if(Find.TickManager.TicksGame == intervalTickShort)
+            if (parent.pawn.IsHashIntervalTick(Props.checkInterval))
             {
                 TryImmuneHediff(parent.pawn);
-                intervalTickShort += Props.checkIntervalShort;
+                TryReplaceHediff(parent.pawn);
             }
         }
 
         public void TryImmuneHediff(Pawn pawn)
         {
-            if(pawn.health == null || pawn.health.hediffSet == null)
+            if(pawn.health == null || pawn.health.hediffSet == null || Props.immunityList == null)
             {
                 return;
             }
             //remove hediff that immune
             foreach(HediffDef item in Props.immunityList)
             {
-                Hediff firstHediffOfDef = pawn.health.hediffSet.GetFirstHediffOfDef(item);
-                if(firstHediffOfDef != null)
+                if (pawn.health.hediffSet.HasHediff(item))
                 {
-                    pawn.health.RemoveHediff(firstHediffOfDef);
+                    pawn.health.RemoveHediff(pawn.health.hediffSet.GetFirstHediffOfDef(item));
                 }
             }
         }
@@ -84,15 +71,15 @@ namespace MakaiTechPsycast
             foreach(HediffInfoList item in Props.hediffInfoList)
             {
                 Hediff replacedHediff = pawn.health.hediffSet.GetFirstHediffOfDef(item.hediffToImmune);
-                if(replacedHediff != null && item.hediffToReplaceWith != null)
+                if(pawn.health.hediffSet.HasHediff(item.hediffToImmune) && item.hediffToReplaceWith != null)
                 {
-                    pawn.health.RemoveHediff(replacedHediff);
                     BodyPartRecord bRecord = null;
                     if (replacedHediff.Part != null)
                     {
                         bRecord = replacedHediff.Part;
                     }
                     Hediff replaceWith = HediffMaker.MakeHediff(item.hediffToReplaceWith,pawn);
+                    pawn.health.RemoveHediff(pawn.health.hediffSet.GetFirstHediffOfDef(item.hediffToImmune));
                     pawn.health.AddHediff(replaceWith,bRecord);
                 }
             }

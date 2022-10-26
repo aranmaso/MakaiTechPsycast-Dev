@@ -88,7 +88,16 @@ namespace MakaiTechPsycast
                     {
                         continue;
                     }
-                    if(pawn.HostileTo(Faction.OfPlayer) && !pawn.Faction.IsPlayer)
+                    if(pawn.HostileTo(projectile.Faction) && Props.hurtEnemyOnly && pawn != projectile.Launcher)
+                    {
+                        if (projectile.Launcher is Pawn shooter)
+                        {
+                            targetBonus += Math.Min(Mathf.FloorToInt(shooter.health.hediffSet.GetFirstHediffOfDef(Props.hediffBonus).Severity), 5);
+                        }
+                        DamageInfo dinfo = new DamageInfo(projectile.def.projectile.damageDef, Props.damageAmount, Props.armorPen);
+                        pawn.TakeDamage(new DamageInfo(dinfo));
+                    }
+                    else if(!Props.hurtEnemyOnly && pawn != projectile.Launcher)
                     {
                         if (projectile.Launcher is Pawn shooter)
                         {
@@ -102,7 +111,7 @@ namespace MakaiTechPsycast
                 {
                     if (item is Pawn pawn)
                     {
-                        if (Props.pullPawn && (pawn.HostileTo(Faction.OfPlayer) && !pawn.Faction.IsPlayer) && !pawn.Downed)
+                        if (Props.pullPawn && (pawn.HostileTo(projectile.Faction) && !pawn.Faction.IsPlayer) && !pawn.Downed)
                         {
                             if (Props.makeGoToJob)
                             {

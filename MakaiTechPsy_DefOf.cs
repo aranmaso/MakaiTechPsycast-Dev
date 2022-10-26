@@ -23,11 +23,15 @@ namespace MakaiTechPsycast
         public static HediffDef MakaiTechPsy_DD_LichSoul;
         public static HediffDef MakaiTechPsy_DD_CollectSoul;
         public static HediffDef MakaiTechPsy_DD_MissingSoul;
+        public static HediffDef MakaiTechPsy_DD_Helheim;
+        public static HediffDef MakaiTechPsy_DD_LifeLink;
 
         public static DamageDef TrueDestruction_LightningTower;
         public static DamageDef TrueDestruction_LightningTowerBeam;
         public static DamageDef CorruptedProphet_CorruptedSky;
         public static DamageDef DestinedDeath_Rot;
+        public static DamageDef DestinedDeath_SharedDamage;
+        public static DamageDef DestinedDeath_LinkExplosion;
 
 
         public static ThingDef MakaiTechPsy_DD_Soul;

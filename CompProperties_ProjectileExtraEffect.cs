@@ -44,6 +44,8 @@ namespace MakaiTechPsycast
         public bool catchAndLaunchBackBullet;
 
         public bool shootAtRandom;
+
+        public bool hurtEnemyOnly = false;
         public CompProperties_ProjectileExtraEffect()
         {
             compClass = typeof(CompProjectileExtraEffect);
