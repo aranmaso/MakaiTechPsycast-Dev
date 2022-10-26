@@ -1,7 +1,7 @@
 ﻿using RimWorld;
 using Verse;
 
-namespace MakaiTechPsycast
+namespace MakaiTechPsycast.DestinedDeath
 {
     public class CompProperties_UseEffectHealAll : CompProperties_UseEffect
     {

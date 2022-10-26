@@ -1,7 +1,7 @@
 ﻿using RimWorld;
 using Verse;
 
-namespace MakaiTechPsycast
+namespace MakaiTechPsycast.TrueDestruction
 {
 	public class Verb_CallStrike : Verb_LaunchProjectile
 	{

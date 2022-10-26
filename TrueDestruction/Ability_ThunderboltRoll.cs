@@ -4,7 +4,7 @@ using Verse;
 using VanillaPsycastsExpanded;
 using VFECore.Abilities;
 
-namespace MakaiTechPsycast
+namespace MakaiTechPsycast.TrueDestruction
 {
 	public class Ability_ThunderboltRoll : VFECore.Abilities.Ability
 	{
