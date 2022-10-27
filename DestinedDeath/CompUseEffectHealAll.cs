@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
-namespace MakaiTechPsycast.DestinedDeath
+namespace MakaiTechPsycast
 {
     public class CompUseEffectHealAll : CompUseEffect
     {
