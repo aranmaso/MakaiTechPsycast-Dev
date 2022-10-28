@@ -59,6 +59,7 @@ namespace MakaiTechPsycast
                 if (pawn.health.hediffSet.HasHediff(item))
                 {
                     pawn.health.RemoveHediff(pawn.health.hediffSet.GetFirstHediffOfDef(item));
+                    MoteMaker.ThrowText(pawn.Position.ToVector3(),pawn.Map,"Immunity: " + item.LabelCap,color:UnityEngine.Color.green);
                 }
             }
         }
@@ -81,6 +82,8 @@ namespace MakaiTechPsycast
                     Hediff replaceWith = HediffMaker.MakeHediff(item.hediffToReplaceWith,pawn);
                     pawn.health.RemoveHediff(pawn.health.hediffSet.GetFirstHediffOfDef(item.hediffToImmune));
                     pawn.health.AddHediff(replaceWith,bRecord);
+                    MoteMaker.ThrowText(pawn.Position.ToVector3(), pawn.Map, "Immunity: " + replacedHediff.Label);
+                    MoteMaker.ThrowText(pawn.Position.ToVector3(), pawn.Map, "Replace with: " + replaceWith.Label);
                 }
             }
         }

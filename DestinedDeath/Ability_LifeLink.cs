@@ -15,8 +15,9 @@ namespace MakaiTechPsycast.DestinedDeath
             base.Cast(targets);
             AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
             RollInfo rollinfo = new RollInfo();
-            rollinfo = MakaiUtility.Roll1D20(pawn, modExtension.skillBonus, rollinfo);
+            rollinfo = MakaiUtility.Roll1D20(pawn, modExtension.skillBonus ?? DefDatabase<SkillDef>.AllDefs.RandomElement(), rollinfo);
             List<Thing> AllPawn = new List<Thing>();
+            /*MoteMaker.ThrowText(pawn.Position.ToVector3(),pawn.Map,"roll: " + rollinfo.roll +"(" + rollinfo.baseRoll + "+" + rollinfo.cumulativeBonusRoll + ")");*/
             if (rollinfo.roll >= modExtension.successThreshold && rollinfo.roll < modExtension.greatSuccessThreshold)
             {
                 foreach (GlobalTargetInfo globalTargetInfo in targets)

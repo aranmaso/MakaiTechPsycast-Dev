@@ -65,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DistortedReality\Ability_DistortEquipment.cs" />
     <Compile Include="Main\Ability_SpawnThingWithRoll.cs" />
     <Compile Include="PerfectKnowledge\AbilityExtension_Thing.cs" />
     <Compile Include="PerfectKnowledge\AbilityExtension_Skill.cs" />
@@ -109,7 +110,7 @@
     <Compile Include="DestinedDeath\Ability_LifeLinkDetonation.cs" />
     <Compile Include="DestinedDeath\HediffCompProperties_LifeLink.cs" />
     <Compile Include="DestinedDeath\HediffComp_LifeLink.cs" />
-    <Compile Include="Main\Pawn_PreApplyDamage_HelHeimStrengthPatch.cs" />
+    <Compile Include="DestinedDeath\Pawn_PreApplyDamage_HelHeimStrengthPatch.cs" />
     <Compile Include="DestinedDeath\HediffComp_HelheimStrength.cs" />
     <Compile Include="DestinedDeath\HediffCompProperties_HelheimStrength.cs" />
     <Compile Include="Main\RollInfo.cs" />
@@ -175,5 +176,6 @@
     <Compile Include="Main\MakaiTechPsy_DefOf.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
