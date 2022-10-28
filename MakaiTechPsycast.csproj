@@ -114,7 +114,7 @@
     <Compile Include="DestinedDeath\HediffComp_HelheimStrength.cs" />
     <Compile Include="DestinedDeath\HediffCompProperties_HelheimStrength.cs" />
     <Compile Include="Main\RollInfo.cs" />
-    <Compile Include="DestinedDeath\HediffCompProperties_ImmunityBuff.cs" />
+    <Compile Include="Main\HediffCompProperties_ImmunityBuff.cs" />
     <Compile Include="Main\HediffComp_ImmunityBuff.cs" />
     <Compile Include="GoldenOrder\Dialog_ChooseTraitToRemove.cs" />
     <Compile Include="DestinedDeath\StatPart_PsycastSoulConsumed.cs" />
