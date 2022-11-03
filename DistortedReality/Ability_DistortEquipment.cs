@@ -15,10 +15,12 @@ namespace MakaiTechPsycast.DistortedReality
         {
             base.Cast(targets);
             AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
+            int threshold1 = Rand.Range(1,21);
+            int threshold2 = Rand.Range(1,21);
             RollInfo rollinfo = new RollInfo();
             List<SkillDef> randomSkill = DefDatabase<SkillDef>.AllDefs.ToList();
             rollinfo = MakaiUtility.Roll1D20(pawn, randomSkill.RandomElement(), rollinfo);
-            if (rollinfo.roll >= modExtension.successThreshold && rollinfo.roll < modExtension.greatSuccessThreshold)
+            if (rollinfo.roll >= Mathf.Min(threshold1, threshold2) && rollinfo.roll < Mathf.Max(threshold1, threshold2))
             {
                 if (targets[0].Thing is Pawn targetPawn && targetPawn.equipment.Primary != null)
                 {
@@ -51,7 +53,7 @@ namespace MakaiTechPsycast.DistortedReality
                     Messages.Message("Target doesn't have weapon equipped", MessageTypeDefOf.NeutralEvent);
                 }
             }
-            if (rollinfo.roll >= modExtension.greatSuccessThreshold)
+            if (rollinfo.roll >= Mathf.Max(threshold1, threshold2))
             {
                 if (targets[0].Thing is Pawn targetPawn && targetPawn.equipment.Primary != null)
                 {
@@ -84,7 +86,7 @@ namespace MakaiTechPsycast.DistortedReality
                     Messages.Message("Target doesn't have weapon equipped", MessageTypeDefOf.NeutralEvent);
                 }
             }
-            if (rollinfo.roll < modExtension.successThreshold)
+            if (rollinfo.roll < Mathf.Min(threshold1, threshold2))
             {
                 if (targets[0].Thing is Pawn targetPawn && targetPawn.equipment.Primary != null)
                 {

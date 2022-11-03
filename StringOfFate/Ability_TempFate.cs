@@ -39,8 +39,7 @@ namespace MakaiTechPsycast.StringOfFate
 				{
 					if (pawn2.HitPoints < pawn2.MaxHitPoints * 0.1)
 					{
-						List<Hediff> list = pawn2.health.hediffSet.hediffs.Where(MakaiUtility.FindBadHediff).ToList();
-						foreach (Hediff item in list)
+						foreach (Hediff item in pawn2.health.hediffSet.hediffs.Where(MakaiUtility.FindBadHediff))
 						{
 							pawn2.health.RemoveHediff(item);
 						}
@@ -52,8 +51,7 @@ namespace MakaiTechPsycast.StringOfFate
 				{
 					if (pawn2.HitPoints < pawn2.MaxHitPoints * 0.1)
 					{
-						List<Hediff> list = pawn2.health.hediffSet.hediffs.Where(MakaiUtility.FindBadHediff).ToList();
-						foreach (Hediff item in list)
+						foreach (Hediff item in pawn2.health.hediffSet.hediffs.Where(MakaiUtility.FindBadHediff))
 						{
 							pawn2.health.RemoveHediff(item);
 						}

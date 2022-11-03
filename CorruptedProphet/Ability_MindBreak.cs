@@ -31,7 +31,7 @@ namespace MakaiTechPsycast.CorruptedProphet
 			}
 			roll += rollBonus + rollBonusLucky + rollBonusUnLucky;
 			int cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
-			if (pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel).Severity >= modExtension.costs)
+			if (pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel) && pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel).Severity >= modExtension.costs)
             {
 				if(targets[0].Thing is Pawn pawn2)
                 {

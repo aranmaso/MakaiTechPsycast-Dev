@@ -25,6 +25,14 @@ namespace MakaiTechPsycast
             }
             return hediff_Injury;
         }
+        public static bool FindNonInjuryHediffFromDatabase(HediffDef hediff)
+        {
+            return hediff.hediffClass != typeof(Hediff_Injury) && hediff.hediffClass != typeof(Hediff_MissingPart);
+        }
+        public static bool FindAllBuildingFromDatabase(ThingDef thingDef)
+        {
+            return thingDef.thingClass != null && (thingDef.thingClass == typeof(Building) || thingDef.thingClass.IsSubclassOf(typeof(Building))) && thingDef.thingClass != typeof(Frame);
+        }
         public static TaggedString RestorePart(BodyPartRecord part, Pawn pawn)
         {
             pawn.health.RestorePart(part);

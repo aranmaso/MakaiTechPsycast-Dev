@@ -59,6 +59,7 @@ namespace MakaiTechPsycast
         public static EffecterDef MakaiPsy_DD_Suck;
 
         public static BodyPartGroupDef Hands;
+        public static BodyPartDef Pelvis;
 
 
     }

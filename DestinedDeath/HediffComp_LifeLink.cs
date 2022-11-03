@@ -44,7 +44,8 @@ namespace MakaiTechPsycast.DestinedDeath
                 {
                     continue;
                 }
-                item.TakeDamage(new DamageInfo(MakaiTechPsy_DefOf.DestinedDeath_SharedDamage, dinfo.Amount, dinfo.ArmorPenetrationInt, dinfo.Angle, parent.pawn,dinfo.HitPart,dinfo.Weapon,dinfo.Category));  
+                item.TakeDamage(new DamageInfo(MakaiTechPsy_DefOf.DestinedDeath_SharedDamage, dinfo.Amount, dinfo.ArmorPenetrationInt, dinfo.Angle, parent.pawn, dinfo.HitPart, dinfo.Weapon, dinfo.Category));
+                item.health.hediffSet.GetFirstHediffOfDef(parent.def).TryGetComp<HediffComp_LifeLink>().totalDamage = totalDamage;
             }
         }
     }

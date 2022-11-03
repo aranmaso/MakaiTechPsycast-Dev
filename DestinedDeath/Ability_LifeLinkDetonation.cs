@@ -21,7 +21,10 @@ namespace MakaiTechPsycast.DestinedDeath
                 {
                     Hediff hediff = targetPawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_LifeLink);
                     float accumulateDamge = hediff.TryGetComp<HediffComp_LifeLink>().totalDamage;
-                    hediff.TryGetComp<HediffComp_LifeLink>().totalDamage = 0;
+                    foreach(Pawn linkedPawn in hediff.TryGetComp<HediffComp_LifeLink>().linkedPawn)
+                    {
+                        linkedPawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_LifeLink).TryGetComp<HediffComp_LifeLink>().totalDamage /= 2;
+                    }
                     GenExplosion.DoExplosion(targetPawn.Position,pawn.Map,Mathf.Min(5,accumulateDamge/10),modExtension.damageDef,pawn,Mathf.FloorToInt(accumulateDamge),1f,null,null,null,targetPawn,null,0,0,GasType.RotStink);
                     Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                     Messages.Message("Makai_PassArollcheckLinkDetonate".Translate(pawn.LabelShort,targetPawn.LabelShort,accumulateDamge, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
@@ -37,7 +40,10 @@ namespace MakaiTechPsycast.DestinedDeath
                 {
                     Hediff hediff = targetPawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_LifeLink);
                     float accumulateDamge = hediff.TryGetComp<HediffComp_LifeLink>().totalDamage;
-                    hediff.TryGetComp<HediffComp_LifeLink>().totalDamage = 0;
+                    foreach (Pawn linkedPawn in hediff.TryGetComp<HediffComp_LifeLink>().linkedPawn)
+                    {
+                        linkedPawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_LifeLink).TryGetComp<HediffComp_LifeLink>().totalDamage /= 2;
+                    }
                     GenExplosion.DoExplosion(targetPawn.Position, pawn.Map, Mathf.Min(10, accumulateDamge / 5), modExtension.damageDef, pawn, Mathf.FloorToInt(accumulateDamge*1.25f), 1f, null, null, null, targetPawn, null, 0, 0, GasType.RotStink);
                     Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                     Messages.Message("Makai_GreatPassArollcheckLinkDetonate".Translate(pawn.LabelShort,targetPawn.LabelShort, accumulateDamge, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
@@ -53,7 +59,10 @@ namespace MakaiTechPsycast.DestinedDeath
                 {
                     Hediff hediff = targetPawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_LifeLink);
                     float accumulateDamge = hediff.TryGetComp<HediffComp_LifeLink>().totalDamage;
-                    hediff.TryGetComp<HediffComp_LifeLink>().totalDamage = 0;
+                    foreach (Pawn linkedPawn in hediff.TryGetComp<HediffComp_LifeLink>().linkedPawn)
+                    {
+                        linkedPawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_LifeLink).TryGetComp<HediffComp_LifeLink>().totalDamage /= 2;
+                    }
                     GenExplosion.DoExplosion(targetPawn.Position, pawn.Map, Mathf.Min(3, accumulateDamge / 10), modExtension.damageDef, pawn, Mathf.FloorToInt(accumulateDamge*0.75f), 1f, null, null, null, targetPawn, null, 0, 0, GasType.RotStink);
                     Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                     Messages.Message("Makai_FailArollcheckLinkDetonate".Translate(pawn.LabelShort,targetPawn.LabelShort,accumulateDamge, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);

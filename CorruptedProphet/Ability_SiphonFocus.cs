@@ -15,7 +15,7 @@ namespace MakaiTechPsycast.CorruptedProphet
         {
 			base.Cast(targets);
 			AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
-			if (targets[0].Thing is Pawn pawn2)
+			if (pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel) && targets[0].Thing is Pawn pawn2)
             {
 				SkillRecord bonus = pawn.skills.GetSkill(modExtension.skillBonus);
 				System.Random rand = new System.Random();

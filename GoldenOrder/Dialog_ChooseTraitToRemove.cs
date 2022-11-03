@@ -60,8 +60,10 @@ namespace MakaiTechPsycast.GoldenOrder
 					rect.width = viewRect.width * 0.5f;
 					if (Widgets.ButtonText(rect, traits.LabelCap))
 					{
+						traitWasChosen = true;
 						RemoveTrait(traits);
 						Close();
+						return;
 					}
 					y += 35f;
 				}

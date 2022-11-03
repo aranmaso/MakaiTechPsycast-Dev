@@ -35,15 +35,7 @@ namespace MakaiTechPsycast.DestinedDeath
         public override void Notify_PawnKilled()
         {
             base.Notify_PawnKilled();
-			List<Thing> thing = null;
-			foreach(Pawn item in parent.pawn.Map.mapPawns.AllPawnsSpawned)
-            {
-				if(item.Faction.IsPlayer || !item.HostileTo(Faction.OfPlayer))
-                {
-					thing.Add(item);
-                }
-            }
-			GenExplosion.DoExplosion(parent.pawn.Position,parent.pawn.Map,SoulCount/2,DamageDefOf.Bomb,parent.pawn,SoulCount/2,0.2f,null,null,null,null,null,0,1,null,false,null,0,1,0,false,null,thing);
+			GenExplosion.DoExplosion(parent.pawn.Position,parent.pawn.Map,SoulCount/2,DamageDefOf.Bomb,parent.pawn,SoulCount/2,0.2f,null,null,null,null,null,0,1,null,false,null,0,1,0,false,null);
         }
         public override IEnumerable<Gizmo> CompGetGizmos()
         {
