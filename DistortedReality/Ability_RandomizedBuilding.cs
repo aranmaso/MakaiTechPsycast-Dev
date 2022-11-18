@@ -17,7 +17,6 @@ namespace MakaiTechPsycast.DistortedReality
             AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
             int threshold1 = Rand.Range(1, 21);
             int threshold2 = Rand.Range(1, 21);
-            Log.Message("threshold: " + threshold1 + " " + threshold2);
             RollInfo rollinfo = new RollInfo();
             List<SkillDef> randomSkill = DefDatabase<SkillDef>.AllDefs.ToList();
             rollinfo = MakaiUtility.Roll1D20(pawn, randomSkill.RandomElement(), rollinfo);

@@ -69,12 +69,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DistortedReality\Ability_DistortedBlessing.cs" />
+    <Compile Include="DistortedReality\Ability_RandomizedEvent.cs" />
+    <Compile Include="DistortedReality\Ability_RandomizedItemOnGround.cs" />
+    <Compile Include="DistortedReality\Dialog_ChooseRandomItem.cs" />
+    <Compile Include="DistortedReality\Dialog_ChooseIncident.cs" />
+    <Compile Include="Main\HediffExtension_MinCapacity.cs" />
+    <Compile Include="Main\PawnCapacityUtility_CalculateCapacityLevel_Universal.cs" />
     <Compile Include="DistortedReality\Ability_DistortEquipment.cs" />
     <Compile Include="DistortedReality\Ability_RandomHediffToANewOne.cs" />
     <Compile Include="DistortedReality\Ability_RandomizedBuilding.cs" />
+    <Compile Include="DistortedReality\Ability_AdaptiveArmor.cs" />
+    <Compile Include="DistortedReality\HediffComp_AdaptiveArmor.cs" />
+    <Compile Include="DistortedReality\HediffCompProperties_AdaptiveArmor.cs" />
     <Compile Include="DistortedReality\Dialog_ChooseBuildingFromChoice.cs" />
     <Compile Include="DistortedReality\Dialog_ChooseHediffToRandom.cs" />
     <Compile Include="Main\Ability_SpawnThingWithRoll.cs" />
+    <Compile Include="DistortedReality\HediffCompProperties_ChangingHediff.cs" />
+    <Compile Include="DistortedReality\HediffComp_ChangingHediff.cs" />
     <Compile Include="PerfectKnowledge\AbilityExtension_Thing.cs" />
     <Compile Include="PerfectKnowledge\AbilityExtension_Skill.cs" />
     <Compile Include="PerfectKnowledge\Ability_TransferSkill.cs" />

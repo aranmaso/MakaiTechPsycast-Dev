@@ -1,25 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine;
 using Verse;
 using Verse.AI;
 using RimWorld;
 using VFECore.Abilities;
 using VFECore.UItils;
 using Verse.Sound;
+using System;
 
 namespace MakaiTechPsycast.DistortedReality
 {
-	public class Dialog_ChooseBuildingFromChoice : Window
+	public class Dialog_ChooseRandomItem : Window
 	{
 
 		private bool thingWasChoosen = false;
-
-		private Thing targetThing;
+		private Thing itemOnGround = null;
+		private Map targetMap;
 		private Pawn casterPawn;
+		private int count;
 		private int roll;
-		private List<ThingDef> preOpenMakeListFromBase = DefDatabase<ThingDef>.AllDefs.Where(MakaiUtility.FindAllBuildingFromDatabase).ToList();
+		private IntVec3 position;
+		private List<ThingDef> preOpenMakeListFromBase = DefDatabase<ThingDef>.AllDefs.Where(x => x.category == ThingCategory.Item && !x.IsCorpse && x.BaseMarketValue > 0 && !x.defName.Contains("VPE_Psyring") && !x.defName.Contains("Psytrainer")).ToList();
 		private List<ThingDef> choose5 = new List<ThingDef>();
 
 		private Vector2 scrollPos;
@@ -28,11 +30,13 @@ namespace MakaiTechPsycast.DistortedReality
 
 		public override Vector2 InitialSize => new Vector2(250f, 300f);
 
-		public Dialog_ChooseBuildingFromChoice(Thing thing,Pawn pawn,int rolResult)
+		public Dialog_ChooseRandomItem(Thing thing,IntVec3 pos ,Map map, int choiceCount, int roll)
 		{
-			this.targetThing = thing;
-			this.casterPawn = pawn;
-			roll = rolResult;
+			itemOnGround = thing;
+			position = pos;
+			this.targetMap = map;
+			this.count = choiceCount;
+			this.roll = roll;
 			forcePause = true;
 			doCloseButton = false;
 			doCloseX = false;
@@ -42,49 +46,54 @@ namespace MakaiTechPsycast.DistortedReality
 			draggable = true;
 			resizeable = true;
 		}
-		private void RandomBuilding(ThingDef thing)
+		private void RandomItem(ThingDef thingDef)
 		{
-			IntVec3 pos = targetThing.Position;
-			Map map = targetThing.Map;
-			try
+			Thing thing = null;
+			if(thingDef.MadeFromStuff)
             {
-				Thing.allowDestroyNonDestroyable = true;
-				targetThing.Destroy();
+				thing = ThingMaker.MakeThing(thingDef, DefDatabase<ThingDef>.AllDefsListForReading.Where((ThingDef stuffDef) => stuffDef.IsStuff).RandomElement());
 			}
-			finally
+			else
             {
-				Thing.allowDestroyNonDestroyable = false;
-			}			
-			if (thing.MadeFromStuff)
-            {
-                Thing newThing = ThingMaker.MakeThing(thing, DefDatabase<ThingDef>.AllDefsListForReading.Where((ThingDef stuffDef) => stuffDef.IsStuff).RandomElement());
-				newThing.SetFaction(casterPawn.Faction);
-				GenSpawn.Spawn(newThing, pos, map);
-				
+				thing = ThingMaker.MakeThing(thingDef);
 			}
-			if (!thing.MadeFromStuff)
-			{
-				Thing newThing = ThingMaker.MakeThing(thing);
-				newThing.SetStuffDirect(DefDatabase<ThingDef>.AllDefsListForReading.Where((ThingDef stuffDef) => stuffDef.IsStuff).RandomElement());
-				newThing.SetFaction(casterPawn.Faction);
-				GenSpawn.Spawn(newThing, pos, map);
-			}
+			itemOnGround.Destroy();
+			thing.stackCount = Rand.Range(1,thing.def.stackLimit);
+			GenSpawn.Spawn(thing, position, targetMap);
 		}
 
-        public override void PreOpen()
-        {
-            base.PreOpen();
-			if(choose5 != null)
-            {
+		public override void PreOpen()
+		{
+			base.PreOpen();
+			if (choose5 != null)
+			{
 				choose5.Clear();
-            }
-			for (int i = 0;i < 5;i++)
-            {
-				choose5.Add(preOpenMakeListFromBase.RandomElement());
 			}
-        }
+			if (roll == 1)
+			{
+				for (int i = 0; i < count; i++)
+				{
+					choose5.Add(preOpenMakeListFromBase.Where(x => !choose5.Contains(x)).RandomElement());
+				}
+			}
+			else if (roll == 2)
+			{
+				for (int i = 0; i < count; i++)
+				{
+					choose5.Add(preOpenMakeListFromBase.Where(x => !choose5.Contains(x)).RandomElement());
+				}
+			}
+			else if (roll == 3)
+			{
+				for (int i = 0; i < count; i++)
+				{
+					choose5.Add(preOpenMakeListFromBase.Where(x => !choose5.Contains(x)).RandomElement());
+				}
+			}
 
-        public override void DoWindowContents(Rect inRect)
+		}
+
+		public override void DoWindowContents(Rect inRect)
 		{
 			Text.Font = GameFont.Small;
 			Rect outRect = new Rect(inRect);
@@ -107,16 +116,16 @@ namespace MakaiTechPsycast.DistortedReality
 					{
 						thingWasChoosen = true;
 						Close();
-						RandomBuilding(item);
+						RandomItem(item);
 						SoundDefOf.Click.PlayOneShotOnCamera();
 						return;
 					}
 					y += 32f;
 					count++;
-					if(count == 5)
-                    {
+					if (count == this.count)
+					{
 						break;
-                    }
+					}
 				}
 				lastHeight = y;
 			}
