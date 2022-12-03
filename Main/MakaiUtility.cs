@@ -225,13 +225,13 @@ namespace MakaiTechPsycast
             minfo.userTakeDamage = userTakeDamage;
             return minfo;
         }
-        public static List<Pawn> GetNearbyHostiles(IntVec3 cell, Map map, Faction faction, float maxDistance)
+        public static List<Pawn> GetNearbyPawn(IntVec3 cell, Map map, float maxDistance)
         {
             List<Pawn> list = new List<Pawn>();
             float num = maxDistance * maxDistance;
             foreach (Pawn item in map.mapPawns.AllPawnsSpawned)
             {
-                if (item.Spawned && !item.Downed && !item.Dead && item.Faction.HostileTo(faction))
+                if (item.Spawned && !item.Downed && !item.Dead)
                 {
                     float num2 = item.Position.DistanceToSquared(cell);
                     if (num2 <= num)

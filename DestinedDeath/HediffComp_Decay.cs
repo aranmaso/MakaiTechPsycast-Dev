@@ -21,11 +21,10 @@ namespace MakaiTechPsycast.DestinedDeath
         }
         public override void CompPostTick(ref float severityAdjustment)
         {
-            if (Find.TickManager.TicksGame == tickSinceTrigger)
+            if (Pawn.IsHashIntervalTick(Props.interval))
             {
                 Pawn pawn = parent.pawn;
-                DamageInfo dinfo = new DamageInfo(Props.damageDef, Props.damageAmount, 100);
-                pawn.TakeDamage(dinfo);
+                pawn.TakeDamage(new DamageInfo(Props.damageDef, Props.damageAmount, 100));
                 tickSinceTrigger += Props.interval;
             }
         }

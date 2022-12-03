@@ -83,7 +83,7 @@ namespace MakaiTechPsycast
         {
             if(parent is Projectile projectile)
             {
-                foreach(Pawn pawn in PawnGroupUtility.GetNearbyHostiles(projectile.Position,projectile.Map,projectile.Launcher.Faction, Props.hurtRadius))
+                foreach(Pawn pawn in MakaiUtility.GetNearbyPawn(projectile.Position,projectile.Map, Props.hurtRadius))
                 {
                     if(pawn.HostileTo(projectile.Faction) && Props.hurtEnemyOnly && pawn != projectile.Launcher)
                     {
@@ -91,8 +91,7 @@ namespace MakaiTechPsycast
                         {
                             targetBonus += Math.Min(Mathf.FloorToInt(shooter.health.hediffSet.GetFirstHediffOfDef(Props.hediffBonus).Severity), 5);
                         }
-                        DamageInfo dinfo = new DamageInfo(projectile.def.projectile.damageDef, Props.damageAmount, Props.armorPen);
-                        pawn.TakeDamage(new DamageInfo(dinfo));
+                        pawn.TakeDamage(new DamageInfo(projectile.def.projectile.damageDef, Props.damageAmount, Props.armorPen));
                     }
                     else if(!Props.hurtEnemyOnly && pawn != projectile.Launcher)
                     {
@@ -100,8 +99,7 @@ namespace MakaiTechPsycast
                         {
                             targetBonus += Math.Min(Mathf.FloorToInt(shooter.health.hediffSet.GetFirstHediffOfDef(Props.hediffBonus).Severity), 5);
                         }
-                        DamageInfo dinfo = new DamageInfo(projectile.def.projectile.damageDef, Props.damageAmount, Props.armorPen);
-                        pawn.TakeDamage(new DamageInfo(dinfo));
+                        pawn.TakeDamage(new DamageInfo(projectile.def.projectile.damageDef, Props.damageAmount, Props.armorPen));
                     }
                 }
                 foreach (Pawn pawn in PawnGroupUtility.GetNearbyHostiles(projectile.Position,projectile.Launcher.Map,projectile.Launcher.Faction,Props.pullRadius))
