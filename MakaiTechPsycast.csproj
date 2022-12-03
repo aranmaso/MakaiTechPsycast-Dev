@@ -39,6 +39,9 @@
       <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="AthenaFramework">
+      <HintPath>..\..\AthenaFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -72,6 +75,17 @@
     <Compile Include="DistortedReality\Ability_DistortedBlessing.cs" />
     <Compile Include="DistortedReality\Ability_RandomizedEvent.cs" />
     <Compile Include="DistortedReality\Ability_RandomizedItemOnGround.cs" />
+    <Compile Include="DistortedReality\Ability_DistortedReality.cs" />
+    <Compile Include="DistortedReality\Ability_DistortedProjectile.cs" />
+    <Compile Include="DistortedReality\Ability_DistortedShield.cs" />
+    <Compile Include="DistortedReality\HediffCompProperties_DistortedShield.cs" />
+    <Compile Include="DistortedReality\HediffComp_DistortedShield.cs" />
+    <Compile Include="DistortedReality\HediffComp_BouncingBullet.cs" />
+    <Compile Include="DistortedReality\HediffCompProperties_BouncingBullet.cs" />
+    <Compile Include="DistortedReality\HediffCompProperties_DistortedUltimateCount.cs" />
+    <Compile Include="DistortedReality\HediffComp_DistortedUltimateCount.cs" />
+    <Compile Include="DistortedReality\Dialog_ChooseIncidentInCategory.cs" />
+    <Compile Include="DistortedReality\Dialog_ChooseIncidentCategory.cs" />
     <Compile Include="DistortedReality\Dialog_ChooseRandomItem.cs" />
     <Compile Include="DistortedReality\Dialog_ChooseIncident.cs" />
     <Compile Include="Main\HediffExtension_MinCapacity.cs" />
@@ -102,6 +116,13 @@
     <Compile Include="Bond Intertwined\AbilityExtension_MindCleanse.cs" />
     <Compile Include="Main\AbilityExtension_Roll1D20.cs" />
     <Compile Include="Bond Intertwined\Ability_SelfBuffWithRoll.cs" />
+    <Compile Include="StringOfFate\Ability_ReverseFate.cs" />
+    <Compile Include="StringOfFate\Ability_MirroredFate.cs" />
+    <Compile Include="StringOfFate\Ability_TempFate.cs" />
+    <Compile Include="StringOfFate\Pawn_PreApplyDamage_LifeLinePatch.cs" />
+    <Compile Include="StringOfFate\MirroredFateInfo.cs" />
+    <Compile Include="StringOfFate\HediffComp_MirroredFate.cs" />
+    <Compile Include="StringOfFate\HediffCompProperties_MirroredFate.cs" />
     <Compile Include="TrueDestruction\Ability_ThunderboltRoll.cs" />
     <Compile Include="Bond Intertwined\Ability_RelationMend.cs" />
     <Compile Include="TrueDestruction\Bullet_Impact_TD_AffectPawn.cs" />
@@ -111,7 +132,7 @@
     <Compile Include="CorruptedProphet\Ability_TargetCorrupted.cs" />
     <Compile Include="CorruptedProphet\Ability_SiphonFocus.cs" />
     <Compile Include="CorruptedProphet\Ability_NightmareClaw.cs" />
-    <Compile Include="StringOfFate\Ability_TempFate.cs" />
+    <Compile Include="StringOfFate\Ability_TempFateTemp.cs" />
     <Compile Include="CorruptedProphet\Ability_ShootRollTaint.cs" />
     <Compile Include="CorruptedProphet\Ability_SpawnThingWithRollTaintCost.cs" />
     <Compile Include="CorruptedProphet\Ability_MindBreak.cs" />
@@ -164,7 +185,7 @@
     <Compile Include="CorruptedProphet\MakaiCP_PowerBeam.cs" />
     <Compile Include="Main\Verb_CallStrike.cs" />
     <Compile Include="Main\Verb_ShootingOffset.cs" />
-    <Compile Include="Main\Pawn_PreApplyDamage_ThornArmorPatch.cs" />
+    <Compile Include="StringOfFate\Pawn_PreApplyDamage_ThornArmorPatch.cs" />
     <Compile Include="Main\Pawn_PostApplyDamage_ThornArmorPatch.cs" />
     <Compile Include="Main\MakaiUtility.cs" />
     <Compile Include="StringOfFate\HediffCompProperties_ReverseSeverity.cs" />
@@ -177,6 +198,7 @@
     <Compile Include="DestinedDeath\Soul.cs" />
     <Compile Include="Main\Projectile_Testing.cs" />
     <Compile Include="Main\ModExtension_TestingProjectile.cs" />
+    <Compile Include="DistortedReality\Bullet_ImpactDistortedPatch.cs" />
     <Compile Include="TrueDestruction\CompProperties_TD_Turret.cs" />
     <Compile Include="TrueDestruction\CompTDturret.cs" />
     <Compile Include="Main\MakaitechPsyCastStartPatch.cs" />

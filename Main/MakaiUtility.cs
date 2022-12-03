@@ -207,8 +207,41 @@ namespace MakaiTechPsycast
             float num = hours * 2500f + (float)ticks;
             num *= pawn.GetStatValue(statDef ?? StatDefOf.PsychicSensitivity);
             Hediff hediff = HediffMaker.MakeHediff(hediffDef, pawn);
-            hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num);
+            if(hediff.TryGetComp<HediffComp_Disappears>() != null)
+            {
+                hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num);
+            }
             return hediff;
+        }
+
+        public static MirroredFateInfo GetMirroredFateInfo(MirroredFateInfo minfo,int count,float percent,bool reflectOnlyEnemies,bool reflectOnlyFriendly,bool reflectMelee,bool reflectRanged,bool userTakeDamage)
+        {
+            minfo.reflectCountLeft = count;
+            minfo.reflectPercent = percent;
+            minfo.reflectOnlyEnemies = reflectOnlyEnemies;
+            minfo.reflectOnlyFriendly = reflectOnlyFriendly;
+            minfo.reflectMelee = reflectMelee;
+            minfo.reflectRanged = reflectRanged;
+            minfo.userTakeDamage = userTakeDamage;
+            return minfo;
+        }
+        public static List<Pawn> GetNearbyHostiles(IntVec3 cell, Map map, Faction faction, float maxDistance)
+        {
+            List<Pawn> list = new List<Pawn>();
+            float num = maxDistance * maxDistance;
+            foreach (Pawn item in map.mapPawns.AllPawnsSpawned)
+            {
+                if (item.Spawned && !item.Downed && !item.Dead && item.Faction.HostileTo(faction))
+                {
+                    float num2 = item.Position.DistanceToSquared(cell);
+                    if (num2 <= num)
+                    {
+                        list.Add(item);
+                    }
+                }
+            }
+
+            return list;
         }
         public static Soul GetPawnCopy(Thing thing ,Pawn pawn)
         {

@@ -17,14 +17,18 @@ namespace MakaiTechPsycast
         public static HediffDef MakaiPsy_BI_TradingGreat;
 
         public static HediffDef MakaiPsy_CP_TaintLevel;
+
         public static HediffDef MakaiPsy_SF_Reverse;
         public static HediffDef MakaiPsy_SF_Counter;
+        public static HediffDef MakaiPsy_SF_Lifeline;
 
         public static HediffDef MakaiTechPsy_DD_LichSoul;
         public static HediffDef MakaiTechPsy_DD_CollectSoul;
         public static HediffDef MakaiTechPsy_DD_MissingSoul;
         public static HediffDef MakaiTechPsy_DD_Helheim;
         public static HediffDef MakaiTechPsy_DD_LifeLink;
+
+        public static HediffDef MakaiTechPsy_DR_DistortBulletBounce;
 
         public static DamageDef TrueDestruction_LightningTower;
         public static DamageDef TrueDestruction_LightningTowerBeam;

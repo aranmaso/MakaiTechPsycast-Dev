@@ -5,6 +5,7 @@ using Verse.Sound;
 using VanillaPsycastsExpanded;
 using Verse.AI;
 using System;
+using AthenaFramework;
 
 namespace MakaiTechPsycast
 {
@@ -82,15 +83,11 @@ namespace MakaiTechPsycast
         {
             if(parent is Projectile projectile)
             {
-                foreach(Thing item in GenRadial.RadialDistinctThingsAround(projectile.Position,projectile.Map,Props.hurtRadius, useCenter: true))
+                foreach(Pawn pawn in PawnGroupUtility.GetNearbyHostiles(projectile.Position,projectile.Map,projectile.Launcher.Faction, Props.hurtRadius))
                 {
-                    if(!(item is Pawn pawn))
-                    {
-                        continue;
-                    }
                     if(pawn.HostileTo(projectile.Faction) && Props.hurtEnemyOnly && pawn != projectile.Launcher)
                     {
-                        if (projectile.Launcher is Pawn shooter)
+                        if (projectile.Launcher is Pawn shooter && shooter.health.hediffSet.HasHediff(Props.hediffBonus))
                         {
                             targetBonus += Math.Min(Mathf.FloorToInt(shooter.health.hediffSet.GetFirstHediffOfDef(Props.hediffBonus).Severity), 5);
                         }
@@ -99,7 +96,7 @@ namespace MakaiTechPsycast
                     }
                     else if(!Props.hurtEnemyOnly && pawn != projectile.Launcher)
                     {
-                        if (projectile.Launcher is Pawn shooter)
+                        if (projectile.Launcher is Pawn shooter && shooter.health.hediffSet.HasHediff(Props.hediffBonus))
                         {
                             targetBonus += Math.Min(Mathf.FloorToInt(shooter.health.hediffSet.GetFirstHediffOfDef(Props.hediffBonus).Severity), 5);
                         }
@@ -107,11 +104,9 @@ namespace MakaiTechPsycast
                         pawn.TakeDamage(new DamageInfo(dinfo));
                     }
                 }
-                foreach (Thing item in GenRadial.RadialDistinctThingsAround(projectile.Position, projectile.Map, Props.pullRadius, useCenter: true))
+                foreach (Pawn pawn in PawnGroupUtility.GetNearbyHostiles(projectile.Position,projectile.Launcher.Map,projectile.Launcher.Faction,Props.pullRadius))
                 {
-                    if (item is Pawn pawn)
-                    {
-                        if (Props.pullPawn && (pawn.HostileTo(projectile.Faction) && !pawn.Faction.IsPlayer) && !pawn.Downed)
+                        if (Props.pullPawn && !pawn.Faction.IsPlayer)
                         {
                             if (Props.makeGoToJob)
                             {
@@ -127,7 +122,7 @@ namespace MakaiTechPsycast
                                     pawn.jobs.StopAll();
                                     pawn.jobs.StartJob(job2, JobCondition.InterruptForced);
                                 }
-                                else if(pawn.equipment.Primary == null && pawn.jobs?.curJob.targetA != projectile)
+                                else if (pawn.equipment.Primary == null && pawn.jobs?.curJob.targetA != projectile)
                                 {
                                     pawn.jobs.StopAll();
                                     pawn.jobs.StartJob(job3, JobCondition.InterruptForced);
@@ -136,17 +131,12 @@ namespace MakaiTechPsycast
                             if (Props.makeFlyer)
                             {
                                 IntVec3 intVec = projectile.DrawPos.ToIntVec3();
-                                PawnFlyer_Pulled pawnFlyer_Pulled = (PawnFlyer_Pulled)PawnFlyer.MakeFlyer(MakaiTechPsy_DefOf.MakaiPsy_PullSlow, pawn, intVec,null,null);
+                                PawnFlyer_Pulled pawnFlyer_Pulled = (PawnFlyer_Pulled)PawnFlyer.MakeFlyer(MakaiTechPsy_DefOf.MakaiPsy_PullSlow, pawn, intVec, null, null);
                                 pawnFlyer_Pulled.def.pawnFlyer.flightSpeed = Props.pullSpeed;
                                 GenSpawn.Spawn(pawnFlyer_Pulled, intVec, projectile.Map);
                             }
                         }
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                    
+
                 }
             }
         }

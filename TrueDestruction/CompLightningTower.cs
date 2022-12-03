@@ -181,6 +181,27 @@ namespace MakaiTechPsycast.TrueDestruction
 								effect.Cleanup();
 							}
 					}
+					/*IntVec3 intVect1 = parent.Position;
+					for (int i = 0; i < parent.Position.DistanceTo(pawn.Position); i++)
+                    {
+						if(intVect1.x > pawn.Position.x)
+                        {
+							intVect1.x--;
+                        }
+						else
+                        {
+							intVect1.x++;
+                        }
+						if (intVect1.z > pawn.Position.z)
+						{
+							intVect1.z--;
+						}
+						else
+						{
+							intVect1.z++;
+						}
+						GenExplosion.DoExplosion(intVect1,parent.Map,0f,DamageDefOf.Bomb,parent,1,1);
+					}*/
 					pawnCount++;
 					if (pawnCount >= (Props.targetCount+1))
 					{

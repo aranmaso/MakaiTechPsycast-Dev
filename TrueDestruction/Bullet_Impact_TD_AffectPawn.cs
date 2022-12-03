@@ -2,6 +2,9 @@
 using MakaiTechPsycast;
 using RimWorld;
 using Verse;
+using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MakaiTechPsycast.TrueDestruction
 {
@@ -11,23 +14,32 @@ namespace MakaiTechPsycast.TrueDestruction
     {
 		private static void Postfix(ref Thing hitThing, ref Bullet __instance)
 		{
-			ThingDef equipmentDef = __instance.EquipmentDef;
-			Building_TurretGun turret = __instance.Launcher as Building_TurretGun;
-			Pawn pawn2 = hitThing as Pawn;
-			if (equipmentDef == null || turret == null || pawn2 == null)
+			Thing turret = __instance.Launcher;
+			CompTDturret compTDProps = turret.TryGetComp<CompTDturret>();
+			if (turret == null || compTDProps == null)
 			{
 				return;
 			}
-			CompProperties_TD_Turret compProperties = equipmentDef.GetCompProperties<CompProperties_TD_Turret>();
-			if (compProperties == null)
-			{
-				return;
-			}
-			float rand = Rand.Value;
+			float linkedCount = 1f;
+			foreach (Thing item in GenRadial.RadialDistinctThingsAround(turret.Position, turret.Map, 5f, useCenter: true))
+            {
+                if (turret.TryGetComp<CompAffectedByFacilities>().LinkedFacilitiesListForReading.Contains(item))
+                {
+                    linkedCount++;
+                }
+				else
+                {
+					continue;
+                }
+            }
+			Log.Message("ForeachComplete");
+			turret.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(turret.Map, __instance.Position));
+			GenExplosion.DoExplosion(__instance.Position, turret.Map, linkedCount, DamageDefOf.Bomb, turret, __instance.DamageAmount, __instance.ArmorPenetration);
+			/*float rand = Rand.Value;
 			if (pawn2 != null && rand <= 0.25f)
             {
-				pawn2.health.AddHediff(compProperties.hediffDef);
-            }
+				pawn2.health.AddHediff(compTDProps.Props.hediffDef);
+            }*/
 		}
 	}
 }

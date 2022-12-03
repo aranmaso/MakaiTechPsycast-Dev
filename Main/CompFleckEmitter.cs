@@ -13,16 +13,6 @@ namespace MakaiTechPsycast
 		private CompProperties_FleckEmitter Props => (CompProperties_FleckEmitter)props;
 		public override void CompTick()
 		{
-			CompPowerTrader comp = parent.GetComp<CompPowerTrader>();
-			if (comp != null && !comp.PowerOn)
-			{
-				return;
-			}
-			CompSendSignalOnCountdown comp2 = parent.GetComp<CompSendSignalOnCountdown>();
-			if ((comp2 != null && comp2.ticksLeft <= 0) || parent == null || parent.Map == null)
-			{
-				return;
-			}
 			if (!active && Props.alwaysOn)
 			{
 				active = true;

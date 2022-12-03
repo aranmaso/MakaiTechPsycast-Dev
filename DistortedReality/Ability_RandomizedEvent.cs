@@ -24,19 +24,19 @@ namespace MakaiTechPsycast.DistortedReality
             {
                 Find.WindowStack.Add(new Dialog_ChooseIncident(pawn.Map,5,1));
                 Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
-                Messages.Message("Makai_PassArollcheckRandomBuilding".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+                Messages.Message("Makai_PassArollcheckRandomEvent".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
             }
             if (rollinfo.roll >= Mathf.Max(threshold1, threshold2))
             {
                 Find.WindowStack.Add(new Dialog_ChooseIncident(pawn.Map,8,2));
                 Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
-                Messages.Message("Makai_GreatPassArollcheckRandomBuilding".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+                Messages.Message("Makai_GreatPassArollcheckRandomEvent".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
             }
             if (rollinfo.roll < Mathf.Min(threshold1, threshold2))
             {
                 Find.WindowStack.Add(new Dialog_ChooseIncident(pawn.Map,2,3));
                 Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
-                Messages.Message("Makai_FailArollcheckRandomBuilding".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
+                Messages.Message("Makai_FailArollcheckRandomEvent".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
             }
         }
     }

@@ -49,6 +49,10 @@ namespace MakaiTechPsycast.TrueDestruction
 			{
 				Log.Message("GreatSuccess");
 				Messages.Message("Makai_GreatPassArollcheckThunder".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+				for (int j = 0; j < pawn.Position.DistanceTo(targets[0].Cell); j++)
+                {
+					IntVec3 pawnPos = pawn.Position;
+                }
 				for (int i = 0; i < targets.Length; i++)
 				{
 					GlobalTargetInfo globalTargetInfo = targets[i];
