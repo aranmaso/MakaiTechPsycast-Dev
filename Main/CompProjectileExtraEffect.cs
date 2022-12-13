@@ -5,7 +5,7 @@ using Verse.Sound;
 using VanillaPsycastsExpanded;
 using Verse.AI;
 using System;
-using AthenaFramework;
+using System.Collections.Generic;
 
 namespace MakaiTechPsycast
 {
@@ -44,13 +44,13 @@ namespace MakaiTechPsycast
                 Hurt();
                 ticksSinceLastHurt += Props.hurtInterval;
             }
-            if (Find.TickManager.TicksGame == ticksSinceLastCatch)
+            if (Find.TickManager.TicksGame == ticksSinceLastCatch && Props.catchAndLaunchBackBullet)
             {
                 Catch();
                 ticksSinceLastCatch += Props.catchInterval;
             }
         }
-        protected void Shoot()
+        private void Shoot()
         {
             if (parent is Projectile projectile)
             {
@@ -79,32 +79,35 @@ namespace MakaiTechPsycast
                 pawnCount = 0;
             }
         }
-        protected void Hurt()
+        private void Hurt()
         {
             if(parent is Projectile projectile)
             {
-                foreach(Pawn pawn in MakaiUtility.GetNearbyPawn(projectile.Position,projectile.Map, Props.hurtRadius))
+                List<Pawn> pawnInRange = new List<Pawn>();
+                foreach (Pawn pawn in MakaiUtility.GetNearbyPawnFriendAndFoe(projectile.Position,projectile.Launcher.Map,Props.hurtRadius))
                 {
-                    if(pawn.HostileTo(projectile.Faction) && Props.hurtEnemyOnly && pawn != projectile.Launcher)
+                    if(pawn.HostileTo(projectile.Faction) && Props.hurtEnemyOnly && pawn != projectile.Launcher && !pawnInRange.Contains(pawn) && !pawn.Downed)
                     {
                         if (projectile.Launcher is Pawn shooter && shooter.health.hediffSet.HasHediff(Props.hediffBonus))
                         {
                             targetBonus += Math.Min(Mathf.FloorToInt(shooter.health.hediffSet.GetFirstHediffOfDef(Props.hediffBonus).Severity), 5);
                         }
                         pawn.TakeDamage(new DamageInfo(projectile.def.projectile.damageDef, Props.damageAmount, Props.armorPen));
+                        pawnInRange.Add(pawn);
                     }
-                    else if(!Props.hurtEnemyOnly && pawn != projectile.Launcher)
+                    else if(!Props.hurtEnemyOnly && pawn != projectile.Launcher && !pawnInRange.Contains(pawn) && !pawn.Downed)
                     {
                         if (projectile.Launcher is Pawn shooter && shooter.health.hediffSet.HasHediff(Props.hediffBonus))
                         {
                             targetBonus += Math.Min(Mathf.FloorToInt(shooter.health.hediffSet.GetFirstHediffOfDef(Props.hediffBonus).Severity), 5);
                         }
                         pawn.TakeDamage(new DamageInfo(projectile.def.projectile.damageDef, Props.damageAmount, Props.armorPen));
+                        pawnInRange.Add(pawn);
                     }
                 }
-                foreach (Pawn pawn in PawnGroupUtility.GetNearbyHostiles(projectile.Position,projectile.Launcher.Map,projectile.Launcher.Faction,Props.pullRadius))
+                foreach (Pawn pawn in MakaiUtility.GetNearbyPawnFriendAndFoe(projectile.Position,projectile.Launcher.Map,Props.pullRadius))
                 {
-                        if (Props.pullPawn && !pawn.Faction.IsPlayer)
+                        if (Props.pullPawn && !pawn.Faction.IsPlayer && pawn.Faction.HostileTo(projectile.Launcher.Faction) && !pawn.Downed && !pawn.Dead)
                         {
                             if (Props.makeGoToJob)
                             {
@@ -138,7 +141,7 @@ namespace MakaiTechPsycast
                 }
             }
         }
-        protected void Catch()
+        private void Catch()
         {
             if(parent is Projectile projectile)
             {
@@ -146,30 +149,33 @@ namespace MakaiTechPsycast
                 {
                     return;
                 }
-                foreach (Thing item in GenRadial.RadialDistinctThingsAround(projectile.Position, projectile.Map, Props.catchRadius, useCenter: true))
+                int reflectCount = 0;
+                foreach (Thing item in GenRadial.RadialDistinctThingsAround(projectile.Position, projectile.Map, Props.catchRadius,useCenter: true))
                 {
-                    if (item is Projectile projectileEnemy && projectileEnemy.def != projectile.def && projectileEnemy.Launcher.Faction != projectile.Launcher.Faction && projectileEnemy.def != ThingDefOf.Spark && projectileEnemy.def != ThingDefOf.Fire)
+                    if (item is Projectile projectileEnemy && projectileEnemy.def != projectile.def && projectileEnemy.Launcher != projectile && projectileEnemy.Launcher.Faction != projectile.Launcher.Faction && projectileEnemy.def != ThingDefOf.Spark && projectileEnemy.def != ThingDefOf.Fire)
                     {
                         if(!Props.shootAtRandom)
                         {
                             IntVec3 location = MakaiUtility.RandomCellAround(projectile, 1);
-                            Projectile projectile2 = (Projectile)GenSpawn.Spawn(projectileEnemy.def, projectile.Position.RandomAdjacentCell8Way(), projectile.Map);
-                            projectile2.Launch(projectile, projectileEnemy.Launcher, projectileEnemy.Launcher, ProjectileHitFlags.IntendedTarget);
-                            Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_WarpBullet.Spawn(projectileEnemy.Position, projectile.Map, 1);
-                            effect.Cleanup();
-                            projectileEnemy.Destroy();
+                            //Projectile projectile2 = (Projectile)GenSpawn.Spawn(projectileEnemy.def, projectile.Position.RandomAdjacentCell8Way(), projectile.Map);
+                            //projectile2.Launch(projectile, projectileEnemy.Launcher, projectileEnemy.Launcher, ProjectileHitFlags.IntendedTarget);
+                            MakaiUtility.ThrowFleck(MakaiTechPsy_DefOf.MakaiPsyMote_ReflectProjectile, projectileEnemy.Position.ToVector3(),projectile.Map,1f);
+                            //Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_WarpBullet.Spawn(projectileEnemy.Position, projectile.Map, 1);
+                            //effect.Cleanup();
+                            projectileEnemy.Launch(projectile.Launcher, projectileEnemy.Launcher, projectileEnemy.Launcher, ProjectileHitFlags.IntendedTarget);
                         }
                         if(Props.shootAtRandom)
                         {
                             IntVec3 locationSpread = MakaiUtility.RandomCellAround(projectile, 10);
-                            Projectile projectile2 = (Projectile)GenSpawn.Spawn(projectileEnemy.def, projectile.Position, projectile.Map);
-                            projectile2.Launch(projectile, locationSpread, locationSpread, ProjectileHitFlags.IntendedTarget);
-                            projectileEnemy.Destroy();
+                            //Projectile projectile2 = (Projectile)GenSpawn.Spawn(projectileEnemy.def, projectile.Position, projectile.Map);
+                            MakaiUtility.ThrowFleck(MakaiTechPsy_DefOf.MakaiPsyMote_ReflectProjectile, projectileEnemy.Position.ToVector3(), projectile.Map, 1f);
+                            projectileEnemy.Launch(projectile, locationSpread, locationSpread, ProjectileHitFlags.IntendedTarget);
                         }
+                        reflectCount++;
                     }
-                    else
+                    if(reflectCount >= 6)
                     {
-                        continue;
+                        break;
                     }
                 }
             }

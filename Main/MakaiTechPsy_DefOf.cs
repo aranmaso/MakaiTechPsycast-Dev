@@ -19,8 +19,12 @@ namespace MakaiTechPsycast
         public static HediffDef MakaiPsy_CP_TaintLevel;
 
         public static HediffDef MakaiPsy_SF_Reverse;
+        public static HediffDef MakaiPsy_SF_Accelerate;
         public static HediffDef MakaiPsy_SF_Counter;
         public static HediffDef MakaiPsy_SF_Lifeline;
+
+        [MayRequireMakaiStuff]
+        public static HediffDef Destined_Death;
 
         public static HediffDef MakaiTechPsy_DD_LichSoul;
         public static HediffDef MakaiTechPsy_DD_CollectSoul;
@@ -50,6 +54,7 @@ namespace MakaiTechPsycast
         public static ThingDef MakaiPsy_CP_Pillar;
 
         public static FleckDef MakaiPsyMote_DeathBolt_Trail;
+        public static FleckDef MakaiPsyMote_ReflectProjectile;
 
         public static ThingDef MakaiTechPsy_CP_CorruptedTower;
 

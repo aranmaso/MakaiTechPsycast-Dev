@@ -120,6 +120,19 @@ namespace MakaiTechPsycast
         {
             return hediff is Hediff_Injury || hediff is Hediff_MissingPart || hediff is Hediff_Addiction || hediff.def.tendable || hediff.def.makesSickThought || hediff.def.HasComp(typeof(HediffComp_Immunizable)) || hediff.def == HediffDefOf.BloodLoss || hediff.def.isBad;
         }
+
+        public static bool FindUniqueMakaiHediff(Hediff hediff)
+        {
+            return hediff.def == MakaiTechPsy_DefOf.MakaiTechPsy_DD_LichSoul
+                || hediff.def == MakaiTechPsy_DefOf.MakaiTechPsy_DD_MissingSoul
+                || hediff.def == MakaiTechPsy_DefOf.MakaiPsy_SF_Counter
+                || hediff.def == MakaiTechPsy_DefOf.MakaiTechPsy_DD_LifeLink
+                || hediff.def == MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul
+                || hediff.def == MakaiTechPsy_DefOf.MakaiTechPsy_DR_DistortBulletBounce
+                || hediff.def == MakaiTechPsy_DefOf.MakaiPsy_SF_Reverse
+                || hediff.def == MakaiTechPsy_DefOf.MakaiPsy_SF_Accelerate
+                || hediff.def == MakaiTechPsy_DefOf.Destined_Death;
+        }
         public static bool HediffFilter(Hediff hediff)
         {
             return hediff is Hediff_Implant || hediff is Hediff_Injury || hediff is Hediff_MissingPart || hediff is Hediff_Addiction || hediff.def.tendable || hediff.def.makesSickThought || hediff.def.HasComp(typeof(HediffComp_Immunizable));
@@ -225,23 +238,99 @@ namespace MakaiTechPsycast
             minfo.userTakeDamage = userTakeDamage;
             return minfo;
         }
-        public static List<Pawn> GetNearbyPawn(IntVec3 cell, Map map, float maxDistance)
+        public static List<Pawn> GetNearbyPawnFriendAndFoe(IntVec3 center, Map map, float radius)
         {
             List<Pawn> list = new List<Pawn>();
-            float num = maxDistance * maxDistance;
+            float num = radius * radius;
             foreach (Pawn item in map.mapPawns.AllPawnsSpawned)
             {
-                if (item.Spawned && !item.Downed && !item.Dead)
+                if (item.Spawned && !item.Dead)
                 {
-                    float num2 = item.Position.DistanceToSquared(cell);
+                    float num2 = item.Position.DistanceToSquared(center);
                     if (num2 <= num)
                     {
                         list.Add(item);
                     }
                 }
             }
-
             return list;
+        }
+
+        public static List<Pawn> GetNearbyPawnFriendOnly(IntVec3 center,Faction faction,Map map,float radius)
+        {
+            List<Pawn> list = new List<Pawn>();
+            float num = radius * radius;
+            foreach(Pawn pawn in map.mapPawns.AllPawnsSpawned)
+            {
+                if(pawn.Spawned && !pawn.Dead && !pawn.Faction.HostileTo(faction))
+                {
+                    float num2 = pawn.Position.DistanceToSquared(center);
+                    if(num2 <= num)
+                    {
+                        list.Add(pawn);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public static List<Pawn> GetNearbyPawnFoeOnly(IntVec3 center, Faction faction, Map map, float radius)
+        {
+            List<Pawn> list = new List<Pawn>();
+            float num = radius * radius;
+            foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
+            {
+                if (pawn.Spawned && !pawn.Dead && (pawn.Faction.HostileTo(faction) || pawn.HostileTo(faction)))
+                {
+                    float num2 = pawn.Position.DistanceToSquared(center);
+                    if (num2 <= num)
+                    {
+                        list.Add(pawn);
+                    }
+                }
+            }
+            return list;
+        }
+        public static FleckCreationData GetDataStatic(Vector3 loc, Map map, FleckDef fleckDef, float scale = 1f)
+        {
+            FleckCreationData result = default(FleckCreationData);
+            result.def = fleckDef;
+            result.spawnPosition = loc;
+            result.scale = scale;
+            result.ageTicksOverride = -1;
+            return result;
+        }
+        public static void ThrowFleck(FleckDef fleckDef,Vector3 c, Map map, float size)
+        {
+            Vector3 vector = c;
+            if (vector.ShouldSpawnMotesAt(map))
+            {        
+                if (vector.InBounds(map))
+                {
+                    FleckCreationData dataStatic = GetDataStatic(vector, map, fleckDef, size);
+                    dataStatic.rotationRate = Rand.Range(-3f, 3f);
+                    dataStatic.velocityAngle = Rand.Range(0, 360);
+                    dataStatic.velocitySpeed = 0.12f;
+                    map.flecks.CreateFleck(dataStatic);
+                }                
+            }
+        }
+
+        public static void ThrowFleckSlightVariationPosition(FleckDef fleckDef, Vector3 c, Map map, float size)
+        {
+            Vector3 vector = c;
+            if (vector.ShouldSpawnMotesAt(map))
+            {
+                vector += size * new Vector3(Rand.Value - 0.5f, 0f, Rand.Value - 0.5f);
+                if (vector.InBounds(map))
+                {
+                    FleckCreationData dataStatic = GetDataStatic(vector, map, fleckDef, size);
+                    dataStatic.rotationRate = Rand.Range(-3f, 3f);
+                    dataStatic.velocityAngle = Rand.Range(0, 360);
+                    dataStatic.velocitySpeed = 0.12f;
+                    map.flecks.CreateFleck(dataStatic);
+                }
+            }
         }
         public static Soul GetPawnCopy(Thing thing ,Pawn pawn)
         {

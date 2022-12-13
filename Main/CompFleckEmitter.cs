@@ -48,7 +48,7 @@ namespace MakaiTechPsycast
 		protected void Emit()
 		{
 			if (parent is Projectile projectile)
-			{ 
+			{
 				MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(Props.moteDefs.RandomElement());
 				moteThrown.Scale = Rand.Range(Props.scale, Props.scaleMax);
 				moteThrown.rotationRate = Rand.Range(Props.rotationMinRate, Props.rotationMaxRate);

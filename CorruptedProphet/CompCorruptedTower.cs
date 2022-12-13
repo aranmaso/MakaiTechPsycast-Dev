@@ -35,12 +35,8 @@ namespace MakaiTechPsycast.CorruptedProphet
 				{
 					return;
 				}
-				foreach (Thing item in GenRadial.RadialDistinctThingsAround(parent.Position, parent.Map, Props.radius, useCenter: true))
+				foreach (Pawn pawn in MakaiUtility.GetNearbyPawnFriendAndFoe(parent.Position, parent.Map, Props.radius))
 				{
-					if (!(item is Pawn pawn))
-					{
-						continue;
-					}
 					if (pawn.HostileTo(Faction.OfPlayer) || (pawn.HostileTo(Faction.OfPlayer) && pawn.AnimalOrWildMan()) && (pawn.Faction != Faction.OfMechanoids || pawn.Faction != Faction.OfInsects))
 					{
 						float rand = Rand.Value;

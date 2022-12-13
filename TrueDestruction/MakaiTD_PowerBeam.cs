@@ -19,6 +19,8 @@ namespace MakaiTechPsycast
 
 		private static List<Thing> tmpThings = new List<Thing>();
 
+		private int ticksSinceLastCheck = 0;
+
 		public override void StartStrike()
 		{
 			base.StartStrike();
@@ -29,10 +31,17 @@ namespace MakaiTechPsycast
 			base.Tick();
 			if (!base.Destroyed)
 			{
-				for (int i = 0; i < 1; i++)
+				ticksSinceLastCheck++;
+				if(ticksSinceLastCheck >= 10)
+                {
+					DoDamge();
+					ticksSinceLastCheck = 0;
+
+				}
+				/*for (int i = 0; i < 1; i++)
 				{
 					DoDamge();
-				}
+				}*/
 			}
 		}
 
@@ -47,13 +56,14 @@ namespace MakaiTechPsycast
 			{
 				int num = ((tmpThings[i] is Corpse) ? CorpseFlameDamageAmountRange.RandomInRange : FlameDamageAmountRange.RandomInRange);
 				Pawn pawn = tmpThings[i] as Pawn;
-				BattleLogEntry_DamageTaken battleLogEntry_DamageTaken = null;
+				/*BattleLogEntry_DamageTaken battleLogEntry_DamageTaken = null;
 				if (pawn != null)
 				{
 					battleLogEntry_DamageTaken = new BattleLogEntry_DamageTaken(pawn, RulePackDefOf.DamageEvent_PowerBeam, instigator as Pawn);
 					Find.BattleLog.Add(battleLogEntry_DamageTaken);
-				}
-				tmpThings[i].TakeDamage(new DamageInfo(MakaiTechPsy_DefOf.TrueDestruction_LightningTowerBeam, 5, 0f, -1f, instigator, null, weaponDef)).AssociateWithLog(battleLogEntry_DamageTaken);
+				}*/
+				//tmpThings[i].TakeDamage(new DamageInfo(MakaiTechPsy_DefOf.TrueDestruction_LightningTowerBeam, 5, 0f, -1f, instigator, null, weaponDef)).AssociateWithLog(battleLogEntry_DamageTaken);
+				tmpThings[i].TakeDamage(new DamageInfo(MakaiTechPsy_DefOf.TrueDestruction_LightningTowerBeam, 5, 1f, -1f, instigator, null, weaponDef));
 			}
 			tmpThings.Clear();
 		}

@@ -85,6 +85,24 @@ namespace MakaiTechPsycast.TrueDestruction
 				};
 				yield return command_ToggleLink;
 			}
+			if (Prefs.DevMode)
+			{
+				/*Command_Action command_Action = new Command_Action();
+				command_Action.defaultLabel = "Debug: reflect now";
+				command_Action.action = delegate
+				{
+					ReflectNow();
+				};
+				yield return command_Action;*/
+
+				Command_Action command_Action2 = new Command_Action();
+				command_Action2.defaultLabel = "Debug: strike now";
+				command_Action2.action = delegate
+				{
+					Strike();
+				};
+				yield return command_Action2;
+			}
 		}
 		private int nextTest = 0;
 
@@ -109,108 +127,125 @@ namespace MakaiTechPsycast.TrueDestruction
 			{
 				return;
 			}
-			foreach (Thing item in GenRadial.RadialDistinctThingsAround(parent.Position, parent.Map, Props.radius, useCenter: true))
+			Strike();
+			pawnCount = 0;
+			nextTest += Props.tickRate;
+		}
+
+		public void ReflectNow()
+        {
+			int reflectCount = 0;
+			foreach (Thing item in GenRadialCached.RadialDistinctThingsAround(parent.Position, parent.Map, 25f, useCenter: true))
 			{
-				if (!(item is Pawn pawn))
+				if (item is Projectile projectileEnemy && projectileEnemy.def != parent.def && projectileEnemy.Launcher != parent && projectileEnemy.Launcher.Faction != parent.Faction && projectileEnemy.def != ThingDefOf.Spark && projectileEnemy.def != ThingDefOf.Fire)
 				{
-					continue;
+					IntVec3 location = MakaiUtility.RandomCellAround(parent, 1);
+					//Projectile projectile2 = (Projectile)GenSpawn.Spawn(projectileEnemy.def, projectile.Position.RandomAdjacentCell8Way(), projectile.Map);
+					//projectile2.Launch(projectile, projectileEnemy.Launcher, projectileEnemy.Launcher, ProjectileHitFlags.IntendedTarget);
+					MakaiUtility.ThrowFleck(MakaiTechPsy_DefOf.MakaiPsyMote_ReflectProjectile, projectileEnemy.Position.ToVector3(), parent.Map, 1f);
+					//Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_WarpBullet.Spawn(projectileEnemy.Position, projectile.Map, 1);
+					//effect.Cleanup();
+					projectileEnemy.Launch(parent, projectileEnemy.Launcher, projectileEnemy.Launcher, ProjectileHitFlags.IntendedTarget);
+					reflectCount++;
 				}
+				if (reflectCount >= 6)
+				{
+					break;
+				}
+			}
+		}
+		private void Strike()
+        {
+			foreach (Pawn pawn in MakaiUtility.GetNearbyPawnFoeOnly(parent.Position, parent.Faction, parent.Map, Props.radius))
+			{
 				/*parent.TryGetQuality(out var qc);
 				if (qc == QualityCategory.Normal)
                 {
 					
                 }*/
-				float ValidTarget = Rand.Value;
-				if (ValidTarget <= 1f)
+				if (!pawn.Downed && !attackDowned && pawn != null)
+				{
+					if (laserBeamToggle)
+					{
+						MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
+						orbitalStrike.duration = 60;
+						orbitalStrike.instigator = pawn;
+						orbitalStrike.StartStrike();
+						Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawn.Position, pawn.Map, 0.5f);
+						effect.Cleanup();
+					}
+					else
+					{
+						GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.EMP, null, 1, 2);
+					}
+					parent.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(pawn.Map, pawn.Position));
+
+					if (pawn.health.hediffSet.HasHediff(Props.conduct ?? VPE_DefOf.VPE_UnLucky))
+						for (int i = 0; i < 2; i++)
+						{
+							MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
+							orbitalStrike.duration = 60;
+							orbitalStrike.instigator = pawn;
+							orbitalStrike.StartStrike();
+							Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawn.Position, pawn.Map, 0.5f);
+							effect.Cleanup();
+						}
+				}
+				if (attackDowned && pawn != null)
+				{
+					if (laserBeamToggle)
+					{
+						MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
+						orbitalStrike.duration = 60;
+						orbitalStrike.instigator = pawn;
+						orbitalStrike.StartStrike();
+						Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawn.Position, pawn.Map, 0.5f);
+						effect.Cleanup();
+					}
+					else
+					{
+						GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.EMP, null, 1, 2);
+					}
+					parent.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(pawn.Map, pawn.Position));
+
+					if (pawn.HostileTo(Faction.OfPlayer) && pawn.health.hediffSet.HasHediff(Props.conduct ?? VPE_DefOf.VPE_UnLucky))
+						for (int i = 0; i < 2; i++)
+						{
+							MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
+							orbitalStrike.duration = 60;
+							orbitalStrike.instigator = pawn;
+							orbitalStrike.StartStrike();
+							Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawn.Position, pawn.Map, 0.5f);
+							effect.Cleanup();
+						}
+				}
+				/*IntVec3 intVect1 = parent.Position;
+                for (int i = 0; i < parent.Position.DistanceTo(pawn.Position); i++)
                 {
-					if (pawn.HostileTo(parent.Faction) && !pawn.Downed && attackDowned == false && pawn != null)
-					{
-						float damRand = Rand.Value;
-						if (damRand <= 0.5f && laserBeamToggle == true)
-						{
-							MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
-							orbitalStrike.duration = 60;
-							orbitalStrike.instigator = pawn;
-							orbitalStrike.StartStrike();
-							Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawn.Position, pawn.Map, 0.5f);
-							effect.Cleanup();
-						}
-						else
-						{
-							GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.EMP, null);
-						}
-						pawn.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(pawn.Map, pawn.Position));
-
-						if (pawn.HostileTo(parent.Faction) && pawn.health.hediffSet.HasHediff(Props.conduct ?? VPE_DefOf.VPE_UnLucky))
-							for (int i = 0; i < 2; i++)
-							{
-								MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
-								orbitalStrike.duration = 60;
-								orbitalStrike.instigator = pawn;
-								orbitalStrike.StartStrike();
-								Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawn.Position, pawn.Map, 0.5f);
-								effect.Cleanup();
-							}
-					}
-					if ((pawn.HostileTo(parent.Faction)) && (attackDowned == true) && pawn != null)
-					{
-						float damRand = Rand.Value;
-						if (damRand <= 0.5f && laserBeamToggle == true)
-						{
-							MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
-							orbitalStrike.duration = 60;
-							orbitalStrike.instigator = pawn;
-							orbitalStrike.StartStrike();
-							Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawn.Position, pawn.Map, 0.5f);
-							effect.Cleanup();
-						}
-						else
-						{
-							GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.EMP, null);
-						}
-						pawn.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(pawn.Map, pawn.Position));
-
-						if (pawn.HostileTo(Faction.OfPlayer) && pawn.health.hediffSet.HasHediff(Props.conduct ?? VPE_DefOf.VPE_UnLucky))
-							for (int i = 0; i < 2; i++)
-							{
-								MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
-								orbitalStrike.duration = 60;
-								orbitalStrike.instigator = pawn;
-								orbitalStrike.StartStrike();
-								Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawn.Position, pawn.Map, 0.5f);
-								effect.Cleanup();
-							}
-					}
-					/*IntVec3 intVect1 = parent.Position;
-					for (int i = 0; i < parent.Position.DistanceTo(pawn.Position); i++)
+                    if(intVect1.x > pawn.Position.x)
                     {
-						if(intVect1.x > pawn.Position.x)
-                        {
-							intVect1.x--;
-                        }
-						else
-                        {
-							intVect1.x++;
-                        }
-						if (intVect1.z > pawn.Position.z)
-						{
-							intVect1.z--;
-						}
-						else
-						{
-							intVect1.z++;
-						}
-						GenExplosion.DoExplosion(intVect1,parent.Map,0f,DamageDefOf.Bomb,parent,1,1);
-					}*/
-					pawnCount++;
-					if (pawnCount >= (Props.targetCount+1))
-					{
-						break;
-					}
+                        intVect1.x--;
+                    }
+                    else
+                    {
+                        intVect1.x++;
+                    }
+                    if (intVect1.z > pawn.Position.z)
+                    {
+                        intVect1.z--;
+                    }
+                    else
+                    {
+                        intVect1.z++;
+                    }
+                    GenExplosion.DoExplosion(intVect1,parent.Map,0f,DamageDefOf.Bomb,parent,1,1);
+                }*/
+				pawnCount++;
+				if (pawnCount >= (Props.targetCount))
+				{
+					break;
 				}
 			}
-			pawnCount = 0;
-			nextTest += Props.tickRate;
-		}
+		}		
 	}
 }

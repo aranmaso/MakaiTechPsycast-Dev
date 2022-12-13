@@ -43,13 +43,9 @@ namespace MakaiTechPsycast.BondIntertwined
 				{
 					return;
 				}
-				foreach (Thing item in GenRadial.RadialDistinctThingsAround(parent.Position, parent.Map, Props.radius, useCenter: true))
+				foreach (Pawn pawn in MakaiUtility.GetNearbyPawnFriendAndFoe(parent.Position, parent.Map, Props.radius))
 				{
-					if (!(item is Pawn pawn))
-					{
-						continue;
-					}
-					foreach (HediffDef hediffDef in this.Props.hediff)
+					foreach (HediffDef hediffDef in Props.hediff)
 					{
 						float num = Props.severityAmount;
 						float dur = Props.durationInHour * 2500f;

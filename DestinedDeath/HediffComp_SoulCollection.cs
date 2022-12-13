@@ -35,7 +35,7 @@ namespace MakaiTechPsycast.DestinedDeath
         public override void Notify_PawnKilled()
         {
             base.Notify_PawnKilled();
-			GenExplosion.DoExplosion(parent.pawn.Position,parent.pawn.Map,SoulCount/2,DamageDefOf.Bomb,parent.pawn,SoulCount/2,0.2f,null,null,null,null,null,0,1,null,false,null,0,1,0,false,null);
+			GenExplosion.DoExplosion(parent.pawn.Position,parent.pawn.Map,Mathf.RoundToInt(SoulCount / 2),DamageDefOf.Bomb,parent.pawn,SoulCount/2,0.2f,null,null,null,null,null,0,1,null,false,null,0,1,0,false,null);
         }
         public override IEnumerable<Gizmo> CompGetGizmos()
         {
@@ -107,20 +107,20 @@ namespace MakaiTechPsycast.DestinedDeath
 			};
 			yield return command_ToggleRestore;*/
 		}
-        public override void CompPostMake()
+        /*public override void CompPostMake()
 		{
 			base.CompPostMake();
 			ticksSinceTrigger = Find.TickManager.TicksGame + Props.interval;
-			/*ticksSincePsyRestore = Find.TickManager.TicksGame + Props.interval;*/
-		}
-        public override void CompPostTick(ref float severityAdjustment)
+			ticksSincePsyRestore = Find.TickManager.TicksGame + Props.interval;
+		}*/
+        /*public override void CompPostTick(ref float severityAdjustment)
         {
             if (Find.TickManager.TicksGame == ticksSinceTrigger)
             {
 				parent.Severity = SoulCount;
 				BonustToStat = SoulCount;
 				ticksSinceTrigger += Props.interval;
-            }
+            }*/
 			/*if (Find.TickManager.TicksGame == ticksSincePsyRestore)
             {
 				if(parent.pawn.psychicEntropy.CurrentPsyfocus < 0.5f && restoreFocus && SoulCount > 0)
@@ -131,6 +131,6 @@ namespace MakaiTechPsycast.DestinedDeath
 				}
 				ticksSincePsyRestore += Props.interval;
 			}*/
-        }
+        
     }
 }

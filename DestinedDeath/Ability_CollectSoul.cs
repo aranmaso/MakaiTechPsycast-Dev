@@ -67,17 +67,20 @@ namespace MakaiTechPsycast.DestinedDeath
                         {
                             continue;
                         }
-                        Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenSuccess, pawn2);
-                        Hediff hediff2 = HediffMaker.MakeHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul, pawn);
+                        Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenSuccess, pawn2);                        
                         pawn2.health.AddHediff(hediff);
                         if (pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul))
                         {
                             pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().SoulCount += 1;
+                            pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().BonustToStat += 1;
+                            pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).Severity = pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().SoulCount;
                         }
                         else
                         {
+                            Hediff hediff2 = HediffMaker.MakeHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul, pawn);
                             pawn.health.AddHediff(hediff2);
                             pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().SoulCount += 1;
+                            pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().BonustToStat += 1;
                         }
                         Messages.Message("Makai_PassArollcheckCollectSoul".Translate(pawn.LabelShort, pawn2.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                     }
@@ -131,23 +134,34 @@ namespace MakaiTechPsycast.DestinedDeath
                             continue;
                         }
                         Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenGreatSuccess, pawn2);
-                        Hediff hediff2 = HediffMaker.MakeHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul, pawn);
                         pawn2.health.AddHediff(hediff);
                         if (pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul))
                         {
                             pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().SoulCount += 2;
+                            pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().BonustToStat += 2;
+                            pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).Severity = pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().SoulCount;
                         }
                         else
                         {
+                            Hediff hediff2 = HediffMaker.MakeHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul, pawn);
                             pawn.health.AddHediff(hediff2);
                             pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().SoulCount += 1;
+                            pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().BonustToStat += 1;
                         }
                         Messages.Message("Makai_GreatPassArollcheckCollectSoul".Translate(pawn.LabelShort, pawn2.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                     }
                     else
                     {
 						continue;
-                    }
+                    }                    
+                }
+                for (int i = 0; i < targets.Length; i++)
+                {
+                    GlobalTargetInfo globalTargetInfo = targets[i];
+                    MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
+                    moteBetween.Attach(globalTargetInfo.Thing, pawn);
+                    moteBetween.exactPosition = globalTargetInfo.Thing.DrawPos;
+                    GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
                 }
                 Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 			}
@@ -166,23 +180,34 @@ namespace MakaiTechPsycast.DestinedDeath
                                 continue;
                             }
                             Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenFail, pawn2);
-                            Hediff hediff2 = HediffMaker.MakeHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul, pawn);
                             pawn2.health.AddHediff(hediff);
                             if (pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul))
                             {
                                 pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().SoulCount += 1;
+                                pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().BonustToStat += 1;
+                                pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).Severity = pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().SoulCount;
                             }
                             else
                             {
+                                Hediff hediff2 = HediffMaker.MakeHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul, pawn);
                                 pawn.health.AddHediff(hediff2);
-                            pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().SoulCount += 1;
-                        }
-                            Messages.Message("Makai_FailArollcheckCollectSoul".Translate(pawn.LabelShort, pawn2.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
+                                pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().SoulCount += 1;
+                                pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>().BonustToStat += 1;
+                            }
+                        Messages.Message("Makai_FailArollcheckCollectSoul".Translate(pawn.LabelShort, pawn2.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
                     }
                     else
                     {
                         continue;
                     }
+                }
+                for (int i = 0; i < targets.Length; i++)
+                {
+                    GlobalTargetInfo globalTargetInfo = targets[i];
+                    MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
+                    moteBetween.Attach(globalTargetInfo.Thing, pawn);
+                    moteBetween.exactPosition = globalTargetInfo.Thing.DrawPos;
+                    GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
                 }
                 Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
 			}

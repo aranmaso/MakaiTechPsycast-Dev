@@ -21,10 +21,25 @@ namespace MakaiTechPsycast.StringOfFate
             Pawn pawn = parent.pawn;
             if (tickSinceTrigger > Props.interval)
             {
-                List<Hediff> hediffs = pawn.health.hediffSet.hediffs;
+                IEnumerable<Hediff> hediffs = pawn.health.hediffSet.hediffs;
                 foreach (Hediff item in hediffs)
                 {
-                    if (item.def.maxSeverity <= 1f && (item.def != HediffDefOf.BloodLoss) && (item.def != HediffDefOf.Hypothermia) && (item.def != HediffDefOf.Heatstroke) && (item.def != HediffDefOf.PsychicAmplifier) && (item.def != HediffDefOf.ToxicBuildup) && (item.def != HediffDefOf.Malnutrition) && (item.def != parent.def))
+                    if(item is Hediff_Level || item.def == parent.def)
+                    {
+                        continue;
+                    }
+                    if (item.def == MakaiTechPsy_DefOf.MakaiTechPsy_DD_LichSoul
+                    || item.def == MakaiTechPsy_DefOf.MakaiTechPsy_DD_MissingSoul
+                    || item.def == MakaiTechPsy_DefOf.MakaiPsy_SF_Counter
+                    || item.def == MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul
+                    || item.def == MakaiTechPsy_DefOf.MakaiTechPsy_DR_DistortBulletBounce
+                    || item.def == MakaiTechPsy_DefOf.MakaiPsy_SF_Reverse
+                    || item.def == MakaiTechPsy_DefOf.MakaiPsy_SF_Accelerate
+                    || item.def == MakaiTechPsy_DefOf.Destined_Death)
+                    {
+                        continue;
+                    }
+                    if (item.def.maxSeverity <= 1f && (item.def != HediffDefOf.BloodLoss) && (item.def != HediffDefOf.Hypothermia) && (item.def != HediffDefOf.Heatstroke) && (item.def != HediffDefOf.PsychicAmplifier) && (item.def != HediffDefOf.ToxicBuildup) && (item.def != HediffDefOf.Malnutrition) && (item.def != HediffDefOf.Anesthetic) && (item.def != parent.def) && !(item is Hediff_Injury))
                     {
                         if (item.def.maxSeverity <= 1f && item.TryGetComp<HediffComp_SeverityPerDay>().SeverityChangePerDay() < 0 && !item.def.isBad)
                         {
@@ -36,7 +51,11 @@ namespace MakaiTechPsycast.StringOfFate
                             hediffComp_Disappears.ticksToDisappear += Mathf.Min(Props.tickIncrease, 5000);
                         }
                     }
-                    else if ((item.def == HediffDefOf.BloodLoss || item.def == HediffDefOf.Heatstroke || item.def == HediffDefOf.Hypothermia || item.def == HediffDefOf.ToxicBuildup || item.def == HediffDefOf.Malnutrition) && item.def != parent.def)
+                    else if ((item.def == HediffDefOf.BloodLoss || item.def == HediffDefOf.Heatstroke || item.def == HediffDefOf.Hypothermia || item.def == HediffDefOf.ToxicBuildup || item.def == HediffDefOf.Malnutrition || (item.def == HediffDefOf.Anesthetic)) && item.def != parent.def && !(item is Hediff_Injury))
+                    {
+                        item.Severity -= Props.severityToReverse;
+                    }
+                    else if(item is Hediff_Injury)
                     {
                         item.Severity -= Props.severityToReverse;
                     }
@@ -49,7 +68,7 @@ namespace MakaiTechPsycast.StringOfFate
                             hediffComp_Disappears.ticksToDisappear += Mathf.Min(Props.tickIncrease, 5000);
                         }
                     }
-                    else if(item.def.maxSeverity > 1f && item.def != parent.def && item.def.isBad == true)
+                    else if(item.def.maxSeverity > 1f && item.def != parent.def && item.def.isBad == true && !(item is Hediff_Injury))
                     {
                         item.Severity += Props.severityToReverse;
                         HediffComp_Disappears hediffComp_Disappears = item.TryGetComp<HediffComp_Disappears>();
@@ -57,6 +76,10 @@ namespace MakaiTechPsycast.StringOfFate
                         {
                             hediffComp_Disappears.ticksToDisappear -= Mathf.Min(Props.tickIncrease, 5000);
                         }
+                    }
+                    else if (item is Hediff_Injury && item.IsTended())
+                    {
+                        item.Severity -= Props.severityToReverse;
                     }
                 }
                 if (pawn.health.hediffSet.GetInjuriesTendable().EnumerableCount() > 0)
@@ -70,8 +93,8 @@ namespace MakaiTechPsycast.StringOfFate
                     MakaiUtility.RestorePart(MakaiUtility.FindSmallestMissingBodyPart(pawn),pawn);
                     parent.TryGetComp<HediffComp_Disappears>().ticksToDisappear -= 1000;
                 }
-                Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_Ring_ExpandY.Spawn(pawn.Position, pawn.Map, 0.5f);
-                effect.Cleanup();
+                /*Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_Ring_ExpandY.Spawn(pawn.Position, pawn.Map, 0.5f);
+                effect.Cleanup();*/
                 tickSinceTrigger = 0;
             }
         }

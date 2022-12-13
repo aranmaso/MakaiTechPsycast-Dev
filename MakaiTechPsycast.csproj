@@ -39,9 +39,6 @@
       <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="AthenaFramework">
-      <HintPath>..\..\AthenaFramework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -88,6 +85,7 @@
     <Compile Include="DistortedReality\Dialog_ChooseIncidentCategory.cs" />
     <Compile Include="DistortedReality\Dialog_ChooseRandomItem.cs" />
     <Compile Include="DistortedReality\Dialog_ChooseIncident.cs" />
+    <Compile Include="Main\MayRequireMakaiStuff.cs" />
     <Compile Include="Main\HediffExtension_MinCapacity.cs" />
     <Compile Include="Main\PawnCapacityUtility_CalculateCapacityLevel_Universal.cs" />
     <Compile Include="DistortedReality\Ability_DistortEquipment.cs" />
@@ -119,6 +117,10 @@
     <Compile Include="StringOfFate\Ability_ReverseFate.cs" />
     <Compile Include="StringOfFate\Ability_MirroredFate.cs" />
     <Compile Include="StringOfFate\Ability_TempFate.cs" />
+    <Compile Include="StringOfFate\Ability_Precognition.cs" />
+    <Compile Include="StringOfFate\Ability_AccelerateFate.cs" />
+    <Compile Include="StringOfFate\HediffCompProperties_AccelerateSeverity.cs" />
+    <Compile Include="StringOfFate\HediffComp_AccelerateSeverity.cs" />
     <Compile Include="StringOfFate\Pawn_PreApplyDamage_LifeLinePatch.cs" />
     <Compile Include="StringOfFate\MirroredFateInfo.cs" />
     <Compile Include="StringOfFate\HediffComp_MirroredFate.cs" />
