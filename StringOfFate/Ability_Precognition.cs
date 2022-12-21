@@ -17,9 +17,9 @@ namespace MakaiTechPsycast.StringOfFate
             RollInfo rollinfo = new RollInfo();
             rollinfo = MakaiUtility.Roll1D20(pawn, modExtension.skillBonus, rollinfo);
             if (rollinfo.roll >= modExtension.successThreshold && rollinfo.roll < modExtension.greatSuccessThreshold)
-            {                
+            {
                 string incident = null;
-                if(Find.Storyteller.incidentQueue != null)
+                if (Find.Storyteller.incidentQueue.Count > 0)
                 {
                     incident = null;
                     foreach (QueuedIncident item in Find.Storyteller.incidentQueue)
@@ -40,7 +40,7 @@ namespace MakaiTechPsycast.StringOfFate
             if (rollinfo.roll >= modExtension.greatSuccessThreshold)
             {
                 string incident = null;
-                if (Find.Storyteller.incidentQueue != null)
+                if (Find.Storyteller.incidentQueue.Count > 0)
                 {
                     incident = null;
                     foreach (QueuedIncident item in Find.Storyteller.incidentQueue)
@@ -61,7 +61,7 @@ namespace MakaiTechPsycast.StringOfFate
             if (rollinfo.roll < modExtension.successThreshold)
             {
                 string incident = null;
-                if (Find.Storyteller.incidentQueue != null)
+                if (Find.Storyteller.incidentQueue.Count > 0)
                 {
                     incident = null;
                     foreach (QueuedIncident item in Find.Storyteller.incidentQueue)

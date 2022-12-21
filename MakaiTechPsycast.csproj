@@ -85,6 +85,10 @@
     <Compile Include="DistortedReality\Dialog_ChooseIncidentCategory.cs" />
     <Compile Include="DistortedReality\Dialog_ChooseRandomItem.cs" />
     <Compile Include="DistortedReality\Dialog_ChooseIncident.cs" />
+    <Compile Include="Main\Ability_GiveHediffTemplate.cs" />
+    <Compile Include="StringOfFate\HediffCompProperties_FateFavor.cs" />
+    <Compile Include="StringOfFate\HediffComp_FateFavor.cs" />
+    <Compile Include="Main\Hediff_LevelWithoutPart.cs" />
     <Compile Include="Main\MayRequireMakaiStuff.cs" />
     <Compile Include="Main\HediffExtension_MinCapacity.cs" />
     <Compile Include="Main\PawnCapacityUtility_CalculateCapacityLevel_Universal.cs" />
@@ -119,6 +123,10 @@
     <Compile Include="StringOfFate\Ability_TempFate.cs" />
     <Compile Include="StringOfFate\Ability_Precognition.cs" />
     <Compile Include="StringOfFate\Ability_AccelerateFate.cs" />
+    <Compile Include="StringOfFate\Ability_BeaconOfFate.cs" />
+    <Compile Include="StringOfFate\Ability_FateFavor.cs" />
+    <Compile Include="StringOfFate\CompConvergenceOfFate.cs" />
+    <Compile Include="StringOfFate\CompProperties_ConvergenceOfFate.cs" />
     <Compile Include="StringOfFate\HediffCompProperties_AccelerateSeverity.cs" />
     <Compile Include="StringOfFate\HediffComp_AccelerateSeverity.cs" />
     <Compile Include="StringOfFate\Pawn_PreApplyDamage_LifeLinePatch.cs" />
