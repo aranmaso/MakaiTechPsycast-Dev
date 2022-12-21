@@ -37,7 +37,7 @@ namespace MakaiTechPsycast.StringOfFate
                 {
                     ((Hediff_LevelWithoutPart)parent).ChangeLevel(-currentFavorInt);
                     GiveFavorHediff(currentHediffSelect,currentFavorInt);
-                    SoundDefOf.MechSerumUsed.PlayOneShot(new TargetInfo(Pawn.Position, Pawn.Map));
+                    SoundDefOf.PsycastPsychicEffect.PlayOneShot(new TargetInfo(Pawn.Position, Pawn.Map));
                     MoteMaker.ThrowText(Pawn.DrawPos, Pawn.Map, currentHediffSelect.label + " gained");
                 }
                 else
@@ -67,8 +67,8 @@ namespace MakaiTechPsycast.StringOfFate
             yield return command_ActionFavor;
 
             Command_Action command_ActionHediff = new Command_Action();
-            command_ActionHediff.defaultLabel = "Hediff: " + currentHediffSelect.label;
-            command_ActionHediff.defaultDesc = "Hediff: " + currentHediffSelect.label;
+            command_ActionHediff.defaultLabel = "Blessing: " + currentHediffSelect.label;
+            command_ActionHediff.defaultDesc = "Blessing: " + currentHediffSelect.label;
             command_ActionHediff.icon = ContentFinder<Texture2D>.Get(Props.uiIcon);
             command_ActionHediff.action = delegate
             {

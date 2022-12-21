@@ -227,6 +227,17 @@ namespace MakaiTechPsycast
             return hediff;
         }
 
+        public static BodyPartRecord GetBodyPartFromDef(Pawn pawn,BodyPartDef bodyDef)
+        {
+            BodyPartRecord br = pawn.RaceProps.body.AllParts.FirstOrFallback(x => x.def == bodyDef);
+            return br;
+        }
+        public static BodyPartRecord GetBodyPartFromHediff(Pawn pawn, HediffDef hediffDef)
+        {
+
+            BodyPartRecord br = pawn.health.hediffSet.GetFirstHediffOfDef(hediffDef).Part;
+            return br;
+        }
         public static MirroredFateInfo GetMirroredFateInfo(MirroredFateInfo minfo,int count,float percent,bool reflectOnlyEnemies,bool reflectOnlyFriendly,bool reflectMelee,bool reflectRanged,bool userTakeDamage)
         {
             minfo.reflectCountLeft = count;
@@ -238,6 +249,7 @@ namespace MakaiTechPsycast
             minfo.userTakeDamage = userTakeDamage;
             return minfo;
         }
+        //GetNearbyPawnFriendOrFoe and it related. this chunk is all credit to Smartkar for the original
         public static List<Pawn> GetNearbyPawnFriendAndFoe(IntVec3 center, Map map, float radius)
         {
             List<Pawn> list = new List<Pawn>();
