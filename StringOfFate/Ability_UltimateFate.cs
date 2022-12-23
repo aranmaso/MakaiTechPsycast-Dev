@@ -21,23 +21,28 @@ namespace MakaiTechPsycast.StringOfFate
                 {
                     foreach(Pawn item in MakaiUtility.GetNearbyPawnFriendAndFoe(targetPawn.Position,targetPawn.Map,GetRadiusForPawn()))
                     {
-                        if(item == pawn)
+                        if (item == pawn)
                         {
                             continue;
                         }
-                        if(!item.HostileTo(targetPawn) && modExtension.targetOnlyEnemies)
+                        if (!item.HostileTo(targetPawn) && modExtension.targetOnlyEnemies)
                         {
                             continue;
                         }
-                        if(!(item.IsSlave || item.IsPrisoner) && modExtension.targetOnlyPrisonerOrSlave)
+                        if (!(item.IsSlave || item.IsPrisoner) && modExtension.targetOnlyPrisonerOrSlave)
                         {
                             continue;
                         }
                         item.ageTracker.AgeBiologicalTicks += Mathf.FloorToInt(10 * 3600000f);
-                        if(pawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
+                        if (pawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                         {
-
+                            MakaiUtility.GetFirstHediffOfDef(pawn, modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_UltimateFate>().fatedCount++;
                         }
+                        else
+                        {
+                            Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(pawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks);
+                            hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount++;
+                        }                        
                     }
                     Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                     Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);

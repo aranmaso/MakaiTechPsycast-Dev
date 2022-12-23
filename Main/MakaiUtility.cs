@@ -227,6 +227,12 @@ namespace MakaiTechPsycast
             return hediff;
         }
 
+        public static Hediff GetFirstHediffOfDef(Pawn pawn,HediffDef hediffDef)
+        {
+            Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(hediffDef);
+            return hediff;
+        }
+
         public static BodyPartRecord GetBodyPartFromDef(Pawn pawn,BodyPartDef bodyDef)
         {
             BodyPartRecord br = null;
