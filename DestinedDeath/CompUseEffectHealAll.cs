@@ -12,7 +12,7 @@ namespace MakaiTechPsycast
 			base.DoEffect(user);
 			if(parent is Soul soul)
             {
-				if (soul.ownerName == user.Name.ToStringFull)
+				if (soul.originalPawn == user)
 				{
 					List<Hediff> list = user.health.hediffSet.hediffs.Where(MakaiUtility.FindBadHediff).ToList();
 					Hediff bloodloss = user.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.BloodLoss);

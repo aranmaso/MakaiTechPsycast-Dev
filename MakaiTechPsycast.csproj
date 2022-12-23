@@ -88,6 +88,7 @@
     <Compile Include="Main\Ability_GiveHediffTemplate.cs" />
     <Compile Include="StringOfFate\Ability_EightRevenge.cs" />
     <Compile Include="StringOfFate\Ability_UltimateFate.cs" />
+    <Compile Include="StringOfFate\Pawn_PreApplyDamage_UltimateFatePatch.cs" />
     <Compile Include="StringOfFate\HediffComp_UltimateFate.cs" />
     <Compile Include="StringOfFate\HediffCompProperties_UltimateFate.cs" />
     <Compile Include="StringOfFate\HediffComp_EightRevenge.cs" />

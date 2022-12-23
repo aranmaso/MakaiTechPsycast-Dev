@@ -22,6 +22,7 @@ namespace MakaiTechPsycast
         public static HediffDef MakaiPsy_SF_Accelerate;
         public static HediffDef MakaiPsy_SF_Counter;
         public static HediffDef MakaiPsy_SF_Lifeline;
+        public static HediffDef MakaiPsy_SF_UltimateFate;
 
         [MayRequireMakaiStuff]
         public static HediffDef Destined_Death;
