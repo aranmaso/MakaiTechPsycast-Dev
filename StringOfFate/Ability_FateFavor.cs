@@ -23,7 +23,7 @@ namespace MakaiTechPsycast.StringOfFate
                     {
                         if(!targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                         {
-                            Hediff hediff = MakaiUtility.ApplyCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
+                            Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
                             ((Hediff_LevelWithoutPart)hediff).level = 4;
                             targetPawn.health.AddHediff(hediff);
                         }
@@ -31,7 +31,7 @@ namespace MakaiTechPsycast.StringOfFate
                         {
                             if(targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess) is Hediff_LevelWithoutPart hLevel)
                             {
-                                hLevel.level += 4;
+                                hLevel.ChangeLevel(4);
                             }
                         }                        
                         Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
@@ -47,7 +47,7 @@ namespace MakaiTechPsycast.StringOfFate
                     {
                         if(!targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                         {
-                            Hediff hediff = MakaiUtility.ApplyCustomHediffWithDuration(targetPawn,modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
+                            Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn,modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
                             ((Hediff_LevelWithoutPart)hediff).level = 7;
                             targetPawn.health.AddHediff(hediff);
                         }
@@ -55,7 +55,7 @@ namespace MakaiTechPsycast.StringOfFate
                         {
                             if (targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess) is Hediff_LevelWithoutPart hLevel)
                             {
-                                hLevel.level += 7;
+                                hLevel.ChangeLevel(7);
                             }
                         }
                         Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
@@ -71,7 +71,7 @@ namespace MakaiTechPsycast.StringOfFate
                     {
                         if(!targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                         {
-                            Hediff hediff = MakaiUtility.ApplyCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
+                            Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
                             ((Hediff_LevelWithoutPart)hediff).level = 2;
                             targetPawn.health.AddHediff(hediff);
                         }      
@@ -79,7 +79,7 @@ namespace MakaiTechPsycast.StringOfFate
                         {
                             if (targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess) is Hediff_LevelWithoutPart hLevel)
                             {
-                                hLevel.level += 2;
+                                hLevel.ChangeLevel(2);
                             }
                         }
                         Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);

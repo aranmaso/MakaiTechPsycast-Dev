@@ -86,6 +86,12 @@
     <Compile Include="DistortedReality\Dialog_ChooseRandomItem.cs" />
     <Compile Include="DistortedReality\Dialog_ChooseIncident.cs" />
     <Compile Include="Main\Ability_GiveHediffTemplate.cs" />
+    <Compile Include="StringOfFate\Ability_EightRevenge.cs" />
+    <Compile Include="StringOfFate\Ability_UltimateFate.cs" />
+    <Compile Include="StringOfFate\HediffComp_UltimateFate.cs" />
+    <Compile Include="StringOfFate\HediffCompProperties_UltimateFate.cs" />
+    <Compile Include="StringOfFate\HediffComp_EightRevenge.cs" />
+    <Compile Include="StringOfFate\HediffCompProperties_EightRevenge.cs" />
     <Compile Include="StringOfFate\HediffCompProperties_FateFavor.cs" />
     <Compile Include="StringOfFate\HediffComp_FateFavor.cs" />
     <Compile Include="Main\Hediff_LevelWithoutPart.cs" />

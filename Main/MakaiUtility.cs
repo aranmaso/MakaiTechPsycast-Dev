@@ -215,7 +215,7 @@ namespace MakaiTechPsycast
             Rinfo.cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
             return Rinfo;
         }
-        public static Hediff ApplyCustomHediffWithDuration(Pawn pawn, HediffDef hediffDef, float hours, int ticks,StatDef statDef = null)
+        public static Hediff CreateCustomHediffWithDuration(Pawn pawn, HediffDef hediffDef, float hours, int ticks,StatDef statDef = null)
         {
             float num = hours * 2500f + (float)ticks;
             num *= pawn.GetStatValue(statDef ?? StatDefOf.PsychicSensitivity);
@@ -229,7 +229,15 @@ namespace MakaiTechPsycast
 
         public static BodyPartRecord GetBodyPartFromDef(Pawn pawn,BodyPartDef bodyDef)
         {
-            BodyPartRecord br = pawn.RaceProps.body.AllParts.FirstOrFallback(x => x.def == bodyDef);
+            BodyPartRecord br = null;
+            if (bodyDef == BodyPartDefOf.Brain)
+            {
+                br = pawn.health.hediffSet.GetBrain();
+            }
+            else
+            {
+                br = pawn.RaceProps.body.AllParts.FirstOrFallback(x => x.def == bodyDef);
+            }            
             return br;
         }
         public static BodyPartRecord GetBodyPartFromHediff(Pawn pawn, HediffDef hediffDef)

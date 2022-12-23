@@ -66,6 +66,8 @@ namespace MakaiTechPsycast
 
 		public bool targetOnlyNonDowned = false;
 
+		public bool targetOnlyPrisonerOrSlave = false;
+
 		public bool testingMode;
 	}
 }

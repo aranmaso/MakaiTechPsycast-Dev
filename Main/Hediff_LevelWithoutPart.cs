@@ -6,14 +6,14 @@ namespace MakaiTechPsycast
 	public class Hediff_LevelWithoutPart : HediffWithComps
 	{
 		public int level = 1;
-		public override string Label
+		/*public override string Label
 		{
 			get
 			{
 				string labelInBrackets = LabelInBrackets;
 				return LabelBase + (labelInBrackets.NullOrEmpty() ? "" : (" (" + labelInBrackets + ")"));
 			}
-		}
+		}*/
 
 		public override bool ShouldRemove => level == 0;
 

@@ -87,7 +87,7 @@ namespace MakaiTechPsycast.StringOfFate
 
         public void GiveFavorHediff(HediffDef hediffDef,int hours)
         {
-            Hediff hediff = MakaiUtility.ApplyCustomHediffWithDuration(Pawn, hediffDef, hours, 0);
+            Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(Pawn, hediffDef, hours, 0);
             hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = hours * 2500;
             hediff.Severity = hours;
             Pawn.health.AddHediff(hediff);

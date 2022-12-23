@@ -31,7 +31,7 @@ namespace MakaiTechPsycast.DistortedReality
                     }
                     else
                     {
-                        Hediff hediff = MakaiUtility.ApplyCustomHediffWithDuration(targetPawn,modExtension.hediffDefWhenSuccess, modExtension.hours, 0);
+                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn,modExtension.hediffDefWhenSuccess, modExtension.hours, 0);
                         hediff.TryGetComp<HediffComp_BouncingBullet>().bouncingCountLeft = 10;
                         targetPawn.health.AddHediff(hediff);
                     }
@@ -50,7 +50,7 @@ namespace MakaiTechPsycast.DistortedReality
                     }
                     else
                     {
-                        Hediff hediff = MakaiUtility.ApplyCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours * 2, 0);
+                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours * 2, 0);
                         hediff.TryGetComp<HediffComp_BouncingBullet>().bouncingCountLeft = 20;
                         targetPawn.health.AddHediff(hediff);
                     }
@@ -69,7 +69,7 @@ namespace MakaiTechPsycast.DistortedReality
                     }
                     else
                     {
-                        Hediff hediff = MakaiUtility.ApplyCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours / 2, 0);
+                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours / 2, 0);
                         hediff.TryGetComp<HediffComp_BouncingBullet>().bouncingCountLeft = 5;
                         targetPawn.health.AddHediff(hediff);
                     }

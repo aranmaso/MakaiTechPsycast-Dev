@@ -30,7 +30,7 @@ namespace MakaiTechPsycast.DestinedDeath
                             Hediff oldLink = linkedPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess);
                             linkedPawn.health.RemoveHediff(oldLink);
                         }
-                        Hediff hediff = MakaiUtility.ApplyCustomHediffWithDuration(linkedPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
+                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(linkedPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
                         hediff.TryGetComp<HediffComp_LifeLink>().linkedPawn = AllPawn;
                         linkedPawn.health.AddHediff(hediff);
                     }
@@ -50,7 +50,7 @@ namespace MakaiTechPsycast.DestinedDeath
                             Hediff oldLink = linkedPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess);
                             linkedPawn.health.RemoveHediff(oldLink);
                         }
-                        Hediff hediff = MakaiUtility.ApplyCustomHediffWithDuration(linkedPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
+                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(linkedPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
                         hediff.TryGetComp<HediffComp_LifeLink>().linkedPawn = AllPawn;
                         linkedPawn.health.AddHediff(hediff);
                     }
@@ -70,7 +70,7 @@ namespace MakaiTechPsycast.DestinedDeath
                             Hediff oldLink = linkedPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess);
                             linkedPawn.health.RemoveHediff(oldLink);
                         }
-                        Hediff hediff = MakaiUtility.ApplyCustomHediffWithDuration(linkedPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
+                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(linkedPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
                         hediff.TryGetComp<HediffComp_LifeLink>().linkedPawn = AllPawn;
                         linkedPawn.health.AddHediff(hediff);
                     }

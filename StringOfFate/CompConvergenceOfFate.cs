@@ -2,6 +2,7 @@
 using RimWorld;
 using System.Collections.Generic;
 using UnityEngine;
+using VFECore.Abilities;
 
 namespace MakaiTechPsycast.StringOfFate
 {
@@ -18,7 +19,6 @@ namespace MakaiTechPsycast.StringOfFate
         private bool isToggledOn = true;
 
         private bool hediffToggle = true;
-
         public override void PostPostMake()
         {
             triggerRate = Props.tickRate;
