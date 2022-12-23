@@ -8,7 +8,7 @@ namespace MakaiTechPsycast.StringOfFate
 
         public HediffCompProperties_UltimateFate()
         {
-            compClass = typeof();
+            compClass = typeof(HediffComp_UltimateFate);
         }
     }
 }
