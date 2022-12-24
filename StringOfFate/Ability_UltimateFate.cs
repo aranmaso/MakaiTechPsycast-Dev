@@ -18,15 +18,11 @@ namespace MakaiTechPsycast.StringOfFate
             if (rollinfo.roll >= modExtension.successThreshold && rollinfo.roll < modExtension.greatSuccessThreshold)
             {
                 if (targets[0].Thing is Pawn targetPawn)
-                {
-                    Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks);
-                    hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 250;
-                    hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 5;
-                    targetPawn.health.AddHediff(hediff);
+                {                                      
                     int fatedCount = 0;
                     foreach (Pawn item in MakaiUtility.GetNearbyPawnFriendAndFoe(targetPawn.Position,targetPawn.Map,GetRadiusForPawn()))
                     {
-                        if (item == pawn)
+                        if (item == pawn || item == targetPawn)
                         {
                             continue;
                         }
@@ -39,12 +35,23 @@ namespace MakaiTechPsycast.StringOfFate
                             continue;
                         }
                         item.ageTracker.AgeBiologicalTicks += Mathf.FloorToInt(10 * 3600000f);
-                        if (pawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
-                        {
-                            MakaiUtility.GetFirstHediffOfDef(pawn, modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_UltimateFate>().fatedCount++;
-                            fatedCount++;
-                        }                      
+                        fatedCount++;
                     }
+                    if(targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
+                    {
+                        Hediff hediff = MakaiUtility.GetFirstHediffOfDef(targetPawn, modExtension.hediffDefWhenSuccess);
+                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 100;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 5;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount += fatedCount;
+                    }
+                    else
+                    {
+                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks);
+                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 100;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 5;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount += fatedCount;
+                        targetPawn.health.AddHediff(hediff);
+                    }                    
                     Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                     Messages.Message("Makai_PassArollcheckUltimateFate".Translate(pawn.LabelShort,targetPawn.LabelShort, fatedCount, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                 }
@@ -53,14 +60,10 @@ namespace MakaiTechPsycast.StringOfFate
             {
                 if (targets[0].Thing is Pawn targetPawn)
                 {
-                    Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks);
-                    hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 100;
-                    hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 2;
-                    targetPawn.health.AddHediff(hediff);
                     int fatedCount = 0;
                     foreach (Pawn item in MakaiUtility.GetNearbyPawnFriendAndFoe(targetPawn.Position, targetPawn.Map, GetRadiusForPawn()))
                     {
-                        if (item == pawn)
+                        if (item == pawn || item == targetPawn)
                         {
                             continue;
                         }
@@ -73,28 +76,35 @@ namespace MakaiTechPsycast.StringOfFate
                             continue;
                         }
                         item.ageTracker.AgeBiologicalTicks += Mathf.FloorToInt(10 * 3600000f);
-                        if (pawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
-                        {
-                            MakaiUtility.GetFirstHediffOfDef(pawn, modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_UltimateFate>().fatedCount++;
-                            fatedCount++;
-                        }
+                        fatedCount++;
+                    }
+                    if (targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
+                    {
+                        Hediff hediff = MakaiUtility.GetFirstHediffOfDef(targetPawn, modExtension.hediffDefWhenSuccess);
+                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 50;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 2;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount += fatedCount;
+                    }
+                    else
+                    {
+                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks);
+                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 50;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 2;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount += fatedCount;
+                        targetPawn.health.AddHediff(hediff);
                     }
                     Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
-                    Messages.Message("Makai_GreatPassArollcheckUltimateFate".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+                    Messages.Message("Makai_GreatPassArollcheckUltimateFate".Translate(pawn.LabelShort, targetPawn.LabelShort, fatedCount, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                 }
             }
             if (rollinfo.roll < modExtension.successThreshold)
             {
                 if (targets[0].Thing is Pawn targetPawn)
                 {
-                    Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks);
-                    hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 500;
-                    hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 10;
-                    targetPawn.health.AddHediff(hediff);
                     int fatedCount = 0;
                     foreach (Pawn item in MakaiUtility.GetNearbyPawnFriendAndFoe(targetPawn.Position, targetPawn.Map, GetRadiusForPawn()))
                     {
-                        if (item == pawn)
+                        if (item == pawn || item == targetPawn)
                         {
                             continue;
                         }
@@ -107,14 +117,25 @@ namespace MakaiTechPsycast.StringOfFate
                             continue;
                         }
                         item.ageTracker.AgeBiologicalTicks += Mathf.FloorToInt(10 * 3600000f);
-                        if (pawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
-                        {
-                            MakaiUtility.GetFirstHediffOfDef(pawn, modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_UltimateFate>().fatedCount++;
-                            fatedCount++;
-                        }
+                        fatedCount++;
+                    }
+                    if (targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
+                    {
+                        Hediff hediff = MakaiUtility.GetFirstHediffOfDef(targetPawn, modExtension.hediffDefWhenSuccess);
+                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 250;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 10;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount += fatedCount;
+                    }
+                    else
+                    {
+                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks);
+                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 250;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 10;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount += fatedCount;
+                        targetPawn.health.AddHediff(hediff);
                     }
                     Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
-                    Messages.Message("Makai_FailArollcheckUltimateFate".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
+                    Messages.Message("Makai_FailArollcheckUltimateFate".Translate(pawn.LabelShort, targetPawn.LabelShort, fatedCount, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
                 }
             }
         }

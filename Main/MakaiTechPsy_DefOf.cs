@@ -71,6 +71,8 @@ namespace MakaiTechPsycast
         public static BodyPartGroupDef Hands;
         public static BodyPartDef Pelvis;
 
+        public static ShaderTypeDef MoteGlow;
+
 
     }
 }

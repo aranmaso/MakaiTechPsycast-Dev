@@ -25,24 +25,33 @@ namespace MakaiTechPsycast.StringOfFate
             IEnumerable<Hediff> hediffs = Pawn.health.hediffSet.hediffs;
             foreach(Hediff item in hediffs)
             {
-                if(item is Hediff_Level)
+                if(item is Hediff_Level || item.def == parent.def || item.def.hediffClass.IsSubclassOf(typeof(Hediff_Level)) || item is Hediff_LevelWithoutPart)
                 {
                     continue;
                 }
-                if(item.def == MakaiTechPsy_DefOf.MakaiTechPsy_DD_LichSoul
+                if (item.def == MakaiTechPsy_DefOf.MakaiTechPsy_DD_LichSoul
                 || item.def == MakaiTechPsy_DefOf.MakaiTechPsy_DD_MissingSoul
                 || item.def == MakaiTechPsy_DefOf.MakaiPsy_SF_Counter
                 || item.def == MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul
                 || item.def == MakaiTechPsy_DefOf.MakaiTechPsy_DR_DistortBulletBounce
                 || item.def == MakaiTechPsy_DefOf.MakaiPsy_SF_Reverse
                 || item.def == MakaiTechPsy_DefOf.MakaiPsy_SF_Accelerate
-                || item.def == MakaiTechPsy_DefOf.Destined_Death)
+                || item.def == MakaiTechPsy_DefOf.Destined_Death
+                || item.def == MakaiTechPsy_DefOf.MakaiPsy_SF_UltimateFate
+                || item.def.defName == "Destruction_AutoAttack"
+                || item.def.defName == "Order_Enlightenment"
+                || item.def.defName == "Corruption_Avatar"
+                || item.def.defName == "Death_Avatar"
+                || item.def.defName == "Flame_Avatar"
+                || item.def.defName == "Frost_Avatar"
+                || item.def.defName == "Knowledge_Avatar"
+                || item.def.defName == "Existence_Resurrection")
                 {
                     continue;
                 }
                 if (item.def.maxSeverity <= 1f && (item.def != HediffDefOf.BloodLoss) && (item.def != HediffDefOf.Hypothermia) && (item.def != HediffDefOf.Heatstroke) && (item.def != HediffDefOf.PsychicAmplifier) && (item.def != HediffDefOf.ToxicBuildup) && (item.def != HediffDefOf.Malnutrition) && (item.def != HediffDefOf.Anesthetic) && (item.def != parent.def))
                 {
-                    if (item.def.maxSeverity <= 1f && item.TryGetComp<HediffComp_SeverityPerDay>().SeverityChangePerDay() < 0 && !item.def.isBad)
+                    if (item.def.maxSeverity <= 1f && item.TryGetComp<HediffComp_SeverityPerDay>() != null && item.TryGetComp<HediffComp_SeverityPerDay>().SeverityChangePerDay() < 0 && !item.def.isBad)
                     {
                         item.Severity -= Props.severityToAccelerate;
                     }
@@ -52,7 +61,7 @@ namespace MakaiTechPsycast.StringOfFate
                         hediffComp_Disappears.ticksToDisappear -= Mathf.Min(Props.tickIncrease, 2500);
                     }                    
                 }
-                else if ((item.def == HediffDefOf.BloodLoss || item.def == HediffDefOf.Heatstroke || item.def == HediffDefOf.Hypothermia || item.def == HediffDefOf.ToxicBuildup || item.def == HediffDefOf.Malnutrition || item.def == HediffDefOf.Anesthetic) && item.def != parent.def)
+                else if ((item.def == HediffDefOf.BloodLoss || item.def == HediffDefOf.Heatstroke || item.def == HediffDefOf.Hypothermia || item.def == HediffDefOf.ToxicBuildup || item.def == HediffDefOf.Malnutrition || item.def == HediffDefOf.Anesthetic) && item.def != parent.def || item.def.isBad)
                 {
                     item.Severity += Props.severityToAccelerate;
                 }

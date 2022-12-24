@@ -22,29 +22,21 @@ namespace MakaiTechPsycast.StringOfFate
             if (hediff.totalDamage < hediff.threshold)
             {
                 return;
-            }
+            }            
             else
             {
                 hediff.totalDamage = 0;
-                dinfo.SetAmount(0);
-                if(hediff.fatedCount > 0)
+                absorbed = true;
+                if (hediff.fatedCount > 0)
                 {
-                    IEnumerable<Hediff> list = __instance.health.hediffSet.hediffs;
-                    Hediff bloodloss = __instance.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.BloodLoss);
-                    if (bloodloss != null)
-                    {
-                        __instance.health.RemoveHediff(bloodloss);
-                    }
+                    List<Hediff> list = __instance.health.hediffSet.hediffs.Where(MakaiUtility.FindBadHediff).ToList();
                     foreach (Hediff item in list)
                     {
-                        if (!MakaiUtility.FindBadHediff(item))
-                        {
-                            continue;
-                        }
                         __instance.health.RemoveHediff(item);
                     }
-                    MoteMaker.ThrowText(__instance.DrawPos,__instance.Map,"Fated Save");
+                    MoteMaker.ThrowText(__instance.Position.ToVector3(),__instance.Map,"Fated Save");
                     hediff.fatedCount--;
+                    MakaiUtility.ThrowFleck(MakaiTechPsy_DefOf.MakaiPsyMote_ReflectProjectile,__instance.DrawPos,__instance.Map,5f);
                 }                                
             }
         }

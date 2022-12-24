@@ -86,8 +86,12 @@
     <Compile Include="DistortedReality\Dialog_ChooseRandomItem.cs" />
     <Compile Include="DistortedReality\Dialog_ChooseIncident.cs" />
     <Compile Include="Main\Ability_GiveHediffTemplate.cs" />
+    <Compile Include="Main\Pawn_DrawAtMainPatch.cs" />
+    <Compile Include="Main\Pawn_DrawAtPatchFate.cs" />
     <Compile Include="StringOfFate\Ability_EightRevenge.cs" />
     <Compile Include="StringOfFate\Ability_UltimateFate.cs" />
+    <Compile Include="Main\HediffCompProperties_DrawAt.cs" />
+    <Compile Include="Main\HediffComp_DrawAt.cs" />
     <Compile Include="StringOfFate\Pawn_PreApplyDamage_UltimateFatePatch.cs" />
     <Compile Include="StringOfFate\HediffComp_UltimateFate.cs" />
     <Compile Include="StringOfFate\HediffCompProperties_UltimateFate.cs" />
