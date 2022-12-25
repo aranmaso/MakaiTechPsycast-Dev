@@ -19,6 +19,10 @@ namespace MakaiTechPsycast.StringOfFate
             {
                 if (targets[0].Thing is Pawn targetPawn)
                 {
+                    if(targetPawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiPsy_SF_Reverse))
+                    {
+                        targetPawn.health.RemoveHediff(MakaiUtility.GetFirstHediffOfDef(targetPawn,MakaiTechPsy_DefOf.MakaiPsy_SF_Reverse));
+                    }
                     if (targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
                         targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_Disappears>().ticksToDisappear += Mathf.FloorToInt(modExtension.hours * 2500);
@@ -42,6 +46,10 @@ namespace MakaiTechPsycast.StringOfFate
             {
                 if (targets[0].Thing is Pawn targetPawn)
                 {
+                    if (targetPawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiPsy_SF_Reverse))
+                    {
+                        targetPawn.health.RemoveHediff(MakaiUtility.GetFirstHediffOfDef(targetPawn, MakaiTechPsy_DefOf.MakaiPsy_SF_Reverse));
+                    }
                     if (targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
                         targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_Disappears>().ticksToDisappear += Mathf.FloorToInt(modExtension.hours * 2500);
@@ -66,6 +74,10 @@ namespace MakaiTechPsycast.StringOfFate
             {
                 if (targets[0].Thing is Pawn targetPawn)
                 {
+                    if (targetPawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiPsy_SF_Reverse))
+                    {
+                        targetPawn.health.RemoveHediff(MakaiUtility.GetFirstHediffOfDef(targetPawn, MakaiTechPsy_DefOf.MakaiPsy_SF_Reverse));
+                    }
                     if (targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
                         targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_Disappears>().ticksToDisappear += Mathf.FloorToInt(modExtension.hours * 2500);

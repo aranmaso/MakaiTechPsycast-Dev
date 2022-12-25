@@ -42,6 +42,10 @@ namespace MakaiTechPsycast
 
 		public ThingDef projectileWhenFail;
 
+		public bool spawnProjectileAtRandom = false;
+
+		public int projectileBurstCount = 1;
+
 		public StatDef multiplier;
 
 		public float hours = 1f;
@@ -55,6 +59,8 @@ namespace MakaiTechPsycast
 		public int damageAmount = 0;
 
 		public SkillDef skillBonus;
+
+		public SkillDef skillBonus2;
 
 		public int repeatEffect;
 

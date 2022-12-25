@@ -194,12 +194,22 @@ namespace MakaiTechPsycast
                 });
             }
         }
-        public static RollInfo Roll1D20(Pawn pawn,SkillDef skillBonus, RollInfo Rinfo)
+        public static RollInfo Roll1D20(Pawn pawn,SkillDef skillBonus, RollInfo Rinfo, SkillDef skillBonus2 = null)
         {
             SkillRecord bonus = pawn.skills.GetSkill(skillBonus);
+            SkillRecord bonus2 = null;
+            if(skillBonus2 != null)
+            {
+                bonus2 = pawn.skills.GetSkill(skillBonus2);
+            }
             System.Random rand = new System.Random();
             Rinfo.roll = rand.Next(1, 21);
             int rollBonus = bonus.Level / 5;
+            int rollBonus2 = 0;
+            if(skillBonus2 != null)
+            {
+                rollBonus2 = bonus2.Level / 5;
+            }
             Rinfo.baseRoll = Rinfo.roll;
             int rollBonusLucky = 0;
             int rollBonusUnLucky = 0;
@@ -211,8 +221,8 @@ namespace MakaiTechPsycast
             {
                 rollBonusUnLucky = -20;
             }
-            Rinfo.roll += rollBonus + rollBonusLucky + rollBonusUnLucky;
-            Rinfo.cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
+            Rinfo.roll += rollBonus + rollBonus2 + rollBonusLucky + rollBonusUnLucky;
+            Rinfo.cumulativeBonusRoll = rollBonus + rollBonus2 + rollBonusLucky + rollBonusUnLucky;
             return Rinfo;
         }
         public static Hediff CreateCustomHediffWithDuration(Pawn pawn, HediffDef hediffDef, float hours, int ticks,StatDef statDef = null)
