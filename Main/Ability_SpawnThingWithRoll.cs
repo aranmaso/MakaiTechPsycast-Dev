@@ -17,28 +17,9 @@ namespace MakaiTechPsycast
 		{
 			base.Cast(targets);
 			AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
-			if (modExtension == null)
-			{
-				return;
-			}
-			SkillRecord bonus = pawn.skills.GetSkill(modExtension.skillBonus);
-			System.Random rand = new System.Random();
-			int roll = rand.Next(1, 21);
-			int rollBonus = bonus.Level / 5;
-			int baseRoll = roll;
-			int rollBonusLucky = 0;
-			int rollBonusUnLucky = 0;
-			if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_Lucky))
-			{
-				rollBonusLucky = 20;
-			}
-			if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_UnLucky))
-			{
-				rollBonusUnLucky = -20;
-			}
-			roll += rollBonus + rollBonusLucky + rollBonusUnLucky;
-			int cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
-			if ((roll >= modExtension.successThreshold && roll < modExtension.greatSuccessThreshold) && modExtension.thingToSpawnWhenSuccess != null)
+			RollInfo rollinfo = new RollInfo();
+			rollinfo = MakaiUtility.Roll1D20(pawn, modExtension.skillBonus, rollinfo);
+			if ((rollinfo.roll >= modExtension.successThreshold && rollinfo.roll < modExtension.greatSuccessThreshold))
             {
 				foreach (GlobalTargetInfo globalTargetInfo in targets)
 				{
@@ -51,7 +32,7 @@ namespace MakaiTechPsycast
 					{
 						compSpawnedBuilding.lastDamageTick = Find.TickManager.TicksGame;
 						compSpawnedBuilding.damagePerTick = Mathf.RoundToInt(GetPowerForPawn());
-						int durationForPawn = GetDurationForPawn();
+						int durationForPawn = Mathf.RoundToInt(modExtension.hours) * 2500;
 						if (durationForPawn > 0)
 						{	
 							compSpawnedBuilding.finalTick = compSpawnedBuilding.lastDamageTick + durationForPawn;
@@ -64,15 +45,15 @@ namespace MakaiTechPsycast
 						hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(dur);
 						pawn.health.AddHediff(hediff);
 					}
-					Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+					Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 					Messages.Message("Makai_PassArollcheckSpawnThing".Translate(pawn.LabelShort, thing.Label , pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 				}
 			}
-			if (roll >= modExtension.greatSuccessThreshold && modExtension.thingToSpawnWhenGreatSuccess != null)
+			if (rollinfo.roll >= modExtension.greatSuccessThreshold)
             {
 				foreach (GlobalTargetInfo globalTargetInfo in targets)
 				{
-					Thing thing = GenSpawn.Spawn(modExtension.thingToSpawnWhenGreatSuccess, globalTargetInfo.Cell, pawn.Map);
+					Thing thing = GenSpawn.Spawn(modExtension.thingToSpawnWhenGreatSuccess ?? modExtension.thingToSpawnWhenSuccess, globalTargetInfo.Cell, pawn.Map);
 					Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_Ring_ExpandY.Spawn(globalTargetInfo.Cell, pawn.Map,0.5f);
 					effect.Cleanup();
 					thing.SetFactionDirect(pawn.Faction);
@@ -81,7 +62,7 @@ namespace MakaiTechPsycast
 					{
 						compSpawnedBuilding.lastDamageTick = Find.TickManager.TicksGame;
 						compSpawnedBuilding.damagePerTick = Mathf.RoundToInt(GetPowerForPawn());
-						int durationForPawn = GetDurationForPawn();
+						int durationForPawn = Mathf.RoundToInt(modExtension.hours) * 2500;
 						if (durationForPawn > 0)
 						{
 							compSpawnedBuilding.finalTick = compSpawnedBuilding.lastDamageTick + durationForPawn;
@@ -94,15 +75,15 @@ namespace MakaiTechPsycast
 						hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(dur);
 						pawn.health.AddHediff(hediff);
 					}
-					Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+					Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 					Messages.Message("Makai_GreatPassArollcheckSpawnThing".Translate(pawn.LabelShort, thing.Label, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 				}
 			}
-			if (roll < modExtension.successThreshold && modExtension.thingToSpawnWhenFail != null)
+			if (rollinfo.roll < modExtension.successThreshold)
             {
 				foreach (GlobalTargetInfo globalTargetInfo in targets)
 				{
-					Thing thing = GenSpawn.Spawn(modExtension.thingToSpawnWhenFail, globalTargetInfo.Cell, pawn.Map);
+					Thing thing = GenSpawn.Spawn(modExtension.thingToSpawnWhenFail ?? modExtension.thingToSpawnWhenSuccess, globalTargetInfo.Cell, pawn.Map);
 					Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_Ring_ExpandY.Spawn(globalTargetInfo.Cell, pawn.Map,0.5f);
 					effect.Cleanup();
 					thing.SetFactionDirect(pawn.Faction);
@@ -111,7 +92,7 @@ namespace MakaiTechPsycast
 					{
 						compSpawnedBuilding.lastDamageTick = Find.TickManager.TicksGame;
 						compSpawnedBuilding.damagePerTick = Mathf.RoundToInt(GetPowerForPawn());
-						int durationForPawn = GetDurationForPawn();
+						int durationForPawn = Mathf.RoundToInt(modExtension.hours) * 2500;
 						if (durationForPawn > 0)
 						{
 							compSpawnedBuilding.finalTick = compSpawnedBuilding.lastDamageTick + durationForPawn;
@@ -124,8 +105,8 @@ namespace MakaiTechPsycast
 						hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(dur);
 						pawn.health.AddHediff(hediff);
 					}
-					Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
-					Messages.Message("Makai_FailArollcheckSpawnThing".Translate(pawn.LabelShort, thing.Label,modExtension.thingToSpawnWhenSuccess.label , pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
+					Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
+					Messages.Message("Makai_FailArollcheckSpawnThing".Translate(pawn.LabelShort, thing.Label , pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
 				}
 			}
 		}

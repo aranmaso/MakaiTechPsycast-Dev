@@ -116,6 +116,18 @@ namespace MakaiTechPsycast
             while (cellRect.Contains(randomCell));
             return randomCell;
         }
+        public static IntVec3 RandomCellBase(IntVec3 cell)
+        {
+            cell = cell.RandomAdjacentCell8Way();
+            cell = cell.RandomAdjacentCell8Way();
+            return cell;
+        }
+        public static IntVec3 RandomCellAroundCellBase(IntVec3 cell, int min,int max)
+        {
+            cell.x += Rand.RangeInclusive(min, max);
+            cell.z += Rand.RangeInclusive(min, max);
+            return cell;
+        }
         public static bool FindBadHediff(Hediff hediff)
         {
             return hediff is Hediff_Injury || hediff is Hediff_MissingPart || hediff is Hediff_Addiction || hediff.def.tendable || hediff.def.makesSickThought || hediff.def.HasComp(typeof(HediffComp_Immunizable)) || hediff.def == HediffDefOf.BloodLoss || hediff.def.isBad;
@@ -273,7 +285,7 @@ namespace MakaiTechPsycast
             minfo.userTakeDamage = userTakeDamage;
             return minfo;
         }
-        //GetNearbyPawnFriendOrFoe and it related. this chunk is all credit to Smartkar for the original
+        //GetNearbyPawnFriendOrFoe and it related. this chunk is all credit to Smartkar's Athena Framework for the original
         public static List<Pawn> GetNearbyPawnFriendAndFoe(IntVec3 center, Map map, float radius)
         {
             List<Pawn> list = new List<Pawn>();
@@ -380,9 +392,9 @@ namespace MakaiTechPsycast
                 soul.childhood = pawn.story?.Childhood;
                 soul.adulthood = pawn.story?.Adulthood;
                 soul.traits = pawn.story?.traits?.allTraits;
-                soul.relations = pawn.relations.DirectRelations ?? new List<DirectPawnRelation>();
-                soul.relatedPawns = pawn.relations.RelatedPawns?.ToHashSet() ?? new HashSet<Pawn>();
-                foreach (Pawn otherPawn in pawn.relations.RelatedPawns)
+                //soul.relations = pawn.relations.DirectRelations ?? new List<DirectPawnRelation>();
+                //soul.relatedPawns = pawn.relations.RelatedPawns?.ToHashSet() ?? new HashSet<Pawn>();
+                /*foreach (Pawn otherPawn in pawn.relations.RelatedPawns)
                 {
                     foreach (PawnRelationDef rel2 in pawn.GetRelations(otherPawn))
                     {
@@ -392,7 +404,7 @@ namespace MakaiTechPsycast
                         }
                     }
                     soul.relatedPawns.Add(otherPawn);
-                }
+                }*/
                 soul.priorities = new Dictionary<WorkTypeDef, int>();
                 if (pawn.workSettings != null && Traverse.Create(pawn.workSettings).Field("priorities").GetValue<DefMap<WorkTypeDef, int>>() != null)
                 {
@@ -459,15 +471,15 @@ namespace MakaiTechPsycast
                 pawn.story.Adulthood = soul.adulthood;
             }
             pawn.story.traits.allTraits = soul.traits;
-            foreach (DirectPawnRelation rel in pawn.relations.DirectRelations)
+            /*foreach (DirectPawnRelation rel in pawn.relations.DirectRelations)
             {
                 pawn.relations.DirectRelations.Remove(rel);
             }
             foreach (DirectPawnRelation rel in soul.relations)
             {
                 pawn.relations.DirectRelations.Add(rel);
-            }
-            foreach (Pawn relatedPawn in soul.relatedPawns)
+            }*/
+            /*foreach (Pawn relatedPawn in soul.relatedPawns)
             {
                 if(relatedPawn.Name == soul.name)
                 {
@@ -566,7 +578,7 @@ namespace MakaiTechPsycast
                         }
                     }
                 }
-            }
+            }*/
             Traverse traverse = Traverse.Create(pawn.workSettings).Field("pawn");
             if (traverse.GetValue() == null)
             {

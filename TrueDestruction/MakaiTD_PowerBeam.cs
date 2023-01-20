@@ -9,6 +9,10 @@ namespace MakaiTechPsycast
 {
 	public class MakaiTD_PowerBeam : OrbitalStrike
 	{
+		public float damageAmount = 5;
+
+		public float armorPen = 1f;
+
 		public const float Radius = 2f;
 
 		private const int FiresStartedPerTick = 0;
@@ -63,7 +67,7 @@ namespace MakaiTechPsycast
 					Find.BattleLog.Add(battleLogEntry_DamageTaken);
 				}*/
 				//tmpThings[i].TakeDamage(new DamageInfo(MakaiTechPsy_DefOf.TrueDestruction_LightningTowerBeam, 5, 0f, -1f, instigator, null, weaponDef)).AssociateWithLog(battleLogEntry_DamageTaken);
-				tmpThings[i].TakeDamage(new DamageInfo(MakaiTechPsy_DefOf.TrueDestruction_LightningTowerBeam, 5, 1f, -1f, instigator, null, weaponDef));
+				tmpThings[i].TakeDamage(new DamageInfo(MakaiTechPsy_DefOf.TrueDestruction_LightningTowerBeam, damageAmount, armorPen, -1f, instigator, null, weaponDef));
 			}
 			tmpThings.Clear();
 		}

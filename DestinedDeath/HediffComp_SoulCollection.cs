@@ -20,7 +20,7 @@ namespace MakaiTechPsycast.DestinedDeath
 		{
 			get
 			{
-				if (SoulCount > 0)
+				if (SoulCount >= 0)
 				{
 					return base.CompLabelInBracketsExtra + SoulCount + " Souls";
 				}
@@ -46,13 +46,17 @@ namespace MakaiTechPsycast.DestinedDeath
 			command_Action.action = delegate
 			{
 				float focusDiff = 1f - parent.pawn.psychicEntropy.CurrentPsyfocus;
-				if(parent.pawn.psychicEntropy.CurrentPsyfocus < 1f)
+				if(parent.pawn.psychicEntropy.CurrentPsyfocus < 1f && SoulCount > 0)
                 {
 					parent.pawn.psychicEntropy.OffsetPsyfocusDirectly(focusDiff);
 					SoulCount -= 1;
 					BonustToStat -= 1;
 					parent.Severity = SoulCount;
 				}
+				else if(SoulCount <= 0)
+                {
+					Messages.Message("not enough soul",MessageTypeDefOf.NegativeEvent,false);
+                }
 			};
 			yield return command_Action;
 			if(Prefs.DevMode)

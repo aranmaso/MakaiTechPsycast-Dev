@@ -13,10 +13,10 @@ namespace MakaiTechPsycast.DestinedDeath
     public class Ability_CollectSoul : VFECore.Abilities.Ability
     {
 		public IntVec3 targetCell;
-		public override bool ValidateTarget(LocalTargetInfo target, bool showMessages = true)
-		{
-			AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
-			if (modExtension.targetOnlyEnemies && target.Thing != null && !target.Thing.HostileTo(pawn))
+        AbilityExtension_Roll1D20 modExtension => def.GetModExtension<AbilityExtension_Roll1D20>();
+        public override bool ValidateTarget(LocalTargetInfo target, bool showMessages = true)
+		{			
+			if (modExtension.targetOnlyEnemies && target.Thing != null && (!target.Thing.HostileTo(pawn.Faction) || !target.Thing.Faction.HostileTo(pawn.Faction) || !target.Thing.HostileTo(pawn)))
 			{
 				if (showMessages)
 				{
@@ -35,7 +35,6 @@ namespace MakaiTechPsycast.DestinedDeath
 		public override void Cast(params GlobalTargetInfo[] targets)
         {
 			base.Cast(targets);
-			AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
 			SkillRecord bonus = pawn.skills.GetSkill(modExtension.skillBonus);
 			System.Random rand = new System.Random();
 			int roll = rand.Next(1, 21);
@@ -90,12 +89,15 @@ namespace MakaiTechPsycast.DestinedDeath
                     }
                 }
                 for (int i = 0; i < targets.Length; i++)
-                {
+                {                   
                     GlobalTargetInfo globalTargetInfo = targets[i];
-                    MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
-                    moteBetween.Attach(globalTargetInfo.Thing, pawn);
-                    moteBetween.exactPosition = globalTargetInfo.Thing.DrawPos;
-                    GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
+                    if(globalTargetInfo.Thing is Pawn victim && victim.Downed)
+                    {
+                        MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
+                        moteBetween.Attach(globalTargetInfo.Thing, pawn);
+                        moteBetween.exactPosition = globalTargetInfo.Thing.DrawPos;
+                        GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
+                    }
                 }
                 /*foreach(Thing item in GenRadial.RadialDistinctThingsAround(targetCell,pawn.Map,def.radius,true))
                 {
@@ -158,10 +160,13 @@ namespace MakaiTechPsycast.DestinedDeath
                 for (int i = 0; i < targets.Length; i++)
                 {
                     GlobalTargetInfo globalTargetInfo = targets[i];
-                    MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
-                    moteBetween.Attach(globalTargetInfo.Thing, pawn);
-                    moteBetween.exactPosition = globalTargetInfo.Thing.DrawPos;
-                    GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
+                    if (globalTargetInfo.Thing is Pawn victim && victim.Downed)
+                    {
+                        MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
+                        moteBetween.Attach(globalTargetInfo.Thing, pawn);
+                        moteBetween.exactPosition = globalTargetInfo.Thing.DrawPos;
+                        GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
+                    }
                 }
                 Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 			}
@@ -204,10 +209,13 @@ namespace MakaiTechPsycast.DestinedDeath
                 for (int i = 0; i < targets.Length; i++)
                 {
                     GlobalTargetInfo globalTargetInfo = targets[i];
-                    MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
-                    moteBetween.Attach(globalTargetInfo.Thing, pawn);
-                    moteBetween.exactPosition = globalTargetInfo.Thing.DrawPos;
-                    GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
+                    if (globalTargetInfo.Thing is Pawn victim && victim.Downed)
+                    {
+                        MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
+                        moteBetween.Attach(globalTargetInfo.Thing, pawn);
+                        moteBetween.exactPosition = globalTargetInfo.Thing.DrawPos;
+                        GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
+                    }
                 }
                 Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
 			}

@@ -49,7 +49,7 @@ namespace MakaiTechPsycast
 			{
 				foreach (GlobalTargetInfo globalTargetInfo in targets)
 				{
-					for (int i = 0; i < modExtension.projectileBurstCount; i++)
+					for (int i = 0; i < modExtension.projectileBurstCount*2; i++)
 					{
 						Projectile projectile = (Projectile)GenSpawn.Spawn(modExtension.projectileWhenGreatSuccess ?? modExtension.projectileWhenSuccess, pawn.Position, pawn.Map);
 						if (globalTargetInfo.HasThing)
@@ -74,11 +74,11 @@ namespace MakaiTechPsycast
 						Projectile projectile = (Projectile)GenSpawn.Spawn(modExtension.projectileWhenFail ?? modExtension.projectileWhenSuccess, pawn.Position, pawn.Map);
 						if (globalTargetInfo.HasThing)
 						{
-							projectile.Launch(pawn, pawn.DrawPos, globalTargetInfo.Thing, globalTargetInfo.Thing, ProjectileHitFlags.IntendedTarget);
+							projectile.Launch(pawn, pawn.DrawPos, globalTargetInfo.Thing.RandomAdjacentCell8Way(), globalTargetInfo.Thing.RandomAdjacentCell8Way(), ProjectileHitFlags.IntendedTarget);
 						}
 						else
 						{
-							projectile.Launch(pawn, pawn.DrawPos, globalTargetInfo.Cell, globalTargetInfo.Cell, ProjectileHitFlags.IntendedTarget);
+							projectile.Launch(pawn, pawn.DrawPos, globalTargetInfo.Cell.RandomAdjacentCell8Way(), globalTargetInfo.Cell.RandomAdjacentCell8Way(), ProjectileHitFlags.IntendedTarget);
 						}
 					}
 					Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);

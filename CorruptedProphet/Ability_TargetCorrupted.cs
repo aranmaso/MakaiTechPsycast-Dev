@@ -11,9 +11,10 @@ namespace MakaiTechPsycast.CorruptedProphet
     public class Ability_TargetCorrupted : VFECore.Abilities.Ability
     {
 		public IntVec3 targetCell;
+
+		AbilityExtension_Roll1D20 modExtension => def.GetModExtension<AbilityExtension_Roll1D20>();
 		public override bool ValidateTarget(LocalTargetInfo target, bool showMessages = true)
 		{
-			AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
 			if (modExtension.targetOnlyEnemies && target.Thing != null && !target.Thing.HostileTo(pawn))
 			{
 				if (showMessages)
@@ -33,7 +34,6 @@ namespace MakaiTechPsycast.CorruptedProphet
 		public override void Cast(params GlobalTargetInfo[] targets)
         {
 			base.Cast(targets);
-			AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
 			SkillRecord bonus = pawn.skills.GetSkill(modExtension.skillBonus);
 			System.Random rand = new System.Random();
 			int roll = rand.Next(1, 21);

@@ -46,6 +46,10 @@ namespace MakaiTechPsycast
 
 		public int projectileBurstCount = 1;
 
+		public int tickBurstInterval = 60;
+
+		public SoundDef soundDef;
+
 		public StatDef multiplier;
 
 		public float hours = 1f;

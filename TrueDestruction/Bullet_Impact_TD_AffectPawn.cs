@@ -12,18 +12,18 @@ namespace MakaiTechPsycast.TrueDestruction
     [HarmonyPatch("Impact")]
     public class Bullet_Impact_TD_AffectPawn
     {
-		private static void Postfix(ref Thing hitThing, ref Bullet __instance)
+		private static void Postfix(ref Thing hitThing, Bullet __instance)
 		{
-			Thing turret = __instance.Launcher;
-			CompTDturret compTDProps = turret.TryGetComp<CompTDturret>();
-			if (turret == null || compTDProps == null)
+			if (__instance == null) return;
+			CompTDturret compTDProps = __instance.TryGetComp<CompTDturret>();
+			if (compTDProps == null)
 			{
 				return;
 			}
 			float linkedCount = 1f;
-			foreach (Thing item in GenRadial.RadialDistinctThingsAround(turret.Position, turret.Map, 5f, useCenter: true))
+			foreach (Thing item in GenRadial.RadialDistinctThingsAround(__instance.Position, __instance.Map, 5f, useCenter: true))
             {
-                if (turret.TryGetComp<CompAffectedByFacilities>().LinkedFacilitiesListForReading.Contains(item))
+                if (__instance.TryGetComp<CompAffectedByFacilities>().LinkedFacilitiesListForReading.Contains(item))
                 {
                     linkedCount++;
                 }
@@ -33,8 +33,8 @@ namespace MakaiTechPsycast.TrueDestruction
                 }
             }
 			Log.Message("ForeachComplete");
-			turret.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(turret.Map, __instance.Position));
-			GenExplosion.DoExplosion(__instance.Position, turret.Map, linkedCount, DamageDefOf.Bomb, turret, __instance.DamageAmount, __instance.ArmorPenetration);
+			__instance.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(__instance.Launcher.Map, __instance.Position));
+			GenExplosion.DoExplosion(__instance.Position, __instance.Map, linkedCount, DamageDefOf.Bomb, __instance, __instance.DamageAmount, __instance.ArmorPenetration);
 			/*float rand = Rand.Value;
 			if (pawn2 != null && rand <= 0.25f)
             {

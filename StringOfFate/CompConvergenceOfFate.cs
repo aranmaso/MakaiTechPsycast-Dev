@@ -143,6 +143,14 @@ namespace MakaiTechPsycast.StringOfFate
                 {
                     continue;
                 }
+                if(hediffToggle && item.health.hediffSet.HasHediff(Props.hediffDefSecond))
+                {
+                    item.health.RemoveHediff(MakaiUtility.GetFirstHediffOfDef(item,Props.hediffDefSecond));
+                }
+                else if (!hediffToggle && item.health.hediffSet.HasHediff(Props.hediffDef))                
+                {
+                    item.health.RemoveHediff(MakaiUtility.GetFirstHediffOfDef(item, Props.hediffDef));
+                }
                 Hediff hediff = HediffMaker.MakeHediff(hediffDef, item);
                 hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = 5000;
                 item.health.AddHediff(hediff);

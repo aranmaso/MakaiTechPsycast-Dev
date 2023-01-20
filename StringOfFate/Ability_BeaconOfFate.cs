@@ -36,7 +36,7 @@ namespace MakaiTechPsycast.StringOfFate
                         }
                     }
                     Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
-                    Messages.Message("Makai_PassArollcheckReverseBeacon".Translate(pawn.LabelShort,compSpawnedBuilding.finalTick/2500, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+                    Messages.Message("Makai_PassArollcheckReverseBeacon".Translate(pawn.LabelShort, modExtension.hours, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                 }                
             }
             if (rollinfo.roll >= modExtension.greatSuccessThreshold)
@@ -59,7 +59,7 @@ namespace MakaiTechPsycast.StringOfFate
                         }
                     }
                     Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
-                    Messages.Message("Makai_GreatPassArollcheckReverseBeacon".Translate(pawn.LabelShort, compSpawnedBuilding.finalTick / 2500, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+                    Messages.Message("Makai_GreatPassArollcheckReverseBeacon".Translate(pawn.LabelShort, modExtension.hours*2, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                 }               
             }
             if (rollinfo.roll < modExtension.successThreshold)
@@ -82,7 +82,7 @@ namespace MakaiTechPsycast.StringOfFate
                         }
                     }
                     Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
-                    Messages.Message("Makai_FailArollcheckReverseBeacon".Translate(pawn.LabelShort, compSpawnedBuilding.finalTick / 2500, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
+                    Messages.Message("Makai_FailArollcheckReverseBeacon".Translate(pawn.LabelShort, modExtension.hours/2, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
                 }                
             }
         }

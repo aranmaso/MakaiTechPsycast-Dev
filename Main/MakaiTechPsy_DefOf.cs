@@ -35,6 +35,12 @@ namespace MakaiTechPsycast
 
         public static HediffDef MakaiTechPsy_DR_DistortBulletBounce;
 
+        public static HediffDef MakaiTechPsy_TD_SkyBlessing;
+        public static HediffDef MakaiTechPsy_TD_FrenziedFlame;
+        public static HediffDef MakaiTechPsy_TD_FrenziedSpeedBuff;
+        public static HediffDef MakaiTechPsy_TD_FrenziedMark;
+        public static HediffDef MakaiTechPsy_TD_WillOfTheFallen;
+
         public static DamageDef TrueDestruction_LightningTower;
         public static DamageDef TrueDestruction_LightningTowerBeam;
         public static DamageDef CorruptedProphet_CorruptedSky;
@@ -67,11 +73,14 @@ namespace MakaiTechPsycast
         public static EffecterDef MakaiPsy_Ring_ExpandY;
         public static EffecterDef MakaiPsy_WarpBullet;
         public static EffecterDef MakaiPsy_DD_Suck;
+        public static EffecterDef MakaiPsy_SmokeExplosion;
 
         public static BodyPartGroupDef Hands;
         public static BodyPartDef Pelvis;
 
         public static ShaderTypeDef MoteGlow;
+
+        public static SoundDef Shot_ChargeBlaster;
 
 
     }

@@ -45,7 +45,11 @@ namespace MakaiTechPsycast
 
 		public List<ThingDef> moteDefs;
 
+		public List<FleckDef> fleckDefs;
+
 		public bool alwaysOn = false;
+
+		public bool useFleck = false;
 
 		public int countPerEmit = 1;
 

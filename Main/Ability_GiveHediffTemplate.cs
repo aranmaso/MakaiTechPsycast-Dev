@@ -9,12 +9,12 @@ namespace MakaiTechPsycast
 {
     public class Ability_GiveHediffTemplate : VFECore.Abilities.Ability
     {
+        public AbilityExtension_Roll1D20 modExtension => def.GetModExtension<AbilityExtension_Roll1D20>();
         public override void Cast(params GlobalTargetInfo[] targets)
         {
-            base.Cast(targets);
-            AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
+            base.Cast(targets);            
             RollInfo rollinfo = new RollInfo();
-            rollinfo = MakaiUtility.Roll1D20(pawn, modExtension.skillBonus, rollinfo);
+            rollinfo = MakaiUtility.Roll1D20(pawn, modExtension.skillBonus, rollinfo , modExtension.skillBonus2 ?? null);
             if (rollinfo.roll >= modExtension.successThreshold && rollinfo.roll < modExtension.greatSuccessThreshold)
             {
                 foreach (GlobalTargetInfo globalTargetInfo in targets)
@@ -34,7 +34,7 @@ namespace MakaiTechPsycast
                 {
                     if (globalTargetInfo.Thing is Pawn targetPawn)
                     {
-                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenGreatSuccess ?? modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
+                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenGreatSuccess ?? modExtension.hediffDefWhenSuccess, modExtension.hours * 2, modExtension.ticks, modExtension.multiplier);
                         targetPawn.health.AddHediff(hediff);
                         Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                         Messages.Message("Makai_GreatPassArollcheckGiveHediffGeneric".Translate(pawn.LabelShort, hediff.LabelCap, targetPawn.LabelShort, pawn.Named("USER"), targetPawn.Named("USER2")), pawn, MessageTypeDefOf.PositiveEvent);
@@ -47,7 +47,7 @@ namespace MakaiTechPsycast
                 {
                     if (globalTargetInfo.Thing is Pawn targetPawn)
                     {
-                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenFail ?? modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
+                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenFail ?? modExtension.hediffDefWhenSuccess, modExtension.hours / 2, modExtension.ticks, modExtension.multiplier);
                         targetPawn.health.AddHediff(hediff);
                         Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
                         Messages.Message("Makai_FailArollcheckGiveHediffGeneric".Translate(pawn.LabelShort, hediff.LabelCap, targetPawn.LabelShort, pawn.Named("USER"), targetPawn.Named("USER2")), pawn, MessageTypeDefOf.NegativeEvent);

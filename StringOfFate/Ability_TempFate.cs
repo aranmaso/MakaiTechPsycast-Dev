@@ -28,7 +28,7 @@ namespace MakaiTechPsycast.StringOfFate
                         {
                             List<Hediff> hediffs = targetPawn.health.hediffSet.hediffs.Where(MakaiUtility.FindBadHediff).ToList();
                             int num = 0;
-                            for (int i = hediffs.Count - 1; i >= hediffs.Count / 2; i--)
+                            for (int i = hediffs.Count - 1; i >= hediffs.Count; i--)
                             {
                                 if ((hediffs[i] is Hediff_Injury || hediffs[i] is Hediff_MissingPart) && hediffs[i].TendableNow())
                                 {
@@ -38,16 +38,16 @@ namespace MakaiTechPsycast.StringOfFate
                             }
                             if (num > 0)
                             {
-                                MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, "NumWoundsTended".Translate(num), 3.65f);
+                                MoteMaker.ThrowText(targetPawn.DrawPos, pawn.Map, "NumWoundsTended".Translate(num), 3.65f);
                             }
                             Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                             Messages.Message("Makai_PassArollcheckTempFate".Translate(pawn.LabelShort, targetPawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                         }
                         else
                         {
-                            BodyPartRecord bR = targetPawn.RaceProps.body.AllParts.Where(x => x.def == BodyPartDefOf.Lung).FirstOrDefault();
-                            targetPawn.health.AddHediff(HediffDefOf.MissingBodyPart, targetPawn.RaceProps.body.AllParts.Where(x => x.def != BodyPartDefOf.Torso).RandomElement());
-                            Messages.Message(pawn.LabelShort + " has failed fate", MessageTypeDefOf.NegativeEvent);
+                            BodyPartRecord bR = targetPawn.RaceProps.body.AllParts.Where(x => x.def != BodyPartDefOf.Torso).RandomElement();
+                            targetPawn.health.AddHediff(HediffDefOf.MissingBodyPart, bR);
+                            Messages.Message(pawn.LabelShort + " has failed to change fate " + targetPawn.LabelShort + " lost their " + bR.Label, MessageTypeDefOf.NegativeEvent);
                         }
                     }
                 }
@@ -73,9 +73,9 @@ namespace MakaiTechPsycast.StringOfFate
                         }
                         else
                         {
-                            BodyPartRecord bR = targetPawn.RaceProps.body.AllParts.Where(x => x.def == BodyPartDefOf.Lung).FirstOrDefault();
-                            targetPawn.health.AddHediff(HediffDefOf.MissingBodyPart, targetPawn.RaceProps.body.AllParts.Where(x => x.def != BodyPartDefOf.Torso).RandomElement());
-                            Messages.Message(pawn.LabelShort + " has failed fate", MessageTypeDefOf.NegativeEvent);
+                            BodyPartRecord bR = targetPawn.RaceProps.body.AllParts.Where(x => x.def != BodyPartDefOf.Torso).RandomElement();
+                            targetPawn.health.AddHediff(HediffDefOf.MissingBodyPart, bR);
+                            Messages.Message(pawn.LabelShort + " has failed to change fate " + targetPawn.LabelShort + " lost their " + bR.Label, MessageTypeDefOf.NegativeEvent);
                         }
                     }                    
                 }
@@ -100,16 +100,16 @@ namespace MakaiTechPsycast.StringOfFate
                             }
                             if (num > 0)
                             {
-                                MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, "NumWoundsTended".Translate(num), 3.65f);
+                                MoteMaker.ThrowText(targetPawn.DrawPos, pawn.Map, "NumWoundsTended".Translate(num), 3.65f);
                             }
                             Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
                             Messages.Message("Makai_FailArollcheckTempFate".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
                         }
                         else
                         {
-                            BodyPartRecord bR = targetPawn.RaceProps.body.AllParts.Where(x => x.def == BodyPartDefOf.Lung).FirstOrDefault();
-                            targetPawn.health.AddHediff(HediffDefOf.MissingBodyPart, targetPawn.RaceProps.body.AllParts.Where(x => x.def != BodyPartDefOf.Torso).RandomElement());
-                            Messages.Message(pawn.LabelShort + " has failed fate", MessageTypeDefOf.NegativeEvent);
+                            BodyPartRecord bR = targetPawn.RaceProps.body.AllParts.Where(x => x.def != BodyPartDefOf.Torso).RandomElement();
+                            targetPawn.health.AddHediff(HediffDefOf.MissingBodyPart, bR);
+                            Messages.Message(pawn.LabelShort + " has failed to change fate " + targetPawn.LabelShort + " lost their " + bR.Label, MessageTypeDefOf.NegativeEvent);
                         }
                     }                                      
                 }

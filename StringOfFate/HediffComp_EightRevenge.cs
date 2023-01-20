@@ -38,7 +38,7 @@ namespace MakaiTechPsycast.StringOfFate
                 MoteMaker.ThrowText(Pawn.Position.ToVector3(),Pawn.Map,"Can't reflect each other");
                 return;
             }
-            dinfo.Instigator.TakeDamage(new DamageInfo(dinfo.Def,dinfo.Amount * multiplier, 999,hitPart: dinfo.HitPart));            
+            dinfo.Instigator.TakeDamage(new DamageInfo(dinfo.Def,dinfo.Amount * multiplier, 9999,hitPart: dinfo.HitPart));            
             Pawn.health.RemoveHediff(parent);
         }
     }

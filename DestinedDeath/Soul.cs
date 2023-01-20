@@ -16,8 +16,8 @@ namespace MakaiTechPsycast
 		public List<Trait> traits;
 		public BackstoryDef childhood;
 		public BackstoryDef adulthood;
-		public List<DirectPawnRelation> relations;
-		public HashSet<Pawn> relatedPawns;
+		//public List<DirectPawnRelation> relations;
+		//public HashSet<Pawn> relatedPawns;
 		public Dictionary<WorkTypeDef, int> priorities;
 		public DefMap<RecordDef, float> records = new DefMap<RecordDef, float>();
 		public Faction faction;
@@ -38,7 +38,7 @@ namespace MakaiTechPsycast
 			Scribe_Collections.Look(ref traits,"traits",LookMode.Undefined);
 			Scribe_Defs.Look(ref childhood, "childhood");
 			Scribe_Defs.Look(ref adulthood, "adulthood");
-			Scribe_Collections.Look(ref relations,"relation",LookMode.Undefined);
+			//Scribe_Collections.Look(ref relations,"relation",LookMode.Undefined);
 			Scribe_Collections.Look(ref priorities, "priorities");
 			Scribe_Deep.Look(ref records, "records");
 			Scribe_References.Look(ref faction, "faction", saveDestroyedThings: true);
