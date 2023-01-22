@@ -10,6 +10,7 @@ namespace MakaiTechPsycast.TrueDestruction
         public override void Notify_PawnUsedVerb(Verb verb, LocalTargetInfo target)
         {
             base.Notify_PawnUsedVerb(verb, target);
+            if (verb.GetType() == typeof(Verb_BeatFire)) return;
             parent.Severity += Props.severityPerHit;
         }
 

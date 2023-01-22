@@ -91,7 +91,7 @@ namespace MakaiTechPsycast.DestinedDeath
                 for (int i = 0; i < targets.Length; i++)
                 {                   
                     GlobalTargetInfo globalTargetInfo = targets[i];
-                    if(globalTargetInfo.Thing is Pawn victim && victim.Downed)
+                    if(globalTargetInfo.Thing is Pawn victim && victim.Downed && !victim.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
                         MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
                         moteBetween.Attach(globalTargetInfo.Thing, pawn);
@@ -160,7 +160,7 @@ namespace MakaiTechPsycast.DestinedDeath
                 for (int i = 0; i < targets.Length; i++)
                 {
                     GlobalTargetInfo globalTargetInfo = targets[i];
-                    if (globalTargetInfo.Thing is Pawn victim && victim.Downed)
+                    if (globalTargetInfo.Thing is Pawn victim && victim.Downed && !victim.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
                         MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
                         moteBetween.Attach(globalTargetInfo.Thing, pawn);
@@ -209,7 +209,7 @@ namespace MakaiTechPsycast.DestinedDeath
                 for (int i = 0; i < targets.Length; i++)
                 {
                     GlobalTargetInfo globalTargetInfo = targets[i];
-                    if (globalTargetInfo.Thing is Pawn victim && victim.Downed)
+                    if (globalTargetInfo.Thing is Pawn victim && victim.Downed && !victim.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
                         MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
                         moteBetween.Attach(globalTargetInfo.Thing, pawn);

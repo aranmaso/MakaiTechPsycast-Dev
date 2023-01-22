@@ -61,6 +61,7 @@ namespace MakaiTechPsycast.TrueDestruction
         public override void Notify_PawnUsedVerb(Verb verb, LocalTargetInfo target)
         {
             base.Notify_PawnUsedVerb(verb, target);
+            if (verb.GetType() == typeof(Verb_BeatFire)) return;
             if(verb.CurrentTarget.HasThing)
             {
                 verb.CurrentTarget.Thing.TakeDamage(new DamageInfo(verb.GetDamageDef(), count * 0.05f, 1f,instigator:Pawn,weapon:verb.EquipmentSource.def ?? null));

@@ -10,10 +10,6 @@ namespace MakaiTechPsycast.DistortedReality
         public int defenseCount;
         public bool stopOnlyEnemy;
         public int tickSinceTrigger;
-        public float rotation = 0f;
-        public MaterialPropertyBlock materialBlock = new MaterialPropertyBlock();
-
-        private Material bubbleMat = MaterialPool.MatFrom("Other/ShieldBubble", ShaderDatabase.Transparent);
 
         public HediffCompProperties_DistortedShield Props => (HediffCompProperties_DistortedShield)props;
 
@@ -44,6 +40,7 @@ namespace MakaiTechPsycast.DistortedReality
 
         public override void CompPostTick(ref float severityAdjustment)
         {
+
             if (Find.TickManager.TicksGame == tickSinceTrigger)
             {
                 foreach(Thing item in GenRadial.RadialDistinctThingsAround(Pawn.Position,Pawn.Map,2f,true))
@@ -52,7 +49,7 @@ namespace MakaiTechPsycast.DistortedReality
                     {
                         continue;
                     }
-                    if(stopOnlyEnemy && projectile.Launcher.Faction.HostileTo(Pawn.Faction))
+                    if(stopOnlyEnemy && (projectile.Launcher.Faction.HostileTo(Pawn.Faction) || projectile.Launcher.HostileTo(Pawn)))
                     {
                         projectile.Destroy();
                         Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_DD_Suck.Spawn(item.Position, Pawn.Map, 1);
@@ -74,8 +71,7 @@ namespace MakaiTechPsycast.DistortedReality
                             Pawn.health.RemoveHediff(Pawn.health.hediffSet.GetFirstHediffOfDef(parent.def));
                         }
                     }                    
-                }
-                rotation = (rotation + 1f) % 360f;                
+                }        
                 tickSinceTrigger += 5;
             }
             /*Vector3 pos = Pawn.DrawPos;

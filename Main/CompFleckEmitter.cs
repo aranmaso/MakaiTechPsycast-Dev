@@ -40,7 +40,7 @@ namespace MakaiTechPsycast
 						Emit();
 					}
 				}
-				else if(Props.fleckDefs != null)
+				else if(Props.fleckDefs != null && Props.useFleck)
                 {
 					for (int i = 0; i < Props.countPerEmit; i++)
 					{

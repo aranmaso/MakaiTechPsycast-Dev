@@ -60,15 +60,15 @@ namespace MakaiTechPsycast.StringOfFate
                             hediffComp_Disappears.ticksToDisappear += Mathf.Min(Props.tickIncrease, 5000);
                         }
                     }
-                    else if ((item.def == HediffDefOf.BloodLoss || item.def == HediffDefOf.Heatstroke || item.def == HediffDefOf.Hypothermia || item.def == HediffDefOf.ToxicBuildup || item.def == HediffDefOf.Malnutrition || (item.def == HediffDefOf.Anesthetic)) && item.def != parent.def && !(item is Hediff_Injury) || item.def.isBad)
+                    else if (item.def.maxSeverity <= 1f && (item.def == HediffDefOf.BloodLoss || item.def == HediffDefOf.Heatstroke || item.def == HediffDefOf.Hypothermia || item.def == HediffDefOf.ToxicBuildup || item.def == HediffDefOf.Malnutrition || (item.def == HediffDefOf.Anesthetic)) && item.def != parent.def && !(item is Hediff_Injury) || item.def.isBad)
                     {
                         item.Severity -= Props.severityToReverse;
                     }
                     else if(item is Hediff_Injury)
                     {
-                        item.Severity -= Props.severityToReverse;
+                        item.Severity -= Rand.Range(Props.severityToReverse,Props.severityToReverse*2);
                     }
-                    else if (item.def.maxSeverity > 1f && item.def != parent.def && item.def.isBad == false)
+                    else if (item.def.maxSeverity > 1f && item.def != parent.def && !item.def.isBad)
                     {
                         item.Severity += Props.severityToReverse;
                         HediffComp_Disappears hediffComp_Disappears = item.TryGetComp<HediffComp_Disappears>();
@@ -77,9 +77,9 @@ namespace MakaiTechPsycast.StringOfFate
                             hediffComp_Disappears.ticksToDisappear += Mathf.Min(Props.tickIncrease, 5000);
                         }
                     }
-                    else if(item.def.maxSeverity > 1f && item.def != parent.def && item.def.isBad == true && !(item is Hediff_Injury))
+                    else if(item.def.maxSeverity > 1f && item.def != parent.def && item.def.isBad && !(item is Hediff_Injury))
                     {
-                        item.Severity += Props.severityToReverse;
+                        item.Severity -= Props.severityToReverse;
                         HediffComp_Disappears hediffComp_Disappears = item.TryGetComp<HediffComp_Disappears>();
                         if (hediffComp_Disappears != null)
                         {
@@ -88,7 +88,7 @@ namespace MakaiTechPsycast.StringOfFate
                     }
                     else if (item is Hediff_Injury && item.IsTended())
                     {
-                        item.Severity -= Props.severityToReverse;
+                        item.Severity -= Rand.Range(Props.severityToReverse, Props.severityToReverse * 2);
                     }
                 }
                 if (pawn.health.hediffSet.GetInjuriesTendable().EnumerableCount() > 0)
