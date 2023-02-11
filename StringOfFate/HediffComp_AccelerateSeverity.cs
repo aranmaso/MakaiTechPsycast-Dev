@@ -45,7 +45,28 @@ namespace MakaiTechPsycast.StringOfFate
                 || item.def.defName == "Flame_Avatar"
                 || item.def.defName == "Frost_Avatar"
                 || item.def.defName == "Knowledge_Avatar"
-                || item.def.defName == "Existence_Resurrection")
+                || item.def.defName == "Existence_Resurrection"
+                || item.def.defName == "Penis"
+                || item.def.defName == "Vagina"
+                || item.def.defName == "Breasts"
+                || item.def.defName == "FeaturelessChest"
+                || item.def.defName == "DemonTentaclePenis"
+                || item.def.defName == "DemonPenis"
+                || item.def.defName == "DemonVagina"
+                || item.def.defName == "DemonAnus"
+                || item.def.defName == "PegDick"
+                || item.def.defName == "HydraulicPenis"
+                || item.def.defName == "HydraulicVagina"
+                || item.def.defName == "HydraulicBreasts"
+                || item.def.defName == "BionicPenis"
+                || item.def.defName == "BionicVagina"
+                || item.def.defName == "BionicBreasts"
+                || item.def.defName == "BionicAnus"
+                || item.def.defName == "ArchotechPenis"
+                || item.def.defName == "ArchotechVagina"
+                || item.def.defName == "ArchotechBreasts"
+                || item.def.defName == "ArchotechAnus"
+                || item.def.defName == "Anus")
                 {
                     continue;
                 }
@@ -76,7 +97,7 @@ namespace MakaiTechPsycast.StringOfFate
                 }
                 else if(item is Hediff_Injury && item.IsTended())
                 {
-                    item.Severity -= Props.severityToAccelerate;
+                    item.Severity -= Rand.Range(Props.severityToAccelerate, 10f);
                 }
             }
             if (Pawn.health.hediffSet.GetInjuriesTendable().EnumerableCount() > 0)

@@ -4,19 +4,18 @@ using UnityEngine;
 using Verse;
 using Verse.AI;
 using RimWorld;
-using VFECore.Abilities;
-using VFECore.UItils;
 using Verse.Sound;
 using HarmonyLib;
 
 namespace MakaiTechPsycast.GoldenOrder
 {
-	public class Dialog_ChooseTraitToRemove : Window
+	public class Dialog_ChooseTraitToAddThree : Window
 	{
 		private static readonly AccessTools.FieldRef<TraitDef, float> commonality = AccessTools.FieldRefAccess<TraitDef, float>("commonality");
 		private Pawn targetPawn;
 		private bool roll;
-		private List<TraitDef> preOpenGetTraitFromBase = DefDatabase<TraitDef>.AllDefs.Where(x => commonality(x) > 0).ToList();
+		private List<TraitDef> preOpenGetTraitFromBase = DefDatabase<TraitDef>.AllDefs.ToList();
+		private List<TraitDef> choose3 = new List<TraitDef>();
 
 		private Vector2 scrollPos;
 
@@ -24,10 +23,9 @@ namespace MakaiTechPsycast.GoldenOrder
 
 		public override Vector2 InitialSize => new Vector2(250f, 300f);
 
-		public Dialog_ChooseTraitToRemove(Pawn pawn, bool great)
+		public Dialog_ChooseTraitToAddThree(Pawn pawn)
 		{
 			targetPawn = pawn;
-			roll = great;
 			forcePause = true;
 			doCloseButton = false;
 			doCloseX = false;
@@ -38,28 +36,31 @@ namespace MakaiTechPsycast.GoldenOrder
 			resizeable = true;
 		}
 
-		private void doChangeTrait(Trait trait)
-        {
-			if(!roll)
-            {
-				targetPawn.story.traits.RemoveTrait(trait);
-				TraitDef selectedTrait = preOpenGetTraitFromBase.RandomElement();				
-				if (selectedTrait.degreeDatas.Count() <= 1)
-				{
-					targetPawn.story.traits.GainTrait(new Trait(selectedTrait));
-				}
-				else
-				{
-					targetPawn.story.traits.GainTrait(new Trait(selectedTrait, 1));
+		public override void PreOpen()
+		{
+			base.PreOpen();
+			if (choose3 != null)
+			{
+				choose3.Clear();
+			}
+			for (int i = 0; i < 3; i++)
+			{
+				choose3.Add(preOpenGetTraitFromBase.Where(x => !choose3.Contains(x) && commonality(x) > 0).RandomElement());
+			}
+		}
 
-				}
+		private void doChangeTrait(TraitDef trait)
+		{
+			if(trait.degreeDatas.Count() <= 1)
+            {
+				targetPawn.story.traits.GainTrait(new Trait(trait));
 			}
 			else
             {
-				targetPawn.story.traits.RemoveTrait(trait);
-				Find.WindowStack.Add(new Dialog_ChooseTraitToAddThree(targetPawn));
+				targetPawn.story.traits.GainTrait(new Trait(trait,1));
+
 			}
-        }
+		}
 
 		public override void DoWindowContents(Rect inRect)
 		{
@@ -69,17 +70,18 @@ namespace MakaiTechPsycast.GoldenOrder
 			outRect.yMax -= 40f;
 			Rect viewRect = new Rect(0f, 0f, inRect.width, lastHeight);
 			Widgets.BeginScrollView(inRect, ref scrollPos, viewRect, showScrollbars: true);
+			int count = 0;
 			try
 			{
 				float y = 5f;
-				foreach (Trait item in targetPawn.story.traits.allTraits)
+				foreach (TraitDef item in choose3)
 				{
 					Rect rect = new Rect(0f, y, viewRect.width, 28f);
 					rect.x = outRect.center.x - 100f;
 					rect.width = viewRect.width * 0.8f;
 					Rect rect2 = new Rect(0f, y + 20f, viewRect.width * 0.75f - 15f, 32f);
 					/*Widgets.Label(rect,hediff.LabelCap);*/
-					if (Widgets.ButtonText(rect, item.Label, true, true, true))
+					if (Widgets.ButtonText(rect, item.defName.ToString(), true, true, true))
 					{
 						Close();
 						doChangeTrait(item);
@@ -87,6 +89,11 @@ namespace MakaiTechPsycast.GoldenOrder
 						return;
 					}
 					y += 32f;
+					count++;
+					if (count == 5)
+					{
+						break;
+					}
 				}
 				lastHeight = y;
 			}
@@ -94,10 +101,6 @@ namespace MakaiTechPsycast.GoldenOrder
 			{
 				Widgets.EndScrollView();
 			}
-		}
-
-		public override void PostClose()
-		{
 		}
 	}
 }

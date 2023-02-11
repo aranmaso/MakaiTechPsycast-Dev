@@ -31,6 +31,7 @@ namespace MakaiTechPsycast.DistortedReality
 			closeOnClickedOutside = true;
 			closeOnAccept = false;
 			closeOnCancel = true;
+			resizeable = true;
 		}
 		private void RandomHediff(Hediff hediff)
 		{

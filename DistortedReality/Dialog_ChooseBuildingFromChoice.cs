@@ -1,12 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine;
 using Verse;
-using Verse.AI;
 using RimWorld;
-using VFECore.Abilities;
-using VFECore.UItils;
 using Verse.Sound;
 
 namespace MakaiTechPsycast.DistortedReality
@@ -78,7 +74,7 @@ namespace MakaiTechPsycast.DistortedReality
             {
 				choose5.Clear();
             }
-			for (int i = 0;i < 5;i++)
+			for (int i = 0;i < 3;i++)
             {
 				choose5.Add(preOpenMakeListFromBase.RandomElement());
 			}

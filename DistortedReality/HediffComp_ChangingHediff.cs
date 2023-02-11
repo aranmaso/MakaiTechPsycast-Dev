@@ -13,7 +13,7 @@ namespace MakaiTechPsycast.DistortedReality
         {
             base.CompPostPostAdd(dinfo);
             Hediff hediff = HediffMaker.MakeHediff(Props.hediffList.RandomElement(), parent.pawn);
-            hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = 2500;
+            hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Props.interval;
             parent.pawn.health.AddHediff(hediff, parent.pawn.RaceProps.body.AllParts.RandomElement());
 
         }
@@ -41,7 +41,7 @@ namespace MakaiTechPsycast.DistortedReality
                                                    where h != x
                                                    select h).RandomElement(),pawn);*/
             Hediff hediff = HediffMaker.MakeHediff(Props.hediffList.Where(h => h != x).RandomElement(),pawn);
-            hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = 2500;
+            hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Props.interval;
             pawn.health.AddHediff(hediff, pawn.RaceProps.body.AllParts.RandomElement());
         }
     }

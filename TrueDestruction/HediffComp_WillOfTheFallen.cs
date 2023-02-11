@@ -37,7 +37,6 @@ namespace MakaiTechPsycast.TrueDestruction
 
         public override void Notify_KilledPawn(Pawn victim, DamageInfo? dinfo)
         {
-            base.Notify_KilledPawn(victim, dinfo);
             foreach(Thought item in victim.needs?.mood?.thoughts?.memories?.Memories)
             {
                 if(buffQuality == 0)
@@ -64,8 +63,8 @@ namespace MakaiTechPsycast.TrueDestruction
             if (verb.GetType() == typeof(Verb_BeatFire)) return;
             if(verb.CurrentTarget.HasThing)
             {
-                verb.CurrentTarget.Thing.TakeDamage(new DamageInfo(verb.GetDamageDef(), count * 0.05f, 1f,instigator:Pawn,weapon:verb.EquipmentSource.def ?? null));
-                count -= Mathf.FloorToInt(count * 0.05f);
+                verb.CurrentTarget.Thing.TakeDamage(new DamageInfo(verb.GetDamageDef(), count * 0.1f, 1f,instigator:Pawn,weapon:verb.EquipmentSource.def ?? null));
+                count -= Mathf.FloorToInt(count * 0.1f);
             }            
         }
     }

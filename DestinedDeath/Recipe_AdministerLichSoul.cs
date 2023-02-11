@@ -50,10 +50,10 @@ namespace MakaiTechPsycast
             }
 			if (billDoer != null)
 			{
-				if (CheckSurgeryFail(billDoer, pawn, ingredients, part, bill) && !flag)
+				/*if (CheckSurgeryFail(billDoer, pawn, ingredients, part, bill) && !flag)
 				{
 					return;
-				}
+				}*/
 				TaleRecorder.RecordTale(TaleDefOf.DidSurgery, billDoer, pawn);
 				if ((PawnUtility.ShouldSendNotificationAbout(pawn) || PawnUtility.ShouldSendNotificationAbout(billDoer)) && flag)
 				{
@@ -71,7 +71,8 @@ namespace MakaiTechPsycast
 				Thing thing = ThingMaker.MakeThing(MakaiTechPsy_DefOf.MakaiTechPsy_DD_Soul);
 				if (thing is Soul soul2)
 				{
-					soul2.ownerName = soul.ownerName;
+					MakaiUtility.GetPawnCopy(soul2,pawn);
+					//soul2.ownerName = soul.ownerName;
 				}
 				GenPlace.TryPlaceThing(thing, billDoer.Position, billDoer.Map, ThingPlaceMode.Near);
 				soul.TryGetComp<CompUsable>().UsedBy(pawn);

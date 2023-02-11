@@ -33,11 +33,7 @@ namespace MakaiTechPsycast.CorruptedProphet
 			int cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
 			if (roll >= modExtension.successThreshold && roll < modExtension.greatSuccessThreshold)
 			{
-				float num = modExtension.hours * 2500f + (float)modExtension.ticks;
-				float statValue = pawn.GetStatValue(modExtension.multiplier ?? StatDefOf.PsychicSensitivity);
-				num *= statValue;
 				Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenSuccess, pawn);
-				hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num);
 				float focus = pawn.psychicEntropy.CurrentPsyfocus;
 				float severity = focus * 5;
 				if (!pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel))
@@ -46,18 +42,14 @@ namespace MakaiTechPsycast.CorruptedProphet
 				}
 				pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel).Severity += (severity);
 				pawn.psychicEntropy.OffsetPsyfocusDirectly(-1f);
-				pawn.psychicEntropy.OffsetPsyfocusDirectly(0.1f);
+				pawn.psychicEntropy.OffsetPsyfocusDirectly(0.01f);
 				Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 				Messages.Message("Makai_PassArollcheckTaint".Translate(pawn.LabelShort, severity, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 			}
 
 			if (roll >= modExtension.greatSuccessThreshold)
 			{
-				float num = modExtension.hours * 2500f + (float)modExtension.ticks;
-				float statValue = pawn.GetStatValue(modExtension.multiplier ?? StatDefOf.PsychicSensitivity);
-				num *= statValue;
 				Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenGreatSuccess, pawn);
-				hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num);
 				float focus = pawn.psychicEntropy.CurrentPsyfocus;
 				float severity = focus * 10;
 				if (!pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel))
@@ -66,17 +58,13 @@ namespace MakaiTechPsycast.CorruptedProphet
 				}
 				pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel).Severity += (severity);
 				pawn.psychicEntropy.OffsetPsyfocusDirectly(-1f);
-				pawn.psychicEntropy.OffsetPsyfocusDirectly(0.1f);
+				pawn.psychicEntropy.OffsetPsyfocusDirectly(0.01f);
 				Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 				Messages.Message("Makai_GreatPassArollcheckTaint".Translate(pawn.LabelShort, severity, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 			}
 			if (roll < modExtension.successThreshold)
 			{
-				float num = modExtension.hours * 2500f + (float)modExtension.ticks;
-				float statValue = pawn.GetStatValue(modExtension.multiplier ?? StatDefOf.PsychicSensitivity);
-				num *= statValue;
 				Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenFail, pawn);
-				hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num);
 				float focus = pawn.psychicEntropy.CurrentPsyfocus;
 				float severity = focus * 2;
 				if (!pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel))
@@ -85,7 +73,7 @@ namespace MakaiTechPsycast.CorruptedProphet
 				}
 				pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel).Severity += (severity);
 				pawn.psychicEntropy.OffsetPsyfocusDirectly(-1f);
-				pawn.psychicEntropy.OffsetPsyfocusDirectly(0.1f);
+				pawn.psychicEntropy.OffsetPsyfocusDirectly(0.01f);
 				Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
 				Messages.Message("Makai_FailArollcheckTaint".Translate(pawn.LabelShort, severity, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
 			}

@@ -41,6 +41,9 @@ namespace MakaiTechPsycast
         public static HediffDef MakaiTechPsy_TD_FrenziedMark;
         public static HediffDef MakaiTechPsy_TD_WillOfTheFallen;
 
+        public static HediffDef MakaiTechPsy_GD_PathOfNaraka;
+        public static HediffDef MakaiTechPsy_GD_Blackthread;
+
         public static DamageDef TrueDestruction_LightningTower;
         public static DamageDef TrueDestruction_LightningTowerBeam;
         public static DamageDef CorruptedProphet_CorruptedSky;
@@ -77,6 +80,7 @@ namespace MakaiTechPsycast
 
         public static BodyPartGroupDef Hands;
         public static BodyPartDef Pelvis;
+        public static BodyPartDef Foot;
 
         public static ShaderTypeDef MoteGlow;
 

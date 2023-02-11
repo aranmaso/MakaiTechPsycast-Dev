@@ -1,4 +1,5 @@
 ﻿using Verse;
+using System.Collections.Generic;
 
 namespace MakaiTechPsycast.StringOfFate
 {

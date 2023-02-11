@@ -47,6 +47,7 @@ namespace MakaiTechPsycast.TrueDestruction
                     orbitalStrike.duration = 60;
                     orbitalStrike.instigator = pawn;
                     orbitalStrike.damageAmount = 2;
+                    orbitalStrike.armorPen = 999f;
                     orbitalStrike.StartStrike();
                     Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawns.Position, pawns.Map, 0.5f);
                     effect.Cleanup();
@@ -70,6 +71,7 @@ namespace MakaiTechPsycast.TrueDestruction
                     orbitalStrike.duration = 60;
                     orbitalStrike.instigator = pawn;
                     orbitalStrike.damageAmount = 5;
+                    orbitalStrike.armorPen = 999f;
                     orbitalStrike.StartStrike();
                     Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawns.Position, pawns.Map, 0.5f);
                     effect.Cleanup();
@@ -93,6 +95,7 @@ namespace MakaiTechPsycast.TrueDestruction
                     orbitalStrike.duration = 60;
                     orbitalStrike.instigator = pawn;
                     orbitalStrike.damageAmount = 10;
+                    orbitalStrike.armorPen = 999f;
                     orbitalStrike.StartStrike();
                     Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawns.Position, pawns.Map, 0.5f);
                     effect.Cleanup();

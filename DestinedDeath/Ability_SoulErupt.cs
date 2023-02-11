@@ -43,7 +43,7 @@ namespace MakaiTechPsycast.DestinedDeath
 						effect.Cleanup();
 						GenExplosion.DoExplosion(targetPawn.Position, pawn.Map, 1.9f, modExtension.damageDef, pawn, modExtension.damageAmount, 1, null, null, null, targetPawn, null, 0, 0, GasType.RotStink);
 						Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
-						Messages.Message("Makai_PassArollcheckSoulSurge".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+						Messages.Message("Makai_PassArollcheckSoulSurge".Translate(targetPawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 					}
 					else if (targetPawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_MissingSoul))
 					{
@@ -61,7 +61,7 @@ namespace MakaiTechPsycast.DestinedDeath
 						effect.Cleanup();
 						GenExplosion.DoExplosion(targetPawn.Position, pawn.Map, 3.9f, modExtension.damageDef, pawn, modExtension.damageAmount*2, 1, null, null, null, targetPawn, null, 0, 0, GasType.RotStink);
 						Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
-						Messages.Message("Makai_GreatPassArollcheckSoulSurge".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+						Messages.Message("Makai_GreatPassArollcheckSoulSurge".Translate(targetPawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 					}
 					else if (targetPawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_MissingSoul))
 					{
@@ -79,7 +79,7 @@ namespace MakaiTechPsycast.DestinedDeath
 						effect.Cleanup();
 						GenExplosion.DoExplosion(targetPawn.Position, pawn.Map, 1f, modExtension.damageDef, pawn, modExtension.damageAmount, 1, null, null, null, targetPawn, null, 0, 0, GasType.RotStink);
 						Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
-						Messages.Message("Makai_FailArollcheckSoulSurge".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
+						Messages.Message("Makai_FailArollcheckSoulSurge".Translate(targetPawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
 					}
 					else if (targetPawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DD_MissingSoul))
 					{

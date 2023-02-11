@@ -30,10 +30,7 @@ namespace MakaiTechPsycast.DistortedReality
                     }
                     else if(!targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
-                        float num = modExtension.hours * 2500f + (float)modExtension.ticks;
-                        num *= pawn.GetStatValue(modExtension.multiplier ?? StatDefOf.PsychicSensitivity);
-                        Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenSuccess, targetPawn);
-                        hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num);
+                        MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks);
                         targetPawn.health.AddHediff(hediff);
                     }
                     Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
@@ -51,10 +48,7 @@ namespace MakaiTechPsycast.DistortedReality
                     }
                     else if (!targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
-                        float num = modExtension.hours * 2500f + (float)modExtension.ticks;
-                        num *= pawn.GetStatValue(modExtension.multiplier ?? StatDefOf.PsychicSensitivity);
-                        Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenSuccess, targetPawn);
-                        hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num * 2);
+                        MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours*2, modExtension.ticks);
                         targetPawn.health.AddHediff(hediff);
                     }
                     Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
@@ -72,10 +66,7 @@ namespace MakaiTechPsycast.DistortedReality
                     }
                     else if (!targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
-                        float num = modExtension.hours * 2500f + (float)modExtension.ticks;
-                        num *= pawn.GetStatValue(modExtension.multiplier ?? StatDefOf.PsychicSensitivity);
-                        Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenSuccess, targetPawn);
-                        hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num / 2);
+                        MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours/2, modExtension.ticks);
                         targetPawn.health.AddHediff(hediff);
                     }
                     Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);

@@ -9,17 +9,27 @@ namespace MakaiTechPsycast.DestinedDeath
 	{
 		public override void TransformValue(StatRequest req, ref float val)
 		{
-			if (req.HasThing && req.Thing is Pawn pawn && pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>() is HediffComp_SoulCollection soulConsume && soulConsume.SoulCount > 0)
+			if (req.HasThing && req.Thing is Pawn pawn)
 			{
-				val += soulConsume.BonustToStat / 100;
+				Hediff hediff = MakaiUtility.GetFirstHediffOfDef(pawn, MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul);
+				HediffComp_SoulCollection soulConsumed = hediff.TryGetComp<HediffComp_SoulCollection>();
+				if (hediff != null && soulConsumed.SoulCount > 0)
+                {
+					val += soulConsumed.BonustToStat / 100;
+				}				
 			}
 		}
 
 		public override string ExplanationPart(StatRequest req)
 		{
-			if (req.HasThing && req.Thing is Pawn pawn && pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul).TryGetComp<HediffComp_SoulCollection>() is HediffComp_SoulCollection soulConsume && soulConsume.SoulCount > 0)
+			if (req.HasThing && req.Thing is Pawn pawn)
 			{
-				return "Soul Consumed + " + soulConsume.BonustToStat;
+				Hediff hediff = MakaiUtility.GetFirstHediffOfDef(pawn, MakaiTechPsy_DefOf.MakaiTechPsy_DD_CollectSoul);
+				HediffComp_SoulCollection soulConsumed = hediff.TryGetComp<HediffComp_SoulCollection>();
+				if (hediff != null && soulConsumed.SoulCount > 0)
+				{
+					return "Soul Consumed + " + soulConsumed.BonustToStat;
+				}				
 			}
 			return null;
 		}

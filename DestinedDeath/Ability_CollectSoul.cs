@@ -54,6 +54,17 @@ namespace MakaiTechPsycast.DestinedDeath
 			int cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
 			if(roll >= modExtension.successThreshold && roll < modExtension.greatSuccessThreshold)
             {
+                for (int i = 0; i < targets.Length; i++)
+                {
+                    GlobalTargetInfo globalTargetInfo = targets[i];
+                    if (globalTargetInfo.Thing is Pawn victim && victim.Downed && !victim.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
+                    {
+                        MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
+                        moteBetween.Attach(globalTargetInfo.Thing, pawn);
+                        moteBetween.exactPosition = globalTargetInfo.Thing.DrawPos;
+                        GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
+                    }
+                }
                 foreach (GlobalTargetInfo globalTargetInfo in targets)
                 {
                     if (globalTargetInfo.Thing is Pawn pawn2)
@@ -87,18 +98,7 @@ namespace MakaiTechPsycast.DestinedDeath
                     {
                         continue;
                     }
-                }
-                for (int i = 0; i < targets.Length; i++)
-                {                   
-                    GlobalTargetInfo globalTargetInfo = targets[i];
-                    if(globalTargetInfo.Thing is Pawn victim && victim.Downed && !victim.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
-                    {
-                        MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
-                        moteBetween.Attach(globalTargetInfo.Thing, pawn);
-                        moteBetween.exactPosition = globalTargetInfo.Thing.DrawPos;
-                        GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
-                    }
-                }
+                }                
                 /*foreach(Thing item in GenRadial.RadialDistinctThingsAround(targetCell,pawn.Map,def.radius,true))
                 {
                     if(item is Corpse corpse)
@@ -123,6 +123,17 @@ namespace MakaiTechPsycast.DestinedDeath
 			}
 			if (roll >= modExtension.greatSuccessThreshold)
 			{
+                for (int i = 0; i < targets.Length; i++)
+                {
+                    GlobalTargetInfo globalTargetInfo = targets[i];
+                    if (globalTargetInfo.Thing is Pawn victim && victim.Downed && !victim.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
+                    {
+                        MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
+                        moteBetween.Attach(globalTargetInfo.Thing, pawn);
+                        moteBetween.exactPosition = globalTargetInfo.Thing.DrawPos;
+                        GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
+                    }
+                }
                 foreach (GlobalTargetInfo globalTargetInfo in targets)
                 {
                     if (globalTargetInfo.Thing is Pawn pawn2)
@@ -157,6 +168,11 @@ namespace MakaiTechPsycast.DestinedDeath
 						continue;
                     }                    
                 }
+                
+                Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+			}
+			if (roll < modExtension.successThreshold)
+			{
                 for (int i = 0; i < targets.Length; i++)
                 {
                     GlobalTargetInfo globalTargetInfo = targets[i];
@@ -168,10 +184,6 @@ namespace MakaiTechPsycast.DestinedDeath
                         GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
                     }
                 }
-                Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
-			}
-			if (roll < modExtension.successThreshold)
-			{
                 foreach (GlobalTargetInfo globalTargetInfo in targets)
                 {
                     if (globalTargetInfo.Thing is Pawn pawn2)
@@ -206,17 +218,7 @@ namespace MakaiTechPsycast.DestinedDeath
                         continue;
                     }
                 }
-                for (int i = 0; i < targets.Length; i++)
-                {
-                    GlobalTargetInfo globalTargetInfo = targets[i];
-                    if (globalTargetInfo.Thing is Pawn victim && victim.Downed && !victim.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
-                    {
-                        MoteBetween moteBetween = (MoteBetween)ThingMaker.MakeThing(VPE_DefOf.VPE_SoulOrbTransfer);
-                        moteBetween.Attach(globalTargetInfo.Thing, pawn);
-                        moteBetween.exactPosition = globalTargetInfo.Thing.DrawPos;
-                        GenSpawn.Spawn(moteBetween, globalTargetInfo.Thing.Position, pawn.Map);
-                    }
-                }
+                
                 Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
 			}
 		}

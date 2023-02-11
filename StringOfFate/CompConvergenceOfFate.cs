@@ -28,7 +28,7 @@ namespace MakaiTechPsycast.StringOfFate
         public override void PostExposeData()
         {
             Scribe_Values.Look(ref tickSinceTrigger, "tickSinceTrigger", 0);
-            Scribe_Values.Look(ref triggerRate, "triggerRate", 0);
+            Scribe_Values.Look(ref triggerRate, "triggerRate", Props.tickRate);
             Scribe_Values.Look(ref isToggledOn, "isToggledOn", true);
             Scribe_Values.Look(ref hediffToggle, "hediffToggle", true);
             base.PostExposeData();

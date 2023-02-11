@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DestinedDeath\Recipe_AdministerLichSoulNoConsume.cs" />
     <Compile Include="DistortedReality\Ability_DistortedBlessing.cs" />
     <Compile Include="DistortedReality\Ability_RandomizedEvent.cs" />
     <Compile Include="DistortedReality\Ability_RandomizedItemOnGround.cs" />
@@ -85,6 +86,19 @@
     <Compile Include="DistortedReality\Dialog_ChooseIncidentCategory.cs" />
     <Compile Include="DistortedReality\Dialog_ChooseRandomItem.cs" />
     <Compile Include="DistortedReality\Dialog_ChooseIncident.cs" />
+    <Compile Include="GoldenOrder\Ability_PathOfNaraka.cs" />
+    <Compile Include="GoldenOrder\Ability_SpawnThingGD.cs" />
+    <Compile Include="GoldenOrder\Ability_BlackThread.cs" />
+    <Compile Include="GoldenOrder\Ability_GiveHediffGD.cs" />
+    <Compile Include="GoldenOrder\Ability_FiveLine.cs" />
+    <Compile Include="GoldenOrder\HediffComp_Enlightment.cs" />
+    <Compile Include="GoldenOrder\HediffCompProperties_Enlightment.cs" />
+    <Compile Include="GoldenOrder\Dialog_ChooseTraitToAddThree.cs" />
+    <Compile Include="GoldenOrder\Projectile_BlackThread.cs" />
+    <Compile Include="Main\CompNearbyDamager.cs" />
+    <Compile Include="Main\CompProperties_NearbyDamager.cs" />
+    <Compile Include="GoldenOrder\HediffCompProperties_PathOfNaraka.cs" />
+    <Compile Include="GoldenOrder\HediffComp_PathOfNaraka.cs" />
     <Compile Include="Main\Ability_GiveHediffTemplate.cs" />
     <Compile Include="Main\Pawn_DrawAtMainPatch.cs" />
     <Compile Include="Main\Pawn_DrawAtPatchFate.cs" />
@@ -163,7 +177,7 @@
     <Compile Include="DestinedDeath\Ability_PullTowardCenter.cs" />
     <Compile Include="DestinedDeath\Ability_CollectSoul.cs" />
     <Compile Include="Main\Ability_PlaceBlueprint.cs" />
-    <Compile Include="GoldenOrder\Ability_ReEducate.cs" />
+    <Compile Include="GoldenOrder\Ability_ChangeTrait.cs" />
     <Compile Include="DestinedDeath\Ability_SoulErupt.cs" />
     <Compile Include="DestinedDeath\Ability_DeathWard.cs" />
     <Compile Include="Main\Ability_Template.cs" />

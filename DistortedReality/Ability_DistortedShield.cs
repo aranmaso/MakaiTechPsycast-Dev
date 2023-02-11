@@ -35,7 +35,7 @@ namespace MakaiTechPsycast.DistortedReality
                     else
                     {
                         float num = modExtension.hours * 2500f + (float)modExtension.ticks;
-                        num *= pawn.GetStatValue(modExtension.multiplier ?? StatDefOf.PsychicSensitivity);
+                        num *= targetPawn.GetStatValue(modExtension.multiplier ?? StatDefOf.PsychicSensitivity);
                         Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenSuccess, targetPawn);
                         if(hediff.TryGetComp<HediffComp_Disappears>() != null)
                         {
@@ -63,7 +63,7 @@ namespace MakaiTechPsycast.DistortedReality
                     else
                     {
                         float num = modExtension.hours * 2500f + (float)modExtension.ticks;
-                        num *= pawn.GetStatValue(modExtension.multiplier ?? StatDefOf.PsychicSensitivity);
+                        num *= targetPawn.GetStatValue(modExtension.multiplier ?? StatDefOf.PsychicSensitivity);
                         Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenSuccess, targetPawn);
                         if (hediff.TryGetComp<HediffComp_Disappears>() != null)
                         {
@@ -91,7 +91,7 @@ namespace MakaiTechPsycast.DistortedReality
                     else
                     {
                         float num = modExtension.hours * 2500f + (float)modExtension.ticks;
-                        num *= pawn.GetStatValue(modExtension.multiplier ?? StatDefOf.PsychicSensitivity);
+                        num *= targetPawn.GetStatValue(modExtension.multiplier ?? StatDefOf.PsychicSensitivity);
                         Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenSuccess, targetPawn);
                         if (hediff.TryGetComp<HediffComp_Disappears>() != null)
                         {

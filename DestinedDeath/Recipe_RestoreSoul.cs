@@ -30,7 +30,7 @@ namespace MakaiTechPsycast
 			List<Hediff> allHediffs = pawn.health.hediffSet.hediffs;
 			for (int i = 0; i < allHediffs.Count; i++)
 			{
-				if (allHediffs[i].Part != null && allHediffs[i].def == recipe.removesHediff && allHediffs[i].Visible)
+				if (allHediffs[i].def == recipe.removesHediff && allHediffs[i].Visible)
 				{
 					yield return allHediffs[i].Part;
 				}
@@ -39,8 +39,7 @@ namespace MakaiTechPsycast
 
 		public override void ApplyOnPawn(Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
 		{
-			bool flag = false;
-			string ownerName = null;
+			bool flag = false;			
 			foreach (Thing ingredient in ingredients)
 			{
 				if (ingredient is Soul soul)
@@ -48,16 +47,15 @@ namespace MakaiTechPsycast
 					if (soul.ownerName == pawn.Name.ToStringFull)
 					{
 						flag = true;
-						ownerName = soul.ownerName;
 					}
 				}
 			}
 			if (billDoer != null)
 			{
-				if (CheckSurgeryFail(billDoer, pawn, ingredients, part, bill) && !flag)
+				/*if (CheckSurgeryFail(billDoer, pawn, ingredients, part, bill) && !flag)
 				{
 					return;
-				}
+				}*/
 				TaleRecorder.RecordTale(TaleDefOf.DidSurgery, billDoer, pawn);
 				if ((PawnUtility.ShouldSendNotificationAbout(pawn) || PawnUtility.ShouldSendNotificationAbout(billDoer)) && flag)
 				{
@@ -67,16 +65,15 @@ namespace MakaiTechPsycast
 			}
 			if (!flag)
 			{
-				if (ingredients[0] is Soul soul && pawn != soul.originalPawn)
+				if (ingredients[0] is Soul soul)
 				{
 					MakaiUtility.applySoulData(soul,pawn);
 					Messages.Message("Soul transferred to a new body", MessageTypeDefOf.NegativeEvent);
 				}
 				Hediff hediff = pawn.health.hediffSet.hediffs.Find((Hediff x) => x.def == recipe.removesHediff && x.Part == part && x.Visible);
-				if (hediff != null && flag)
+				if (hediff != null)
 				{
 					pawn.health.RemoveHediff(hediff);
-					return;
 				}
 				/*Thing thing = ThingMaker.MakeThing(MakaiTechPsy_DefOf.MakaiTechPsy_DD_Soul);
 				if (thing is Soul soul2)
@@ -84,6 +81,14 @@ namespace MakaiTechPsycast
 					soul2.ownerName = ownerName;
 				}
 				GenPlace.TryPlaceThing(thing, billDoer.Position, billDoer.Map, ThingPlaceMode.Near);*/
+			}
+			else if(flag)
+            {
+				Hediff hediff = pawn.health.hediffSet.hediffs.Find((Hediff x) => x.def == recipe.removesHediff && x.Part == part && x.Visible);
+				if (hediff != null)
+				{
+					pawn.health.RemoveHediff(hediff);
+				}
 			}
 		}
 	}

@@ -339,6 +339,25 @@ namespace MakaiTechPsycast
             }
             return list;
         }
+
+        public static Dictionary<Pawn, IntVec3> GetNearbyPawnWithPosition(IntVec3 center,Map map,float radius)
+        {
+            Dictionary<Pawn, IntVec3> result = new Dictionary<Pawn, IntVec3>();
+            float num = radius * radius;
+            foreach(Pawn pawn in map.mapPawns.AllPawnsSpawned)
+            {
+                if(!pawn.Spawned || pawn.Dead)
+                {
+                    continue;
+                }
+                float num2 = pawn.Position.DistanceToSquared(center);
+                if(num2 <= num)
+                {
+                    result[pawn] = pawn.Position;
+                }
+            }
+            return result;
+        }
         public static FleckCreationData GetDataStatic(Vector3 loc, Map map, FleckDef fleckDef, float scale = 1f)
         {
             FleckCreationData result = default(FleckCreationData);

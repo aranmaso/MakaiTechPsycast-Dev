@@ -40,14 +40,14 @@ namespace MakaiTechPsycast.StringOfFate
                     if(targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
                         Hediff hediff = MakaiUtility.GetFirstHediffOfDef(targetPawn, modExtension.hediffDefWhenSuccess);
-                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 100;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 50;
                         hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 5;
                         hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount += fatedCount;
                     }
                     else
                     {
                         Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks);
-                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 100;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 50;
                         hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 5;
                         hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount += fatedCount;
                         targetPawn.health.AddHediff(hediff);
@@ -81,14 +81,14 @@ namespace MakaiTechPsycast.StringOfFate
                     if (targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
                         Hediff hediff = MakaiUtility.GetFirstHediffOfDef(targetPawn, modExtension.hediffDefWhenSuccess);
-                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 50;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 25;
                         hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 2;
                         hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount += fatedCount;
                     }
                     else
                     {
                         Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks);
-                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 50;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 25;
                         hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 2;
                         hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount += fatedCount;
                         targetPawn.health.AddHediff(hediff);
@@ -122,14 +122,14 @@ namespace MakaiTechPsycast.StringOfFate
                     if (targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
                         Hediff hediff = MakaiUtility.GetFirstHediffOfDef(targetPawn, modExtension.hediffDefWhenSuccess);
-                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 250;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 100;
                         hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 10;
                         hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount += fatedCount;
                     }
                     else
                     {
                         Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks);
-                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 250;
+                        hediff.TryGetComp<HediffComp_UltimateFate>().threshold = 100;
                         hediff.TryGetComp<HediffComp_UltimateFate>().maxThresholdPerHit = 10;
                         hediff.TryGetComp<HediffComp_UltimateFate>().fatedCount += fatedCount;
                         targetPawn.health.AddHediff(hediff);
