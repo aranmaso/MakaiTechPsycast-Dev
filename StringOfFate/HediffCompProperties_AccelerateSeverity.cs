@@ -9,7 +9,7 @@ namespace MakaiTechPsycast.StringOfFate
 
         public int tickIncrease = 1000;
 
-        public float severityToAccelerate = 0.1f;
+        public FloatRange severityToAccelerate;
 
         public HediffCompProperties_AccelerateSeverity()
         {

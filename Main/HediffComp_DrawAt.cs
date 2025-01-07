@@ -127,7 +127,8 @@ namespace MakaiTechPsycast
                 {
                     return;
                 }
-                drawPos.y = Props.altitudeLayerMatrix.AltitudeFor();
+                Vector3 pos1 = drawPos;
+                pos1.y = Props.altitudeLayerMatrix.AltitudeFor();
                 float angle = rotation;
                 if(Props.rotateReverse)
                 {
@@ -138,8 +139,9 @@ namespace MakaiTechPsycast
                     angle = 0;
                 }
                 Vector3 s = Props.drawOffset;
+                pos1 += Props.drawPosOffset;
                 Matrix4x4 matrix = default(Matrix4x4);
-                matrix.SetTRS(drawPos, Quaternion.AngleAxis(angle, Vector3.up), s);
+                matrix.SetTRS(pos1, Quaternion.AngleAxis(angle, Vector3.up), s);
                 Graphics.DrawMesh(MeshPool.plane10, matrix, TextureMat, 0);
 
                 rotation += Props.rotateSpeed;
@@ -155,7 +157,8 @@ namespace MakaiTechPsycast
                 {
                     return;
                 }
-                drawPos.y = Props.altitudeLayerMatrix2.AltitudeFor();
+                Vector3 pos2 = drawPos;
+                pos2.y = Props.altitudeLayerMatrix2.AltitudeFor();
                 float angle = rotation2;
                 if (Props.rotateReverse2)
                 {
@@ -166,8 +169,9 @@ namespace MakaiTechPsycast
                     angle = 0;
                 }
                 Vector3 s = Props.drawOffset2;
+                pos2 += Props.drawPosOffset2;
                 Matrix4x4 matrix = default(Matrix4x4);
-                matrix.SetTRS(drawPos, Quaternion.AngleAxis(angle, Vector3.up), s);
+                matrix.SetTRS(pos2, Quaternion.AngleAxis(angle, Vector3.up), s);
                 Graphics.DrawMesh(MeshPool.plane10, matrix, TextureMat2, 0);
 
                 rotation2 += Props.rotateSpeed2;
@@ -183,7 +187,8 @@ namespace MakaiTechPsycast
                 {
                     return;
                 }
-                drawPos.y = Props.altitudeLayerMatrix3.AltitudeFor();
+                Vector3 pos3 = drawPos;
+                pos3.y = Props.altitudeLayerMatrix3.AltitudeFor();
                 float angle = rotation3;
                 if (Props.rotateReverse3)
                 {
@@ -194,8 +199,9 @@ namespace MakaiTechPsycast
                     angle = 0;
                 }
                 Vector3 s = Props.drawOffset3;
+                pos3 += Props.drawPosOffset3;
                 Matrix4x4 matrix = default(Matrix4x4);
-                matrix.SetTRS(drawPos, Quaternion.AngleAxis(angle, Vector3.up), s);
+                matrix.SetTRS(pos3, Quaternion.AngleAxis(angle, Vector3.up), s);
                 Graphics.DrawMesh(MeshPool.plane10, matrix, TextureMat3, 0);
 
                 rotation3 += Props.rotateSpeed3;

@@ -1,6 +1,7 @@
 ﻿using Verse;
 using RimWorld;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace MakaiTechPsycast
 {
@@ -11,6 +12,8 @@ namespace MakaiTechPsycast
 		public HediffDef hediffDefWhenSuccess;
 
 		public HediffDef hediffDefWhenGreatSuccess;
+
+		public List<HediffDef> hediffsToApply;
 
 		public int successThreshold;
 
@@ -52,7 +55,7 @@ namespace MakaiTechPsycast
 
 		public StatDef multiplier;
 
-		public float hours = 1f;
+		public float hours;
 
 		public float costs;
 
@@ -65,6 +68,10 @@ namespace MakaiTechPsycast
 		public SkillDef skillBonus;
 
 		public SkillDef skillBonus2;
+
+		public FleckDef fleckDef;
+
+		public Vector3 fleckPosOffset;
 
 		public int repeatEffect;
 
@@ -79,5 +86,7 @@ namespace MakaiTechPsycast
 		public bool targetOnlyPrisonerOrSlave = false;
 
 		public bool testingMode;
+
+		public SimpleCurve curve;
 	}
 }

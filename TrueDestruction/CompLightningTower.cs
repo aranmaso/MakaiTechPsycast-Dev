@@ -104,32 +104,27 @@ namespace MakaiTechPsycast.TrueDestruction
 				yield return command_Action2;
 			}
 		}
-		private int nextTest = 0;
 
 		private int pawnCount = 0;
 
 		public override void PostExposeData()
 		{
-			Scribe_Values.Look(ref nextTest, "nextTest", 0);
+			Scribe_Values.Look(ref isToggledOn, "isToggledOn", false);			
+			Scribe_Values.Look(ref laserBeamToggle, "laserBeamToggle", false);			
+			Scribe_Values.Look(ref isAttackDowned, "isAttackDowned", false);			
+			Scribe_Values.Look(ref attackDowned, "attackDowned", false);			
 			base.PostExposeData();
 		}
 
-		public override void PostPostMake()
-		{
-			nextTest = Find.TickManager.TicksGame + Props.tickRate;
-			base.PostPostMake();
-		}
 
 		public override void CompTick()
 		{
 			base.CompTick();
-			if (Find.TickManager.TicksGame != nextTest)
+			if (parent.IsHashIntervalTick(Props.tickRate))
 			{
-				return;
-			}
-			Strike();
-			pawnCount = 0;
-			nextTest += Props.tickRate;
+				Strike();
+				pawnCount = 0;
+			}			
 		}
 
 		public void ReflectNow()
@@ -176,7 +171,8 @@ namespace MakaiTechPsycast.TrueDestruction
 					}
 					else
 					{
-						GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.EMP, null, 1, 2);
+						GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.EMP, null, 10, 2);
+						GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.Bomb, null, 10, 2);
 					}
 					parent.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(pawn.Map, pawn.Position));
 
@@ -204,7 +200,9 @@ namespace MakaiTechPsycast.TrueDestruction
 					}
 					else
 					{
-						GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.EMP, null, 1, 2);
+						GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.EMP, null, 10, 2);
+						GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.Bomb, null, 10, 2);
+
 					}
 					parent.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(pawn.Map, pawn.Position));
 

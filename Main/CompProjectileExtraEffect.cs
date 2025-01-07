@@ -24,6 +24,12 @@ namespace MakaiTechPsycast
 
         private CompProperties_ProjectileExtraEffect Props => (CompProperties_ProjectileExtraEffect)props;
 
+        public override void PostExposeData()
+        {
+            Scribe_Values.Look(ref ticksSinceLastShoot, "ticksSinceLastShoot",0);
+            Scribe_Values.Look(ref ticksSinceLastHurt, "ticksSinceLastHurt", 0);
+            Scribe_Values.Look(ref ticksSinceLastCatch, "ticksSinceLastCatch", 0);
+        }
         public override void PostPostMake()
         {
             ticksSinceLastShoot = Find.TickManager.TicksGame + Props.interval;

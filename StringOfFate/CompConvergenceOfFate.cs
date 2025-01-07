@@ -12,8 +12,6 @@ namespace MakaiTechPsycast.StringOfFate
 
         public int triggerRate;
 
-        public int tickSinceTrigger;
-
         public float radius;
 
         private bool isToggledOn = true;
@@ -27,7 +25,6 @@ namespace MakaiTechPsycast.StringOfFate
         }
         public override void PostExposeData()
         {
-            Scribe_Values.Look(ref tickSinceTrigger, "tickSinceTrigger", 0);
             Scribe_Values.Look(ref triggerRate, "triggerRate", Props.tickRate);
             Scribe_Values.Look(ref isToggledOn, "isToggledOn", true);
             Scribe_Values.Look(ref hediffToggle, "hediffToggle", true);
@@ -109,14 +106,12 @@ namespace MakaiTechPsycast.StringOfFate
         }
         public override void CompTick()
         {
-            tickSinceTrigger++;
-            if (tickSinceTrigger >= triggerRate)
+            if (parent.IsHashIntervalTick(triggerRate))
             {
                 if(isToggledOn)
                 {
                     GiveHediff();
                 }                
-                tickSinceTrigger = 0;
             }            
             base.CompTick();
         }

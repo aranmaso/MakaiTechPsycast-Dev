@@ -36,7 +36,7 @@ namespace MakaiTechPsycast.TrueDestruction
             IntVec3 spawnPosition = MakaiUtility.RandomCellAroundCellBase(globalTargetInfo.Cell,-4,4);
             IntVec3 spawnPositionOffset = spawnPosition;
             spawnPositionOffset.z += 10;
-            Projectile projectile = (Projectile)GenSpawn.Spawn(modExtension.projectileWhenSuccess, spawnPositionOffset, instigator.Map);
+            Projectile projectile = (Projectile)GenSpawn.Spawn(modExtension.projectileWhenSuccess, spawnPositionOffset.ClampInsideMap(pawn.Map), instigator.Map);
             if (targetThing != null)
             {
                 float rand = Rand.Value;

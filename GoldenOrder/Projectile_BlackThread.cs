@@ -10,18 +10,19 @@ using Verse.Sound;
 
 namespace MakaiTechPsycast.GoldenOrder
 {
+	[StaticConstructorOnStartup]
     public class Projectile_BlackThread : Projectile
     {
         private static readonly Material shadowMaterial = MaterialPool.MatFrom("Things/Skyfaller/SkyfallerShadowCircle", ShaderDatabase.Transparent);
 
-        public static Func<Projectile, float> ArcHeightFactor = (Func<Projectile, float>)Delegate.CreateDelegate(typeof(Func<Projectile, float>), null, AccessTools.Method(typeof(Projectile), "get_ArcHeightFactor"));
+        //public static Func<Projectile, float> ArcHeightFactor = (Func<Projectile, float>)Delegate.CreateDelegate(typeof(Func<Projectile, float>), null, AccessTools.Method(typeof(Projectile), "get_ArcHeightFactor"));
 
 		private Sustainer sustainer;
 
 		public int tickTosustaine = 2500;
-		public override void Draw()
-		{
-			float num = ArcHeightFactor(this) * GenMath.InverseParabola(base.DistanceCoveredFraction);
+		protected override void DrawAt(Vector3 drawLoc, bool flip = false)
+        {
+			float num = ArcHeightFactor * GenMath.InverseParabola(base.DistanceCoveredFraction);
 			float y = Vector3.Distance(origin.Yto0(), DrawPos.Yto0());
 			Vector3 vector = Vector3.Lerp(origin, DrawPos, 0.5f);
 			vector.y += 5f;
@@ -83,8 +84,8 @@ namespace MakaiTechPsycast.GoldenOrder
 			}
 		}
 
-		protected override void Impact(Thing hitThing, bool blockedByShield = false)
-		{
-		}
-	}
+        protected override void Impact(Thing hitThing, bool blockedByShield = false)
+        {
+        }
+    }
 }

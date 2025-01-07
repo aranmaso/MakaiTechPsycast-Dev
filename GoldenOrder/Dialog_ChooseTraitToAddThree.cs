@@ -11,7 +11,7 @@ namespace MakaiTechPsycast.GoldenOrder
 {
 	public class Dialog_ChooseTraitToAddThree : Window
 	{
-		private static readonly AccessTools.FieldRef<TraitDef, float> commonality = AccessTools.FieldRefAccess<TraitDef, float>("commonality");
+		//private static readonly AccessTools.FieldRef<TraitDef, float> commonality = AccessTools.FieldRefAccess<TraitDef, float>("commonality");
 		private Pawn targetPawn;
 		private bool roll;
 		private List<TraitDef> preOpenGetTraitFromBase = DefDatabase<TraitDef>.AllDefs.ToList();
@@ -45,7 +45,7 @@ namespace MakaiTechPsycast.GoldenOrder
 			}
 			for (int i = 0; i < 3; i++)
 			{
-				choose3.Add(preOpenGetTraitFromBase.Where(x => !choose3.Contains(x) && commonality(x) > 0).RandomElement());
+				choose3.Add(preOpenGetTraitFromBase.Where(x => !choose3.Contains(x) && x.commonality > 0).RandomElement());
 			}
 		}
 

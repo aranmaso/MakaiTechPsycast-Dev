@@ -12,12 +12,12 @@ namespace MakaiTechPsycast
 		public Name name;
 		public string title;
 		public Pawn originalPawn;
-		public List<SkillRecord> skills;
+		public List<SkillRecord> skills = new List<SkillRecord>();
 		public List<Trait> traits;
 		public BackstoryDef childhood;
 		public BackstoryDef adulthood;
-		//public List<DirectPawnRelation> relations;
-		//public HashSet<Pawn> relatedPawns;
+		public List<DirectPawnRelation> relations;
+		public HashSet<Pawn> relatedPawns;
 		public Dictionary<WorkTypeDef, int> priorities;
 		public DefMap<RecordDef, float> records = new DefMap<RecordDef, float>();
 		public Faction faction;
@@ -26,29 +26,36 @@ namespace MakaiTechPsycast
 		public float certainty;
 		public Precept_RoleMulti precept_RoleMulti;
 		public Precept_RoleSingle precept_RoleSingle;
+		public float pawnMarketValue;
+		public bool isPrisoner;
+		public bool isSlave;
 
 		public override void ExposeData()
 		{
 			base.ExposeData();
 			Scribe_Values.Look(ref ownerName, "ownerName");
+			Scribe_Values.Look(ref pawnMarketValue, "pawnMarketValue");
 			Scribe_Deep.Look(ref name, "name");
 			Scribe_Values.Look(ref title, "title");
 			Scribe_References.Look(ref originalPawn, "originalPawn", saveDestroyedThings: true);
 			Scribe_Collections.Look(ref skills, "skills", LookMode.Undefined);
-			Scribe_Collections.Look(ref traits,"traits",LookMode.Undefined);
+			Scribe_Collections.Look(ref traits, "traits", LookMode.Undefined);
 			Scribe_Defs.Look(ref childhood, "childhood");
 			Scribe_Defs.Look(ref adulthood, "adulthood");
-			//Scribe_Collections.Look(ref relations,"relation",LookMode.Undefined);
+			Scribe_Collections.Look(ref relations, "relation", LookMode.Undefined);
+			Scribe_Collections.Look(ref relatedPawns, "relatedPawns", LookMode.Reference);
 			Scribe_Collections.Look(ref priorities, "priorities");
 			Scribe_Deep.Look(ref records, "records");
 			Scribe_References.Look(ref faction, "faction", saveDestroyedThings: true);
+			Scribe_Values.Look(ref isPrisoner, "isPrisoner", false);
 			if (ModsConfig.IdeologyActive)
-            {
+			{
 				Scribe_References.Look(ref ideo, "ideo", saveDestroyedThings: true);
 				Scribe_Values.Look(ref favColor, "favoriteColor");
 				Scribe_Values.Look(ref certainty, "certainty", 0f);
 				Scribe_References.Look(ref precept_RoleSingle, "precept_RoleSingle");
 				Scribe_References.Look(ref precept_RoleMulti, "precept_RoleMulti");
+				Scribe_Values.Look(ref isSlave, "isSlave", false);
 			}
 		}
 		public override string LabelNoCount

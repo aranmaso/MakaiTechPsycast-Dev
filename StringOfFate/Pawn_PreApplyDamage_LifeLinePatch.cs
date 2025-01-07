@@ -21,18 +21,15 @@ namespace MakaiTechPsycast.StringOfFate
             dinfo.SetAmount(0);
             foreach(Hediff_Injury item in __instance.health.hediffSet.hediffs.OfType<Hediff_Injury>().Distinct())
             {
-                if(item is Hediff_Injury injury)
+                if (originalDamage > 0)
                 {
-                    if(originalDamage > 0)
-                    {
-                        float deduct = originalDamage * 0.1f;
-                        injury.Severity -= deduct;
-                        originalDamage -= deduct;
-                    }
+                    float deduct = originalDamage * 0.1f;
+                    item.Severity -= deduct;
+                    originalDamage -= deduct;
                 }
                 else
                 {
-                    continue;
+                    break;
                 }
             }
         }

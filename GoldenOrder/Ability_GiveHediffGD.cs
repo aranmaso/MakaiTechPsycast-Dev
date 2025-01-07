@@ -26,62 +26,70 @@ namespace MakaiTechPsycast.GoldenOrder
             return true;
         }
         public override void Cast(params GlobalTargetInfo[] targets)
-        {
-            base.Cast(targets);
-            MakaiUtility.GetFirstHediffOfDef(pawn, MakaiTechPsy_DefOf.MakaiTechPsy_GD_PathOfNaraka).TryGetComp<HediffComp_PathOfNaraka>().currentStack -= modExtension.costs;
-            RollInfo rollinfo = new RollInfo();
-            rollinfo = MakaiUtility.Roll1D20(pawn, modExtension.skillBonus, rollinfo, modExtension.skillBonus2 ?? null);
-            if (rollinfo.roll >= modExtension.successThreshold && rollinfo.roll < modExtension.greatSuccessThreshold)
+        {            
+            if (!pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiTechPsy_GD_PathOfNaraka)
+            || MakaiUtility.GetFirstHediffOfDef(pawn, MakaiTechPsy_DefOf.MakaiTechPsy_GD_PathOfNaraka).TryGetComp<HediffComp_PathOfNaraka>().currentStack < modExtension.costs)
             {
-                foreach (GlobalTargetInfo globalTargetInfo in targets)
-                {
-                    if (globalTargetInfo.Thing is Pawn targetPawn)
-                    {
-                        if(modExtension.targetOnlyEnemies && targetPawn.Faction == pawn.Faction && !(targetPawn.Faction.HostileTo(pawn.Faction) || targetPawn.HostileTo(pawn) || targetPawn.HostileTo(pawn.Faction)))
-                        {
-                            continue;                            
-                        }
-                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
-                        targetPawn.health.AddHediff(hediff);
-                        Messages.Message("Makai_PassArollcheckGiveHediffGeneric".Translate(pawn.LabelShort, hediff.LabelCap, targetPawn.LabelShort, pawn.Named("USER"), targetPawn.Named("USER2")), pawn, MessageTypeDefOf.PositiveEvent);
-                    }
-                }
-                Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);                
+                Messages.Message("Not Enough mental strength", MessageTypeDefOf.NeutralEvent, false);
             }
-            if (rollinfo.roll >= modExtension.greatSuccessThreshold)
+            else
             {
-                foreach (GlobalTargetInfo globalTargetInfo in targets)
+                base.Cast(targets);
+                MakaiUtility.GetFirstHediffOfDef(pawn, MakaiTechPsy_DefOf.MakaiTechPsy_GD_PathOfNaraka).TryGetComp<HediffComp_PathOfNaraka>().currentStack -= modExtension.costs;
+                RollInfo rollinfo = new RollInfo();
+                rollinfo = MakaiUtility.Roll1D20(pawn, modExtension.skillBonus, rollinfo, modExtension.skillBonus2 ?? null);
+                if (rollinfo.roll >= modExtension.successThreshold && rollinfo.roll < modExtension.greatSuccessThreshold)
                 {
-                    if (globalTargetInfo.Thing is Pawn targetPawn)
+                    foreach (GlobalTargetInfo globalTargetInfo in targets)
                     {
-                        if (modExtension.targetOnlyEnemies && targetPawn.Faction == pawn.Faction && !(targetPawn.Faction.HostileTo(pawn.Faction) || targetPawn.HostileTo(pawn) || targetPawn.HostileTo(pawn.Faction)))
+                        if (globalTargetInfo.Thing is Pawn targetPawn)
                         {
-                            continue;
+                            if (modExtension.targetOnlyEnemies && targetPawn.Faction == pawn.Faction && !(targetPawn.Faction.HostileTo(pawn.Faction) || targetPawn.HostileTo(pawn) || targetPawn.HostileTo(pawn.Faction)))
+                            {
+                                continue;
+                            }
+                            Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours, modExtension.ticks, modExtension.multiplier);
+                            targetPawn.health.AddHediff(hediff);
+                            Messages.Message("Makai_PassArollcheckGiveHediffGeneric".Translate(pawn.LabelShort, hediff.LabelCap, targetPawn.LabelShort, pawn.Named("USER"), targetPawn.Named("USER2")), pawn, MessageTypeDefOf.PositiveEvent);
                         }
-                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours *2, modExtension.ticks *2, modExtension.multiplier);
-                        targetPawn.health.AddHediff(hediff);
-                        Messages.Message("Makai_GreatPassArollcheckGiveHediffGeneric".Translate(pawn.LabelShort, hediff.LabelCap, targetPawn.LabelShort, pawn.Named("USER"), targetPawn.Named("USER2")), pawn, MessageTypeDefOf.PositiveEvent);
                     }
+                    Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                 }
-                Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
-            }
-            if (rollinfo.roll < modExtension.successThreshold)
-            {
-                foreach (GlobalTargetInfo globalTargetInfo in targets)
+                if (rollinfo.roll >= modExtension.greatSuccessThreshold)
                 {
-                    if (globalTargetInfo.Thing is Pawn targetPawn)
+                    foreach (GlobalTargetInfo globalTargetInfo in targets)
                     {
-                        if (modExtension.targetOnlyEnemies && targetPawn.Faction == pawn.Faction && !(targetPawn.Faction.HostileTo(pawn.Faction) || targetPawn.HostileTo(pawn) || targetPawn.HostileTo(pawn.Faction)))
+                        if (globalTargetInfo.Thing is Pawn targetPawn)
                         {
-                            continue;
+                            if (modExtension.targetOnlyEnemies && targetPawn.Faction == pawn.Faction && !(targetPawn.Faction.HostileTo(pawn.Faction) || targetPawn.HostileTo(pawn) || targetPawn.HostileTo(pawn.Faction)))
+                            {
+                                continue;
+                            }
+                            Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours * 2, modExtension.ticks * 2, modExtension.multiplier);
+                            targetPawn.health.AddHediff(hediff);
+                            Messages.Message("Makai_GreatPassArollcheckGiveHediffGeneric".Translate(pawn.LabelShort, hediff.LabelCap, targetPawn.LabelShort, pawn.Named("USER"), targetPawn.Named("USER2")), pawn, MessageTypeDefOf.PositiveEvent);
                         }
-                        Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours /2, modExtension.ticks /2, modExtension.multiplier);
-                        targetPawn.health.AddHediff(hediff);
-                        Messages.Message("Makai_FailArollcheckGiveHediffGeneric".Translate(pawn.LabelShort, hediff.LabelCap, targetPawn.LabelShort, pawn.Named("USER"), targetPawn.Named("USER2")), pawn, MessageTypeDefOf.PositiveEvent);
                     }
+                    Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                 }
-                Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
-            }
+                if (rollinfo.roll < modExtension.successThreshold)
+                {
+                    foreach (GlobalTargetInfo globalTargetInfo in targets)
+                    {
+                        if (globalTargetInfo.Thing is Pawn targetPawn)
+                        {
+                            if (modExtension.targetOnlyEnemies && targetPawn.Faction == pawn.Faction && !(targetPawn.Faction.HostileTo(pawn.Faction) || targetPawn.HostileTo(pawn) || targetPawn.HostileTo(pawn.Faction)))
+                            {
+                                continue;
+                            }
+                            Hediff hediff = MakaiUtility.CreateCustomHediffWithDuration(targetPawn, modExtension.hediffDefWhenSuccess, modExtension.hours / 2, modExtension.ticks / 2, modExtension.multiplier);
+                            targetPawn.health.AddHediff(hediff);
+                            Messages.Message("Makai_FailArollcheckGiveHediffGeneric".Translate(pawn.LabelShort, hediff.LabelCap, targetPawn.LabelShort, pawn.Named("USER"), targetPawn.Named("USER2")), pawn, MessageTypeDefOf.PositiveEvent);
+                        }
+                    }
+                    Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
+                }
+            }            
         }
     }
 }

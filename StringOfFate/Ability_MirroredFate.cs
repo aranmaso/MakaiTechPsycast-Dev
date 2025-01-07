@@ -20,11 +20,12 @@ namespace MakaiTechPsycast.StringOfFate
                 if (targets[0].Thing is Pawn targetPawn)
                 {
                     MirroredFateInfo minfo = new MirroredFateInfo();
-                    minfo = MakaiUtility.GetMirroredFateInfo(minfo,10,0.5f,reflectOnlyEnemies:true,reflectOnlyFriendly:false,reflectMelee: true,reflectRanged: false,userTakeDamage: false);
+                    minfo = MakaiUtility.GetMirroredFateInfo(minfo,20,0.5f,reflectOnlyEnemies:true,reflectOnlyFriendly:false,reflectMelee: true,reflectRanged: false,userTakeDamage: false);
                     if (targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
                         targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_Disappears>().ticksToDisappear += Mathf.FloorToInt(modExtension.hours * 2500);
                         targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_MirroredFate>().reflectCount += 5;
+                        targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_MirroredFate>().info = "normal";
                     }
                     else
                     {
@@ -49,11 +50,12 @@ namespace MakaiTechPsycast.StringOfFate
                 if (targets[0].Thing is Pawn targetPawn)
                 {
                     MirroredFateInfo minfo = new MirroredFateInfo();
-                    minfo = MakaiUtility.GetMirroredFateInfo(minfo, 20,0.5f, reflectOnlyEnemies: true, reflectOnlyFriendly: false, reflectMelee: true, reflectRanged: true, userTakeDamage: false);
+                    minfo = MakaiUtility.GetMirroredFateInfo(minfo, 40, 1f, reflectOnlyEnemies: true, reflectOnlyFriendly: false, reflectMelee: true, reflectRanged: true, userTakeDamage: false);
                     if (targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
                         targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_Disappears>().ticksToDisappear += Mathf.FloorToInt(modExtension.hours * 2500);
                         targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_MirroredFate>().reflectCount += 10;
+                        targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_MirroredFate>().info = "great";
                     }
                     else
                     {
@@ -78,11 +80,12 @@ namespace MakaiTechPsycast.StringOfFate
                 if (targets[0].Thing is Pawn targetPawn)
                 {
                     MirroredFateInfo minfo = new MirroredFateInfo();
-                    minfo = MakaiUtility.GetMirroredFateInfo(minfo, 5, 0.25f, reflectOnlyEnemies: true, reflectOnlyFriendly: false, reflectMelee: true, reflectRanged: false, userTakeDamage: true);
+                    minfo = MakaiUtility.GetMirroredFateInfo(minfo, 10, 0.25f, reflectOnlyEnemies: true, reflectOnlyFriendly: false, reflectMelee: true, reflectRanged: false, userTakeDamage: true);
                     if (targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
                         targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_Disappears>().ticksToDisappear += Mathf.FloorToInt(modExtension.hours * 2500);
                         targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_MirroredFate>().reflectCount += 2;
+                        targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_MirroredFate>().info = "failed";
                     }
                     else
                     {

@@ -15,13 +15,30 @@ namespace MakaiTechPsycast.DestinedDeath
 		private static bool Prefix(Pawn __instance)
 		{
 			Hediff firstHediffOfDef = __instance.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_LichSoul);
+			/*List<Thing> thinghaulable = __instance.Map.listerThings.ThingsOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DD_Soul) ?? null;
+			bool soulExist = false;
+			if(thinghaulable != null)
+            {
+				for (int i = 0; i < thinghaulable.Count; i++)
+				{
+					if (thinghaulable[i].def == MakaiTechPsy_DefOf.MakaiTechPsy_DD_Soul && thinghaulable[i] is Soul soul)
+					{
+						if (soul.ownerName == __instance.Name.ToStringFull)
+						{
+							soulExist = true;
+						}
+					}
+				}
+			}*/			
 			if (firstHediffOfDef != null)
 			{
 				return false;
 			}
+			
 			return true;
 		}
 	}
+	
 	[HarmonyPatch(typeof(Pawn_HealthTracker), "ShouldBeDowned")]
 	public static class Patch_Undead_CantDowned_Patch
 	{

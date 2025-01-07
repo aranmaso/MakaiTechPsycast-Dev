@@ -19,7 +19,6 @@ namespace MakaiTechPsycast.StringOfFate
                 AccelerateSeverity();
             }
         }
-
         public void AccelerateSeverity()
         {
             IEnumerable<Hediff> hediffs = Pawn.health.hediffSet.hediffs;
@@ -74,7 +73,7 @@ namespace MakaiTechPsycast.StringOfFate
                 {
                     if (item.def.maxSeverity <= 1f && item.TryGetComp<HediffComp_SeverityPerDay>() != null && item.TryGetComp<HediffComp_SeverityPerDay>().SeverityChangePerDay() < 0 && !item.def.isBad)
                     {
-                        item.Severity -= Props.severityToAccelerate;
+                        item.Severity -= Props.severityToAccelerate.RandomInRange;
                     }
                     HediffComp_Disappears hediffComp_Disappears = item.TryGetComp<HediffComp_Disappears>();
                     if (hediffComp_Disappears != null)
@@ -84,11 +83,15 @@ namespace MakaiTechPsycast.StringOfFate
                 }
                 else if ((item.def == HediffDefOf.BloodLoss || item.def == HediffDefOf.Heatstroke || item.def == HediffDefOf.Hypothermia || item.def == HediffDefOf.ToxicBuildup || item.def == HediffDefOf.Malnutrition || item.def == HediffDefOf.Anesthetic) && item.def != parent.def || item.def.isBad)
                 {
-                    item.Severity += Props.severityToAccelerate;
+                    item.Severity += Props.severityToAccelerate.RandomInRange;
+                }
+                else if (!item.def.tags.NullOrEmpty() && item.def.tags.Contains("CTR_Realm"))
+                {
+                    item.Severity += Props.severityToAccelerate.RandomInRange;
                 }
                 else if (item.def.maxSeverity > 1f && item.def != parent.def && item.def.isBad == false && !(item is Hediff_Injury))
                 {
-                    item.Severity -= Props.severityToAccelerate;
+                    item.Severity -= Props.severityToAccelerate.RandomInRange;
                     HediffComp_Disappears hediffComp_Disappears = item.TryGetComp<HediffComp_Disappears>();
                     if (hediffComp_Disappears != null)
                     {
@@ -97,10 +100,10 @@ namespace MakaiTechPsycast.StringOfFate
                 }
                 else if(item is Hediff_Injury && item.IsTended())
                 {
-                    item.Severity -= Rand.Range(Props.severityToAccelerate, 10f);
+                    item.Severity -= Rand.Range(Props.severityToAccelerate.RandomInRange, 10f);
                 }
             }
-            if (Pawn.health.hediffSet.GetInjuriesTendable().EnumerableCount() > 0)
+            if (Pawn.health.hediffSet.GetHediffsTendable().EnumerableCount() > 0)
             {
                 Hediff_Injury inju = MakaiUtility.FindInjury(Pawn);
                 Pawn.health.RemoveHediff(inju);

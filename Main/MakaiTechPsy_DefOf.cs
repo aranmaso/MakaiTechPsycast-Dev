@@ -44,6 +44,7 @@ namespace MakaiTechPsycast
         public static HediffDef MakaiTechPsy_GD_PathOfNaraka;
         public static HediffDef MakaiTechPsy_GD_Blackthread;
 
+        public static DamageDef TrueDestruction_BonusDamage;
         public static DamageDef TrueDestruction_LightningTower;
         public static DamageDef TrueDestruction_LightningTowerBeam;
         public static DamageDef CorruptedProphet_CorruptedSky;
@@ -60,16 +61,23 @@ namespace MakaiTechPsycast
         public static ThingDef MakaiTechPsy_ReflectWarp;
         public static ThingDef MakaiPsy_DD_Bolt;
         public static ThingDef MakaiPsy_TD_Beam;
+        public static ThingDef MakaiPsy_TD_Rhongo;
+        public static ThingDef MakaiPsy_TD_HeavenlyChain;
+        public static ThingDef MakaiPsy_TD_SwordRain;
+        public static ThingDef MakaiPsy_TD_ProxyMine;
         public static ThingDef MakaiPsy_CP_Beam;
         public static ThingDef MakaiPsy_CP_Pillar;
 
         public static FleckDef MakaiPsyMote_DeathBolt_Trail;
         public static FleckDef MakaiPsyMote_ReflectProjectile;
+        public static FleckDef MakaiPsyMote_Distort;
+        public static FleckDef MakaiPsyMote_DistortTwo;
 
         public static ThingDef MakaiTechPsy_CP_CorruptedTower;
 
         public static ThingDef MakaiPsyMote_YellowGlow;
         public static ThingDef MakaiPsyMote_PurpleRingSuck;
+        public static ThingDef MakaiPsyMote_Orb;
 
         public static EffecterDef MakaiPsy_DD_Blast;
         public static EffecterDef MakaiPsy_TD_Blast;
@@ -77,14 +85,23 @@ namespace MakaiTechPsycast
         public static EffecterDef MakaiPsy_WarpBullet;
         public static EffecterDef MakaiPsy_DD_Suck;
         public static EffecterDef MakaiPsy_SmokeExplosion;
+        public static EffecterDef MakaiPsy_PF_PillarOfLightSpawned;
 
         public static BodyPartGroupDef Hands;
         public static BodyPartDef Pelvis;
         public static BodyPartDef Foot;
+        public static BodyPartDef Brain;
 
         public static ShaderTypeDef MoteGlow;
 
         public static SoundDef Shot_ChargeBlaster;
+        public static SoundDef FlamingEffect;
+        public static SoundDef EnergyShield_Broken;
+
+        public static IncidentCategoryDef ShipChunkDrop;
+        public static IncidentCategoryDef AllyAssistance;
+        public static IncidentCategoryDef OrbitalVisitor;
+        public static IncidentCategoryDef DiseaseAnimal;
 
 
     }

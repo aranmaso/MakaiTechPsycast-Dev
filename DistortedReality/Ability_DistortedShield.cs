@@ -54,7 +54,7 @@ namespace MakaiTechPsycast.DistortedReality
                 {
                     if (targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
-                        targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_DistortedShield>().defenseCount += 10;
+                        targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_DistortedShield>().defenseCount += 20;
                         if (hediff.TryGetComp<HediffComp_Disappears>() != null)
                         {
                             targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_Disappears>().ticksToDisappear += Mathf.FloorToInt(modExtension.hours * 2500);
@@ -69,7 +69,7 @@ namespace MakaiTechPsycast.DistortedReality
                         {
                             hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num);
                         }
-                        hediff.TryGetComp<HediffComp_DistortedShield>().defenseCount += 10;
+                        hediff.TryGetComp<HediffComp_DistortedShield>().defenseCount += 20;
                         targetPawn.health.AddHediff(hediff);
                     }
                     Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
@@ -82,7 +82,7 @@ namespace MakaiTechPsycast.DistortedReality
                 {
                     if (targetPawn.health.hediffSet.HasHediff(modExtension.hediffDefWhenSuccess))
                     {
-                        targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_DistortedShield>().defenseCount += 10;
+                        targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_DistortedShield>().defenseCount += 5;
                         if (hediff.TryGetComp<HediffComp_Disappears>() != null)
                         {
                             targetPawn.health.hediffSet.GetFirstHediffOfDef(modExtension.hediffDefWhenSuccess).TryGetComp<HediffComp_Disappears>().ticksToDisappear += Mathf.FloorToInt(modExtension.hours * 2500);
@@ -97,7 +97,7 @@ namespace MakaiTechPsycast.DistortedReality
                         {
                             hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num);
                         }
-                        hediff.TryGetComp<HediffComp_DistortedShield>().defenseCount += 10;
+                        hediff.TryGetComp<HediffComp_DistortedShield>().defenseCount += 5;
                         targetPawn.health.AddHediff(hediff);
                     }
                     Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);

@@ -37,34 +37,75 @@ namespace MakaiTechPsycast.TrueDestruction
 
         public override void Notify_KilledPawn(Pawn victim, DamageInfo? dinfo)
         {
-            foreach(Thought item in victim.needs?.mood?.thoughts?.memories?.Memories)
+            if(victim.RaceProps.Humanlike)
             {
-                if(buffQuality == 0)
+                if(victim.needs != null)
                 {
-                    count += (int)Math.Abs(item.MoodOffset())/2;
+                    if (victim.needs?.mood?.thoughts != null)
+                    {
+                        foreach (var item in victim.needs?.mood?.thoughts?.memories?.Memories)
+                        {
+                            if (item == null)
+                            {
+                                continue;
+                            }
+                            if (buffQuality == 0)
+                            {
+                                count += (int)Math.Abs(item.MoodOffset()) / 2;
+                            }
+                            else if (buffQuality == 1)
+                            {
+                                count += (int)Math.Abs(item.MoodOffset());
+                            }
+                            else if (buffQuality == 2)
+                            {
+                                count += (int)Math.Abs(item.MoodOffset()) * 2;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        count += Rand.Range(5, 20);
+                    }
                 }
-                else if(buffQuality == 1)
+                else
                 {
-                    count += (int)Math.Abs(item.MoodOffset());
+                    count += Rand.Range(5, 20);
                 }
-                else if(buffQuality == 2)
-                {
-                    count += (int)Math.Abs(item.MoodOffset()) * 2;
-                }
+
+            }
+            else
+            {
+                count += Rand.Range(5,20);
             }
             if(Props.soundDefOnTrigger != null)
             {
                 Props.soundDefOnTrigger.PlayOneShot(new TargetInfo(Pawn.Position,Pawn.Map));
             }
         }
+
         public override void Notify_PawnUsedVerb(Verb verb, LocalTargetInfo target)
         {
             base.Notify_PawnUsedVerb(verb, target);
             if (verb.GetType() == typeof(Verb_BeatFire)) return;
-            if(verb.CurrentTarget.HasThing)
+            if (verb.GetType() == typeof(Verb_CastAbility)) return;
+            if (verb.GetType() == typeof(Verb_CastPsycast)) return;
+            if (verb.GetType() == typeof(Verb_CastAbilityTouch)) return;
+            if (verb.GetType() == typeof(Verb_CastAbilityJump)) return;
+            if(target.HasThing)
             {
-                verb.CurrentTarget.Thing.TakeDamage(new DamageInfo(verb.GetDamageDef(), count * 0.1f, 1f,instigator:Pawn,weapon:verb.EquipmentSource.def ?? null));
-                count -= Mathf.FloorToInt(count * 0.1f);
+                //target.Thing.TakeDamage(new DamageInfo(MakaiTechPsy_DefOf.TrueDestruction_BonusDamage, count * 0.1f, 1f,instigator:Pawn,weapon:verb.EquipmentSource.def ?? null));                                            
+                target.Thing.TakeDamage(new DamageInfo(MakaiTechPsy_DefOf.TrueDestruction_BonusDamage, count * 0.1f, 9999f,instigator:Pawn));
+                float rand = Rand.Value;
+                if (rand <= 0.9f)
+                {
+                    count -= Mathf.FloorToInt(count * 0.1f);
+                }
+                float rand2 = Rand.Value;
+                if (rand2 <= 0.10f)
+                {
+                    count += 10;
+                }
             }            
         }
     }

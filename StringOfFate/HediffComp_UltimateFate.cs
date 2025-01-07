@@ -95,8 +95,8 @@ namespace MakaiTechPsycast.StringOfFate
             StringBuilder builder = new StringBuilder(Desc);
             builder.AppendLine();
             builder.AppendLine();
-            builder.AppendLine("threshold: " + threshold);
-            builder.AppendLine("maxThresholdPerHit: " + maxThresholdPerHit);
+            builder.AppendLine("threshold to full heal: " + threshold);
+            builder.AppendLine("Max damage per hit: " + maxThresholdPerHit);
             return builder.ToString().TrimEndNewlines();
         }
         public override void Notify_PawnPostApplyDamage(DamageInfo dinfo, float totalDamageDealt)

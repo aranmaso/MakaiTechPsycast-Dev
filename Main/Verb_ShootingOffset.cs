@@ -28,7 +28,6 @@ namespace MakaiTechPsycast
 			if (base.EquipmentSource != null)
 			{
 				base.EquipmentSource.GetComp<CompChangeableProjectile>()?.Notify_ProjectileLaunched();
-				base.EquipmentSource.GetComp<CompReloadable>()?.UsedOnce();
 			}
 
 			Projectile projectile2 = (Projectile)GenSpawn.Spawn(projectile, location, CasterPawn.Map);
@@ -65,7 +64,7 @@ namespace MakaiTechPsycast
 			ThingDef targetCoverDef = randomCoverToMissInto?.def;
 			if (!Rand.Chance(shotReport.AimOnTargetChance_IgnoringPosture))
 			{
-				resultingLine.ChangeDestToMissWild(shotReport.AimOnTargetChance_StandardTarget);
+				resultingLine.ChangeDestToMissWild_NewTemp(shotReport.AimOnTargetChance_StandardTarget,projectile.projectile.flyOverhead,projectile2.Map);
 				ProjectileHitFlags projectileHitFlags2 = ProjectileHitFlags.NonTargetWorld;
 				if (Rand.Chance(0.5f) && canHitNonTargetPawnsNow)
 				{

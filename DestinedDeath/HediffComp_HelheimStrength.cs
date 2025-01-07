@@ -24,6 +24,7 @@ namespace MakaiTechPsycast.DestinedDeath
 		public override void CompExposeData()
 		{
 			Scribe_Values.Look(ref ShieldCount, "ShieldCount", 1);
+			Scribe_Values.Look(ref stopOnlyEnemy, "stopOnlyEnemy", false);
 		}
         public override void CompPostMake()
         {

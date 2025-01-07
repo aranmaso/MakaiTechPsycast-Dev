@@ -25,7 +25,7 @@ namespace MakaiTechPsycast.TrueDestruction
         public override void Tick()
         {
             base.Tick();
-            if(countLeft > 0)
+            if(countLeft > 0 && pawn != null && pawn.Spawned)
             {
                 tickBetween++;
                 if (tickBetween >= Mathf.Max(interval - level * 2, 30))
@@ -47,6 +47,10 @@ namespace MakaiTechPsycast.TrueDestruction
                     orbitalStrike.duration = 60;
                     orbitalStrike.instigator = pawn;
                     orbitalStrike.damageAmount = 2;
+                    if(pawn.RaceProps.IsMechanoid)
+                    {
+                        orbitalStrike.damageAmount *= 1.1f;
+                    }
                     orbitalStrike.armorPen = 999f;
                     orbitalStrike.StartStrike();
                     Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawns.Position, pawns.Map, 0.5f);
@@ -71,6 +75,10 @@ namespace MakaiTechPsycast.TrueDestruction
                     orbitalStrike.duration = 60;
                     orbitalStrike.instigator = pawn;
                     orbitalStrike.damageAmount = 5;
+                    if (pawn.RaceProps.IsMechanoid)
+                    {
+                        orbitalStrike.damageAmount *= 1.5f;
+                    }
                     orbitalStrike.armorPen = 999f;
                     orbitalStrike.StartStrike();
                     Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawns.Position, pawns.Map, 0.5f);
@@ -95,6 +103,10 @@ namespace MakaiTechPsycast.TrueDestruction
                     orbitalStrike.duration = 60;
                     orbitalStrike.instigator = pawn;
                     orbitalStrike.damageAmount = 10;
+                    if (pawn.RaceProps.IsMechanoid)
+                    {
+                        orbitalStrike.damageAmount *= 2;
+                    }
                     orbitalStrike.armorPen = 999f;
                     orbitalStrike.StartStrike();
                     Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_TD_Blast.Spawn(pawns.Position, pawns.Map, 0.5f);

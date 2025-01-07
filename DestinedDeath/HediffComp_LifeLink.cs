@@ -27,7 +27,7 @@ namespace MakaiTechPsycast.DestinedDeath
         public override void CompExposeData()
         {
             base.CompExposeData();
-            Scribe_Collections.Look(ref linkedPawn,true, "linkedPawn", LookMode.Reference);
+            Scribe_Collections.Look(ref linkedPawn, "linkedPawn", LookMode.Reference);
             Scribe_Values.Look(ref totalDamage, "totalDamage", 0);
         }
         public override void Notify_PawnPostApplyDamage(DamageInfo dinfo, float totalDamageDealt)
@@ -44,7 +44,7 @@ namespace MakaiTechPsycast.DestinedDeath
                 {
                     continue;
                 }
-                item.TakeDamage(new DamageInfo(MakaiTechPsy_DefOf.DestinedDeath_SharedDamage, dinfo.Amount, dinfo.ArmorPenetrationInt, dinfo.Angle, parent.pawn, dinfo.HitPart, dinfo.Weapon, dinfo.Category));
+                item.TakeDamage(new DamageInfo(MakaiTechPsy_DefOf.DestinedDeath_SharedDamage, dinfo.Amount, 9999f, dinfo.Angle, null, dinfo.HitPart, dinfo.Weapon, dinfo.Category));
                 item.health.hediffSet.GetFirstHediffOfDef(parent.def).TryGetComp<HediffComp_LifeLink>().totalDamage = totalDamage;
             }
         }

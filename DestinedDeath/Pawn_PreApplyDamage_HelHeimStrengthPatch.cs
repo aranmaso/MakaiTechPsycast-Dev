@@ -22,12 +22,12 @@ namespace MakaiTechPsycast.DestinedDeath
             HediffComp_HelheimStrength shieldCount = hediff.TryGetComp<HediffComp_HelheimStrength>();
             if (shieldCount.ShieldCount > 0)
             {
-                if(shieldCount.stopOnlyEnemy && dinfo.Instigator.Faction.HostileTo(__instance.Faction))
+                if(shieldCount.stopOnlyEnemy && dinfo.Instigator != null  && dinfo.Instigator.Faction.HostileTo(__instance.Faction))
                 {
                     shieldCount.ShieldCount -= 1;
                     if (shieldCount.ShieldCount == 0)
                     {
-                        SoundDefOf.EnergyShield_Broken.PlayOneShot(new TargetInfo(__instance.Position,__instance.MapHeld));
+                        MakaiTechPsy_DefOf.EnergyShield_Broken.PlayOneShot(new TargetInfo(__instance.Position,__instance.MapHeld));
                         Effecter effect2 = EffecterDefOf.Shield_Break.Spawn(__instance.Position, __instance.Map, 1f);
                         effect2.Cleanup();
                     }
@@ -41,7 +41,7 @@ namespace MakaiTechPsycast.DestinedDeath
                     shieldCount.ShieldCount -= 1;
                     if (shieldCount.ShieldCount == 0)
                     {
-                        SoundDefOf.EnergyShield_Broken.PlayOneShot(new TargetInfo(__instance.Position, __instance.MapHeld));
+                        MakaiTechPsy_DefOf.EnergyShield_Broken.PlayOneShot(new TargetInfo(__instance.Position, __instance.MapHeld));
                         Effecter effect2 = EffecterDefOf.Shield_Break.Spawn(__instance.Position, __instance.Map, 1f);
                         effect2.Cleanup();
                     }

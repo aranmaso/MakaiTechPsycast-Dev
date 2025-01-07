@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Krafs.Publicizer.2.2.1\build\Krafs.Publicizer.props" Condition="Exists('packages\Krafs.Publicizer.2.2.1\build\Krafs.Publicizer.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,15 +10,18 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MakaiTechPsycast</RootNamespace>
     <AssemblyName>MakaiTechPsycast</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
     <DebugType>none</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\MakaiTech Psycast\Assemblies\</OutputPath>
+    <OutputPath>..\..\..\MakaiTech Psycast\1.5\Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -64,11 +68,14 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="VFECore">
-      <HintPath>..\..\..\..\..\..\workshop\content\294100\2023507013\1.3\Assemblies\VFECore.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\2023507013\1.4\Assemblies\VFECore.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DestinedDeath\HediffCompProperties_LichSoul.cs" />
+    <Compile Include="DestinedDeath\HediffComp_LichSoul.cs" />
+    <Compile Include="DestinedDeath\StatPart_SoulWorth.cs" />
     <Compile Include="DestinedDeath\Recipe_AdministerLichSoulNoConsume.cs" />
     <Compile Include="DistortedReality\Ability_DistortedBlessing.cs" />
     <Compile Include="DistortedReality\Ability_RandomizedEvent.cs" />
@@ -95,6 +102,8 @@
     <Compile Include="GoldenOrder\HediffCompProperties_Enlightment.cs" />
     <Compile Include="GoldenOrder\Dialog_ChooseTraitToAddThree.cs" />
     <Compile Include="GoldenOrder\Projectile_BlackThread.cs" />
+    <Compile Include="Main\Ability_GiveHediffTemplateNoMultiplier.cs" />
+    <Compile Include="Main\HediffCompProperties_DrawShadowUnderFeet.cs" />
     <Compile Include="Main\CompNearbyDamager.cs" />
     <Compile Include="Main\CompProperties_NearbyDamager.cs" />
     <Compile Include="GoldenOrder\HediffCompProperties_PathOfNaraka.cs" />
@@ -102,6 +111,28 @@
     <Compile Include="Main\Ability_GiveHediffTemplate.cs" />
     <Compile Include="Main\Pawn_DrawAtMainPatch.cs" />
     <Compile Include="Main\Pawn_DrawAtPatchFate.cs" />
+    <Compile Include="PassionedFlame\Ability_GiveHediffPassion.cs" />
+    <Compile Include="PassionedFlame\Ability_ShootFromAroundTarget.cs" />
+    <Compile Include="PassionedFlame\Ability_GiveHediffPassionCurved.cs" />
+    <Compile Include="PassionedFlame\Ability_SpawnThing.cs" />
+    <Compile Include="PassionedFlame\Ability_LightPunishment.cs" />
+    <Compile Include="Main\HediffComp_DrawShadowUnderFeet.cs" />
+    <Compile Include="Main\HediffCompProperties_DoThingOnExpire.cs" />
+    <Compile Include="Main\HediffComp_DoThingOnExpire.cs" />
+    <Compile Include="PassionedFlame\Ability_AkashaRecord.cs" />
+    <Compile Include="PassionedFlame\HediffCompProperties_AkashaRecord.cs" />
+    <Compile Include="PassionedFlame\HediffComp_AkashaRecord.cs" />
+    <Compile Include="PassionedFlame\HediffCompProperties_FakeSun.cs" />
+    <Compile Include="PassionedFlame\HediffComp_FakeSun.cs" />
+    <Compile Include="PassionedFlame\HediffCompProperties_PassionCrucible.cs" />
+    <Compile Include="PassionedFlame\HediffComp_PassionCrucible.cs" />
+    <Compile Include="PassionedFlame\HediffComp_GatheringFlame.cs" />
+    <Compile Include="PassionedFlame\HediffCompProperties_GatheringFlame.cs" />
+    <Compile Include="PassionedFlame\Dialog_ChooseSkillToImprove.cs" />
+    <Compile Include="PassionedFlame\CompPassionCrucible.cs" />
+    <Compile Include="PassionedFlame\CompProperties_PassionCrucible.cs" />
+    <Compile Include="PassionedFlame\HediffCompProperties_PassionBuff.cs" />
+    <Compile Include="PassionedFlame\HediffComp_PassionBuff.cs" />
     <Compile Include="StringOfFate\Ability_EightRevenge.cs" />
     <Compile Include="StringOfFate\Ability_UltimateFate.cs" />
     <Compile Include="Main\HediffCompProperties_DrawAt.cs" />
@@ -131,7 +162,7 @@
     <Compile Include="PerfectKnowledge\AbilityExtension_Thing.cs" />
     <Compile Include="PerfectKnowledge\AbilityExtension_Skill.cs" />
     <Compile Include="PerfectKnowledge\Ability_TransferSkill.cs" />
-    <Compile Include="PerfectKnowledge\Ability_StealIntellectual.cs" />
+    <Compile Include="PerfectKnowledge\Ability_StealAllIntellectual.cs" />
     <Compile Include="PerfectKnowledge\Ability_SwapSkill.cs" />
     <Compile Include="PerfectKnowledge\Ability_XpToCaster.cs" />
     <Compile Include="Bond Intertwined\AbilityExtension_WordOfBond.cs" />
@@ -242,6 +273,7 @@
     <Compile Include="TrueDestruction\Ability_HeavenWrath.cs" />
     <Compile Include="TrueDestruction\Bullet_Impact_FrenziedFlameBuff.cs" />
     <Compile Include="TrueDestruction\Ability_WillOfTheFallen.cs" />
+    <Compile Include="TrueDestruction\Bullet_Impact_Spread_Explosive.cs" />
     <Compile Include="TrueDestruction\Pawn_PreApplyDamage_WillOfTheFallenPatch.cs" />
     <Compile Include="TrueDestruction\HediffCompProperties_WillOfTheFallen.cs" />
     <Compile Include="TrueDestruction\HediffComp_WillOfTheFallen.cs" />
@@ -274,6 +306,26 @@
     <Compile Include="Main\MakaiTechPsy_DefOf.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <!-- ItemGroup>
+		<Publicize Include="Assembly-CSharp;UnityEngine.IMGUIModule;UnityEngine.CoreModule" />
+	</ItemGroup -->
+  <ItemGroup>
+    <Publicize Include="Assembly-CSharp:Verse.Projectile.ticksToImpact" />
+    <Publicize Include="Assembly-CSharp:Verse.Projectile.destination" />
+    <Publicize Include="Assembly-CSharp:Verse.Projectile.ArcHeightFactor" />
+    <Publicize Include="Assembly-CSharp:RimWorld.Pawn_PsychicEntropyTracker.currentEntropy" />
+    <Publicize Include="Assembly-CSharp:RimWorld.TraitDef.commonality" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Krafs.Publicizer.2.2.1\build\Krafs.Publicizer.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Krafs.Publicizer.2.2.1\build\Krafs.Publicizer.props'))" />
+    <Error Condition="!Exists('packages\Krafs.Publicizer.2.2.1\build\Krafs.Publicizer.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Krafs.Publicizer.2.2.1\build\Krafs.Publicizer.targets'))" />
+  </Target>
+  <Import Project="packages\Krafs.Publicizer.2.2.1\build\Krafs.Publicizer.targets" Condition="Exists('packages\Krafs.Publicizer.2.2.1\build\Krafs.Publicizer.targets')" />
 </Project>

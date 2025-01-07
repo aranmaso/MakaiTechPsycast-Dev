@@ -8,9 +8,9 @@ namespace MakaiTechPsycast
 {
 	public class CompFleckEmitter : ThingComp
 	{
-		private static readonly AccessTools.FieldRef<Projectile, Vector3> destination = AccessTools.FieldRefAccess<Projectile, Vector3>("destination");
+		//private static readonly AccessTools.FieldRef<Projectile, Vector3> destination = AccessTools.FieldRefAccess<Projectile, Vector3>("destination");
 
-		public int ticksSinceLastEmitted;
+		public int ticksSinceLastEmitted = 1;
 
 		private bool active = false;
 		private CompProperties_FleckEmitter Props => (CompProperties_FleckEmitter)props;
@@ -70,7 +70,7 @@ namespace MakaiTechPsycast
 					{
 						if(projectile.usedTarget.Thing is Pawn usedTarget)
                         {
-							moteThrown.Velocity = (parent.Position.ToVector3() - destination(projectile)) / Props.propelSlowdown;
+							moteThrown.Velocity = (parent.Position.ToVector3() - projectile.destination) / Props.propelSlowdown;
 						}
 						else
                         {

@@ -88,102 +88,93 @@ namespace MakaiTechPsycast.TrueDestruction
 		}
 		private int nextTest = 0;
 
-		public override void PostExposeData()
+		/*public override void PostExposeData()
 		{
-			Scribe_Values.Look(ref nextTest, "nextTest", 0);
 			base.PostExposeData();
-		}
-
-		public override void PostPostMake()
-		{
-			nextTest = Find.TickManager.TicksGame + Props.tickRate;
-			base.PostPostMake();
-		}
+		}*/
 
 		public override void CompTick()
 		{
-			base.CompTick();
-			if (Find.TickManager.TicksGame != nextTest)
+			if (parent.IsHashIntervalTick(Props.tickRate))
 			{
-				return;
-			}
-			foreach (Thing item in GenRadial.RadialDistinctThingsAround(parent.Position, parent.Map, Props.radius, useCenter: true))
-			{
-				if (!(item is Pawn pawn))
+				foreach (Thing item in GenRadial.RadialDistinctThingsAround(parent.Position, parent.Map, Props.radius, useCenter: true))
 				{
-					continue;
-				}
-				/*parent.TryGetQuality(out var qc);
-				if (qc == QualityCategory.Normal)
-                {
-					
-                }*/
-				System.Random randWarp = new System.Random();
-				int randomWarp = randWarp.Next(-7, 7);
-				IntVec3 pawnRand = new IntVec3(randomWarp, 0, randomWarp);
-				IntVec3 pawnCurrent = pawn.Position;
-				IntVec3 pawnNew = (parent.Position + pawnRand);
-
-				float ValidTarget = Rand.Value;
-				if (ValidTarget <= 0.25f)
-				{
-					if (pawn.HostileTo(Faction.OfPlayer) && !pawn.Downed && attackDowned == false)
+					if (!(item is Pawn pawn))
 					{
-						float damRand = Rand.Value;
-						if (damRand <= 0.5f && laserBeamToggle == true)
-						{
-							MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawnNew, pawn.Map);
-							orbitalStrike.duration = 60;
-							orbitalStrike.instigator = pawn;
-							orbitalStrike.StartStrike();
-						}
-						else
-						{
-							GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.EMP, null);
-						}
-						pawn.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(pawn.Map, pawnCurrent));
-						pawn.teleporting = true;
-						pawn.ExitMap(allowedToJoinOrCreateCaravan: true, Rot4.Invalid);
-						pawn.teleporting = false;
-						GenSpawn.Spawn(pawn, pawnNew, parent.Map);
-						pawn.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(pawn.Map, pawnNew));
+						continue;
+					}
+					/*parent.TryGetQuality(out var qc);
+					if (qc == QualityCategory.Normal)
+					{
 
-						if (pawn.HostileTo(Faction.OfPlayer) && pawn.health.hediffSet.HasHediff(Props.conduct ?? VPE_DefOf.VPE_UnLucky))
-							for (int i = 0; i < 2; i++)
+					}*/
+					System.Random randWarp = new System.Random();
+					int randomWarp = randWarp.Next(-7, 7);
+					IntVec3 pawnRand = new IntVec3(randomWarp, 0, randomWarp);
+					IntVec3 pawnCurrent = pawn.Position;
+					IntVec3 pawnNew = (parent.Position + pawnRand);
+
+					float ValidTarget = Rand.Value;
+					if (ValidTarget <= 0.25f)
+					{
+						if (pawn.HostileTo(Faction.OfPlayer) && !pawn.Downed && attackDowned == false)
+						{
+							float damRand = Rand.Value;
+							if (damRand <= 0.5f && laserBeamToggle == true)
+							{
+								MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawnNew, pawn.Map);
+								orbitalStrike.duration = 60;
+								orbitalStrike.instigator = pawn;
+								orbitalStrike.StartStrike();
+							}
+							else
+							{
+								GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.EMP, null);
+							}
+							pawn.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(pawn.Map, pawnCurrent));
+							pawn.teleporting = true;
+							pawn.ExitMap(allowedToJoinOrCreateCaravan: true, Rot4.Invalid);
+							pawn.teleporting = false;
+							GenSpawn.Spawn(pawn, pawnNew, parent.Map);
+							pawn.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(pawn.Map, pawnNew));
+
+							if (pawn.HostileTo(Faction.OfPlayer) && pawn.health.hediffSet.HasHediff(Props.conduct ?? VPE_DefOf.VPE_UnLucky))
+								for (int i = 0; i < 2; i++)
+								{
+									MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
+									orbitalStrike.duration = 60;
+									orbitalStrike.instigator = pawn;
+									orbitalStrike.StartStrike();
+								}
+						}
+						if ((pawn.HostileTo(Faction.OfPlayer) || !pawn.Faction.IsPlayer) && (attackDowned == true))
+						{
+							float damRand = Rand.Value;
+							if (damRand <= 0.5f && laserBeamToggle == true)
 							{
 								MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
 								orbitalStrike.duration = 60;
 								orbitalStrike.instigator = pawn;
 								orbitalStrike.StartStrike();
 							}
-					}
-					if ((pawn.HostileTo(Faction.OfPlayer) || !pawn.Faction.IsPlayer) && (attackDowned == true))
-					{
-						float damRand = Rand.Value;
-						if (damRand <= 0.5f && laserBeamToggle == true)
-						{
-							MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
-							orbitalStrike.duration = 60;
-							orbitalStrike.instigator = pawn;
-							orbitalStrike.StartStrike();
-						}
-						else
-						{
-							GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.EMP, null);
-						}
-						pawn.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(pawn.Map, pawn.Position));
-
-						if (pawn.HostileTo(Faction.OfPlayer) && pawn.health.hediffSet.HasHediff(Props.conduct ?? VPE_DefOf.VPE_UnLucky))
-							for (int i = 0; i < 2; i++)
+							else
 							{
-								MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
-								orbitalStrike.duration = 60;
-								orbitalStrike.instigator = pawn;
-								orbitalStrike.StartStrike();
+								GenExplosion.DoExplosion(pawn.Position, pawn.Map, 2f, DamageDefOf.EMP, null);
 							}
-					}
-				}
+							pawn.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrikeGreen(pawn.Map, pawn.Position));
 
+							if (pawn.HostileTo(Faction.OfPlayer) && pawn.health.hediffSet.HasHediff(Props.conduct ?? VPE_DefOf.VPE_UnLucky))
+								for (int i = 0; i < 2; i++)
+								{
+									MakaiTD_PowerBeam orbitalStrike = (MakaiTD_PowerBeam)GenSpawn.Spawn(Props.projectile, pawn.Position, pawn.Map);
+									orbitalStrike.duration = 60;
+									orbitalStrike.instigator = pawn;
+									orbitalStrike.StartStrike();
+								}
+						}
+					}
+
+				}
 			}
 			nextTest += Props.tickRate;
 		}

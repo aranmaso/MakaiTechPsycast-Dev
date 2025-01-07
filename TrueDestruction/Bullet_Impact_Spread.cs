@@ -14,7 +14,11 @@ namespace MakaiTechPsycast.TrueDestruction
     {
         private static void Postfix(Thing hitThing, Bullet __instance)
         {
-            if(__instance == null || __instance.Launcher == null || !(__instance.Launcher is Pawn pawn))
+            if(__instance == null || __instance.Launcher == null || !(__instance.Launcher is Pawn pawn) 
+                || __instance.def == MakaiTechPsy_DefOf.MakaiPsy_TD_Rhongo
+                || __instance.def == MakaiTechPsy_DefOf.MakaiPsy_TD_HeavenlyChain
+                || __instance.def == MakaiTechPsy_DefOf.MakaiPsy_TD_ProxyMine
+                || __instance.def == MakaiTechPsy_DefOf.MakaiPsy_TD_SwordRain)
             {
                 return;
             }
@@ -29,11 +33,12 @@ namespace MakaiTechPsycast.TrueDestruction
                     int count = Mathf.RoundToInt(5 * pawn.GetStatValue(StatDefOf.PsychicSensitivity));
                     for (int i = 0; i < count; i++)
                     {
-                        possibleTargetCell.Add(MakaiUtility.RandomCellAroundCellBase(__instance.intendedTarget.Cell, -5, 5));
+                        possibleTargetCell.Add(GenRadial.RadialCellsAround(__instance.intendedTarget.Cell, 5f, true).RandomElement());
+                        //possibleTargetCell.Add(MakaiUtility.RandomCellAroundCellBase(__instance.intendedTarget.Cell, -5, 5).ClampInsideMap(__instance.Map ?? __instance.Launcher.Map));
                     }
                     for (int i = 0; i < possibleTargetCell.Count; i++)
                     {
-                        Projectile shrapnelThing = (Projectile)GenSpawn.Spawn(__instance.def, __instance.Position, __instance.Launcher.Map);
+                        Projectile shrapnelThing = (Projectile)GenSpawn.Spawn(__instance.def, __instance.Position.ClampInsideMap(__instance.Map ?? __instance.Launcher.Map), __instance.Launcher.Map);
                         Thing possibleThing = possibleTargetCell[i].GetFirstPawn(__instance.Launcher.Map) ?? possibleTargetCell[i].GetFirstBuilding(__instance.Launcher.Map) as Thing;
                         if (possibleThing != null)
                         {
@@ -44,7 +49,7 @@ namespace MakaiTechPsycast.TrueDestruction
                             shrapnelThing.Launch(__instance.Launcher, possibleTargetCell[i], possibleTargetCell[i], ProjectileHitFlags.NonTargetPawns);
                         }
                     }
-                    __instance.Launch(pawn, __instance.Position.ToVector3(), __instance.intendedTarget, __instance.intendedTarget, ProjectileHitFlags.IntendedTarget);
+                    __instance.Launch(pawn, __instance.Position.ToVector3Shifted(), __instance.intendedTarget, __instance.intendedTarget, ProjectileHitFlags.IntendedTarget);
                     comp.isBursted = true;
                     comp.useCountLeft--;
                 }                

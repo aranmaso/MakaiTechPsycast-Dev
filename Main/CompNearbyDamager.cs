@@ -49,7 +49,7 @@ namespace MakaiTechPsycast
             {
                 int count = 0;
                 IDictionary<Pawn, IntVec3> pawnWithLocation = MakaiUtility.GetNearbyPawnWithPosition(parent.Position, parent.Map, Props.spewRadius);
-                foreach (Pawn pawn in pawnWithLocation.Keys)
+                foreach (var pawn in pawnWithLocation.Keys)
                 {
                     if (pawn.Faction != parent.Faction || pawn.Faction.HostileTo(parent.Faction) || pawn.HostileTo(parent.Faction))
                     {                        

@@ -17,7 +17,7 @@ namespace MakaiTechPsycast
             {
                 BodyPartRecord bR = pawn.RaceProps.body.AllParts.RandomElement();
                 
-                if(pawn.health.hediffSet.HasHediff(HediffDefOf.Flu))
+                /*if(pawn.health.hediffSet.HasHediff(HediffDefOf.Flu))
                 {
                     pawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.Flu).Severity += 0.1f;
                 }
@@ -34,7 +34,7 @@ namespace MakaiTechPsycast
                         orbitalStrike.instigator = null;
                         orbitalStrike.StartStrike();
                     }
-                }
+                }*/
                 if(base.launcher is Pawn paw && pawn != null)
                 {
                     SkillRecord SR = paw.skills.GetSkill(SkillDefOf.Intellectual);
@@ -60,9 +60,9 @@ namespace MakaiTechPsycast
             }
             if (modExtension != null && modExtension.healAlly == true && hitThing != null && hitThing is Pawn pawn2 && pawn2.Faction == base.launcher.Faction)
             {
-                if(pawn2.health.hediffSet.GetInjuriesTendable().EnumerableCount() > 0)
+                if(pawn2.health.hediffSet.GetTendableNonInjuryNonMissingPartHediffs().EnumerableCount() > 0)
                 {
-                    Hediff_Injury HI = (Hediff_Injury)pawn2.health.hediffSet.GetInjuriesTendable().RandomElement();
+                    Hediff_Injury HI = (Hediff_Injury)pawn2.health.hediffSet.GetTendableNonInjuryNonMissingPartHediffs().RandomElement();
                     pawn2.health.RemoveHediff(HI);
                 }
                 if(pawn2.health.hediffSet.GetMissingPartsCommonAncestors().Count > 0)

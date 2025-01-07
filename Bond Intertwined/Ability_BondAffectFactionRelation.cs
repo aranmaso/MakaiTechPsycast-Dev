@@ -12,33 +12,19 @@ namespace MakaiTechPsycast.BondIntertwined
     {
         public override bool CanAutoCast => false;
 
-        public override void Cast(params GlobalTargetInfo[] targets)
+		public AbilityExtension_Roll1D20 modExtension => def.GetModExtension<AbilityExtension_Roll1D20>();
+
+		public override void Cast(params GlobalTargetInfo[] targets)
         {
-            base.Cast(targets);
-            AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
+			base.Cast(targets);
+			RollInfo rollinfo = new RollInfo();
+			rollinfo = MakaiUtility.Roll1D20(pawn, modExtension.skillBonus, rollinfo, modExtension.skillBonus2);
 			if (modExtension == null)
 			{
 				return;
 			}
-			SkillRecord bonus = pawn.skills.GetSkill(modExtension.skillBonus);
-			System.Random rand = new System.Random();
-			int roll = rand.Next(1, 21);
-			int rollBonus = bonus.Level / 5;
-			int baseRoll = roll;
-			int rollBonusLucky = 0;
-			int rollBonusUnLucky = 0;
-			if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_Lucky))
-			{
-				rollBonusLucky = 20;
-			}
-			if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_UnLucky))
-			{
-				rollBonusUnLucky = -20;
-			}
-			roll += rollBonus + rollBonusLucky + rollBonusUnLucky;
-			int cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
 			SkillRecord skillRequirement = pawn.skills.GetSkill(SkillDefOf.Social);
-			if (roll >= modExtension.successThreshold && roll < modExtension.greatSuccessThreshold)
+			if (rollinfo.roll >= modExtension.successThreshold && rollinfo.roll < modExtension.greatSuccessThreshold)
 			{
 				float dur = modExtension.hours * 2500f + modExtension.ticks;
 				float dur2 = modExtension.hours * 2500f + modExtension.ticks;
@@ -46,7 +32,7 @@ namespace MakaiTechPsycast.BondIntertwined
 				{
 					dur *= pawn.GetStatValue(modExtension.multiplier);
 				}
-				if (skillRequirement.Level >= modExtension.skillRequirementSuccessThreshold && skillRequirement.Level < modExtension.skillRequirementGreatSuccessThreshold)
+				if (skillRequirement.Level >= modExtension.skillRequirementSuccessThreshold)
                 {
 					foreach (Pawn pawn2 in pawn.Map.mapPawns.AllPawnsSpawned)
 					{
@@ -60,7 +46,7 @@ namespace MakaiTechPsycast.BondIntertwined
 							Hediff hediff2 = HediffMaker.MakeHediff(modExtension.hediffDefWhenSuccess, pawn2);
 							hediff2.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(dur);
 							pawn2.health.AddHediff(hediff2);
-							Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+							Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 							Messages.Message("Makai_PassArollcheckMassRelation".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 						}
 					}
@@ -70,10 +56,10 @@ namespace MakaiTechPsycast.BondIntertwined
 				}
 				else
 				{
-					Messages.Message("Makai_SkillFailArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, skillRequirement.levelInt, modExtension.skillRequirementSuccessThreshold, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+					Messages.Message("Makai_SkillFailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, skillRequirement.levelInt, modExtension.skillRequirementSuccessThreshold, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 				}
 			}
-			if (roll >=  modExtension.greatSuccessThreshold)
+			if (rollinfo.roll >=  modExtension.greatSuccessThreshold)
 			{
 				float dur = modExtension.hours * 2500f + modExtension.ticks;
 				float dur2 = modExtension.hours * 2500f + modExtension.ticks;
@@ -100,7 +86,7 @@ namespace MakaiTechPsycast.BondIntertwined
 							Hediff hediff = HediffMaker.MakeHediff(modExtension.hediffDefWhenGreatSuccess, pawn, pawn.health.hediffSet.GetBrain());
 							hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(dur);
 							pawn.health.AddHediff(hediff);
-							Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+							Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 							Messages.Message("Makai_GreatPassArollcheckMassRelation".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 						}
 					}
@@ -121,17 +107,17 @@ namespace MakaiTechPsycast.BondIntertwined
 								Hediff hediff2 = HediffMaker.MakeHediff(modExtension.hediffDefWhenSuccess, pawn2);
 								hediff2.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(dur);
 								pawn2.health.AddHediff(hediff2);
-								Messages.Message("Makai_SkillFailDownGradeArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, skillRequirement.levelInt, modExtension.skillRequirementGreatSuccessThreshold, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+								Messages.Message("Makai_SkillFailDownGradeArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, skillRequirement.levelInt, modExtension.skillRequirementGreatSuccessThreshold, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 							}
 						}
 					}
 					else
                     {
-						Messages.Message("Makai_SkillFailMinimum".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, skillRequirement.levelInt, modExtension.skillRequirementSuccessThreshold, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+						Messages.Message("Makai_SkillFailMinimum".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, skillRequirement.levelInt, modExtension.skillRequirementSuccessThreshold, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 					}
 				}
 			}
-			if (roll < modExtension.successThreshold && skillRequirement.Level >= modExtension.skillRequirementFailThreshold)
+			if (rollinfo.roll < modExtension.successThreshold && skillRequirement.Level >= modExtension.skillRequirementFailThreshold)
             {
 				float dur = modExtension.hours * 2500f + modExtension.ticks;
 				float dur2 = modExtension.hours * 2500f + modExtension.ticks;
@@ -153,7 +139,7 @@ namespace MakaiTechPsycast.BondIntertwined
 						Hediff hediff2 = HediffMaker.MakeHediff(modExtension.hediffDefWhenFail, pawn2);
 						hediff2.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(dur) + durRandom;
 						pawn2.health.AddHediff(hediff2);
-						Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+						Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 						Messages.Message("Makai_FailArollcheckMassRelation".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 					}
 				}
@@ -161,7 +147,7 @@ namespace MakaiTechPsycast.BondIntertwined
 				hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(dur);
 				pawn.health.AddHediff(hediff);
 			}
-			if (roll < modExtension.successThreshold && skillRequirement.Level < modExtension.skillRequirementFailThreshold)
+			if (rollinfo.roll < modExtension.successThreshold && skillRequirement.Level < modExtension.skillRequirementFailThreshold)
             {
 				float dur = modExtension.hours * 2500f + modExtension.ticks;
 				float dur2 = modExtension.hours * 2500f + modExtension.ticks;
@@ -183,7 +169,7 @@ namespace MakaiTechPsycast.BondIntertwined
 						Hediff hediff2 = HediffMaker.MakeHediff(modExtension.hediffDefWhenFail, pawn2);
 						hediff2.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(dur) + durRandom;
 						pawn2.health.AddHediff(hediff2);
-						Messages.Message("Makai_GreatFailArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, skillRequirement.levelInt, modExtension.skillRequirementFailThreshold, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+						Messages.Message("Makai_GreatFailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, skillRequirement.levelInt, modExtension.skillRequirementFailThreshold, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 						Messages.Message("Makai_GreatFailArollcheckMassRelation".Translate(pawn.LabelShort, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 					}
 				}

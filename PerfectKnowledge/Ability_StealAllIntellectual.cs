@@ -13,10 +13,20 @@ namespace MakaiTechPsycast.PerfectKnowledge
 			base.Cast(targets);
 			if (targets[0].Thing is Pawn pawn2)
 			{
-				AbilityExtension_Skill modExtension = def.GetModExtension<AbilityExtension_Skill>();
-				SkillRecord skillrecord = pawn2.skills?.GetSkill(modExtension.skillDef);
-				float num = skillrecord.XpTotalEarned;
-				if (skillrecord != null);
+				float num = 0;
+				float num2 = 0;
+				foreach (SkillRecord item in pawn2.skills.skills)
+                {
+					num += item.XpTotalEarned;
+					item.levelInt = 0;
+					item.xpSinceLastLevel = 0;
+                }
+				num2 = num / 12;
+				foreach(SkillRecord item in pawn.skills.skills)
+                {
+					item.Learn(num2, true);
+                }
+				/*if (skillrecord != null);
 				{
 					pawn.skills.Learn(SkillDefOf.Melee, num/12, direct: true);
 					pawn.skills.Learn(SkillDefOf.Shooting, num/12, direct: true);
@@ -33,7 +43,7 @@ namespace MakaiTechPsycast.PerfectKnowledge
 
 					skillrecord.levelInt = 0;
 					skillrecord.xpSinceLastLevel = 0f;
-				}
+				}*/
 			}
 		}
 	}

@@ -56,9 +56,9 @@ namespace MakaiTechPsycast
 			}
 		}
 
-		public override void DrawAt(Vector3 drawLoc, bool flip = false)
+		protected override void DrawAt(Vector3 drawLoc, bool flip = false)
 		{
-			base.FlyingPawn.DrawAt(drawLoc, flip);
+			base.DrawAt(drawLoc, flip);
 		}
 	}
 }

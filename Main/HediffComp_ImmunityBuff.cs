@@ -1,6 +1,7 @@
 ﻿using Verse;
 using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MakaiTechPsycast
@@ -19,6 +20,8 @@ namespace MakaiTechPsycast
             intervalTick = Find.TickManager.TicksGame + Props.checkInterval;
             intervalTickShort = Find.TickManager.TicksGame + Props.checkIntervalShort;
         }*/
+
+        //public IEnumerable<HediffDef> imList => DefDatabase<HediffDef>.AllDefsListForReading.Where(x => x.isBad && !(x.hediffClass == typeof(Hediff_Injury))).ToList();
         public override string CompDescriptionExtra
         {
             get
@@ -80,7 +83,7 @@ namespace MakaiTechPsycast
                         bRecord = replacedHediff.Part;
                     }
                     Hediff replaceWith = HediffMaker.MakeHediff(item.hediffToReplaceWith,pawn);
-                    pawn.health.RemoveHediff(pawn.health.hediffSet.GetFirstHediffOfDef(item.hediffToImmune));
+                    pawn.health.RemoveHediff(replacedHediff);
                     pawn.health.AddHediff(replaceWith,bRecord);
                     MoteMaker.ThrowText(pawn.Position.ToVector3(), pawn.Map, "Immunity: " + replacedHediff.Label);
                     MoteMaker.ThrowText(pawn.Position.ToVector3(), pawn.Map, "Replace with: " + replaceWith.Label);

@@ -237,12 +237,51 @@ namespace MakaiTechPsycast
             Rinfo.cumulativeBonusRoll = rollBonus + rollBonus2 + rollBonusLucky + rollBonusUnLucky;
             return Rinfo;
         }
+
+        public static RollInfo Roll1D20PassionCount(Pawn pawn, RollInfo Rinfo)
+        {
+            int count = 0;
+            foreach(SkillRecord item in pawn.skills.skills)
+            {
+                if(item.passion != Passion.None)
+                {
+                    count++;
+                }                
+            }
+            System.Random rand = new System.Random();
+            Rinfo.roll = rand.Next(1, 21);
+            int rollBonus = count;
+            Rinfo.baseRoll = Rinfo.roll;
+            int rollBonusLucky = 0;
+            int rollBonusUnLucky = 0;
+            if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_Lucky))
+            {
+                rollBonusLucky = 20;
+            }
+            if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_UnLucky))
+            {
+                rollBonusUnLucky = -20;
+            }
+            Rinfo.roll += rollBonus + rollBonusLucky + rollBonusUnLucky;
+            Rinfo.cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
+            return Rinfo;
+        }
         public static Hediff CreateCustomHediffWithDuration(Pawn pawn, HediffDef hediffDef, float hours, int ticks,StatDef statDef = null)
         {
             float num = hours * 2500f + (float)ticks;
             num *= pawn.GetStatValue(statDef ?? StatDefOf.PsychicSensitivity);
             Hediff hediff = HediffMaker.MakeHediff(hediffDef, pawn);
             if(hediff.TryGetComp<HediffComp_Disappears>() != null)
+            {
+                hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num);
+            }
+            return hediff;
+        }
+        public static Hediff CreateCustomHediffWithDurationNoMultiplier(Pawn pawn, HediffDef hediffDef, float hours, int ticks)
+        {
+            float num = hours * 2500f + (float)ticks;
+            Hediff hediff = HediffMaker.MakeHediff(hediffDef, pawn);
+            if (hediff.TryGetComp<HediffComp_Disappears>() != null)
             {
                 hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(num);
             }
@@ -258,7 +297,7 @@ namespace MakaiTechPsycast
         public static BodyPartRecord GetBodyPartFromDef(Pawn pawn,BodyPartDef bodyDef)
         {
             BodyPartRecord br = null;
-            if (bodyDef == BodyPartDefOf.Brain)
+            if (bodyDef == MakaiTechPsy_DefOf.Brain)
             {
                 br = pawn.health.hediffSet.GetBrain();
             }
@@ -285,6 +324,16 @@ namespace MakaiTechPsycast
             minfo.userTakeDamage = userTakeDamage;
             return minfo;
         }
+
+        public static bool GetPawnIsHostileToPlayer(Pawn pawn)
+        {
+            return pawn.HostileTo(Faction.OfPlayer) || pawn.Faction.HostileTo(Faction.OfPlayer);
+        }
+
+        public static bool GetPawnIsHostileToFaction(Pawn pawn, Faction faction)
+        {
+            return pawn.HostileTo(Faction.OfPlayer) || pawn.Faction.HostileTo(Faction.OfPlayer);
+        }
         //GetNearbyPawnFriendOrFoe and it related. this chunk is all credit to Smartkar's Athena Framework for the original
         public static List<Pawn> GetNearbyPawnFriendAndFoe(IntVec3 center, Map map, float radius)
         {
@@ -310,7 +359,7 @@ namespace MakaiTechPsycast
             float num = radius * radius;
             foreach(Pawn pawn in map.mapPawns.AllPawnsSpawned)
             {
-                if(pawn.Spawned && !pawn.Dead && !pawn.Faction.HostileTo(faction))
+                if(pawn.Spawned && !pawn.Dead && !pawn.Faction.HostileTo(faction) && !pawn.HostileTo(faction))
                 {
                     float num2 = pawn.Position.DistanceToSquared(center);
                     if(num2 <= num)
@@ -358,6 +407,138 @@ namespace MakaiTechPsycast
             }
             return result;
         }
+
+        public static Dictionary<Pawn, float> NearbyPawnsDistances(IntVec3 cell, Map map, float maxDistance, TraverseParms parms, Faction faction = null, bool hostiles = false, bool checkDowned = false, bool checkDead = false, Func<Pawn, float, bool> additionalCheck = null, int? regionOverride = null, Pawn givenPawn = null)
+        {
+            Dictionary<Pawn, float> result = new Dictionary<Pawn, float>();
+            float squaredDistance = maxDistance * maxDistance;
+
+            RegionTraverser.BreadthFirstTraverse(cell, map, (Region from, Region to) => to.Allows(parms, isDestination: false), delegate (Region reg)
+            {
+                List<Thing> pawns = reg.ListerThings.ThingsInGroup(ThingRequestGroup.Pawn);
+
+                for (int i = pawns.Count - 1; i >= 0; i--)
+                {
+                    Pawn pawn = pawns[i] as Pawn;
+
+                    if (pawns[i] is Corpse)
+                    {
+                        pawn = (pawns[i] as Corpse).InnerPawn;
+                    }
+
+                    if ((pawn.Downed && !checkDowned) || (pawn.Dead && !checkDead))
+                    {
+                        continue;
+                    }
+
+                    if (faction != null)
+                    {
+                        if (hostiles)
+                        {
+                            if (!pawn.HostileTo(faction))
+                            {
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            if (pawn.Faction != faction)
+                            {
+                                continue;
+                            }
+                        }
+                    }
+
+                    if (hostiles && givenPawn != null)
+                    {
+                        if (!pawn.HostileTo(givenPawn))
+                        {
+                            continue;
+                        }
+                    }
+
+                    float distance = pawn.Position.DistanceToSquared(cell);
+
+                    if (distance > squaredDistance)
+                    {
+                        continue;
+                    }
+
+                    if (additionalCheck != null && !additionalCheck(pawn, distance))
+                    {
+                        continue;
+                    }
+
+                    result[pawn] = distance;
+                }
+
+                if (!checkDead)
+                {
+                    return false;
+                }
+
+                List<Thing> corpses = reg.ListerThings.ThingsInGroup(ThingRequestGroup.Corpse);
+
+                for (int i = corpses.Count - 1; i >= 0; i--)
+                {
+                    Corpse corpse = corpses[i] as Corpse;
+                    Pawn pawn = corpse.InnerPawn;
+
+                    if (faction != null && !hostiles)
+                    {
+                        if (pawn.Faction != faction)
+                        {
+                            continue;
+                        }
+                    }
+
+                    float distance = corpse.Position.DistanceToSquared(cell);
+
+                    if (distance > squaredDistance)
+                    {
+                        continue;
+                    }
+
+                    if (faction != null)
+                    {
+                        if (hostiles)
+                        {
+                            if (!pawn.HostileTo(faction))
+                            {
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            if (pawn.Faction != faction)
+                            {
+                                continue;
+                            }
+                        }
+                    }
+
+                    if (hostiles && givenPawn != null)
+                    {
+                        if (!pawn.HostileTo(givenPawn))
+                        {
+                            continue;
+                        }
+                    }
+
+                    if (additionalCheck != null && !additionalCheck(pawn, distance))
+                    {
+                        continue;
+                    }
+
+                    result[pawn] = distance;
+                }
+
+                return false;
+
+            }, regionOverride ?? (int)(Math.Max(3, Math.Ceiling(maxDistance / 3) + 1) * Math.Max(3, Math.Ceiling(maxDistance / 3) + 1)));
+
+            return result;
+        }
         public static FleckCreationData GetDataStatic(Vector3 loc, Map map, FleckDef fleckDef, float scale = 1f)
         {
             FleckCreationData result = default(FleckCreationData);
@@ -380,6 +561,19 @@ namespace MakaiTechPsycast
                     dataStatic.velocitySpeed = 0.12f;
                     map.flecks.CreateFleck(dataStatic);
                 }                
+            }
+        }
+
+        public static void ThrowFleckStationary(FleckDef fleckDef, Vector3 c, Map map, float size)
+        {
+            Vector3 vector = c;
+            if (vector.ShouldSpawnMotesAt(map))
+            {
+                if (vector.InBounds(map))
+                {
+                    FleckCreationData dataStatic = GetDataStatic(vector, map, fleckDef, size);
+                    map.flecks.CreateFleck(dataStatic);
+                }
             }
         }
 
@@ -407,23 +601,30 @@ namespace MakaiTechPsycast
                 soul.ownerName = pawn.Name.ToStringFull;
                 soul.name = pawn.Name;
                 soul.title = pawn.story?.title;
-                soul.skills = pawn.skills?.skills;
+                foreach (SkillRecord item in pawn.skills.skills)
+                {
+                    soul.skills.Add(item);
+                }
                 soul.childhood = pawn.story?.Childhood;
                 soul.adulthood = pawn.story?.Adulthood;
                 soul.traits = pawn.story?.traits?.allTraits;
-                //soul.relations = pawn.relations.DirectRelations ?? new List<DirectPawnRelation>();
-                //soul.relatedPawns = pawn.relations.RelatedPawns?.ToHashSet() ?? new HashSet<Pawn>();
-                /*foreach (Pawn otherPawn in pawn.relations.RelatedPawns)
+                soul.relations = pawn.relations?.DirectRelations;
+                soul.relatedPawns = pawn.relations?.RelatedPawns?.ToHashSet();
+                foreach (var otherPawn in soul.relatedPawns)
                 {
-                    foreach (PawnRelationDef rel2 in pawn.GetRelations(otherPawn))
+                    foreach (var rel2 in pawn.GetRelations(otherPawn))
                     {
-                        if (!soul.relations.Any((DirectPawnRelation r) => r.def == rel2 && r.otherPawn == otherPawn) && !rel2.implied)
+                        if (soul.relations.Where(r => r.def == rel2 && r.otherPawn == otherPawn).Count() == 0)
                         {
-                            soul.relations.Add(new DirectPawnRelation(rel2, otherPawn, 0));
+                            if (!rel2.implied)
+                            {
+                                soul.relations.Add(new DirectPawnRelation(rel2, otherPawn, 0));
+                            }
                         }
                     }
                     soul.relatedPawns.Add(otherPawn);
-                }*/
+                }
+                soul.pawnMarketValue = pawn.MarketValue;
                 soul.priorities = new Dictionary<WorkTypeDef, int>();
                 if (pawn.workSettings != null && Traverse.Create(pawn.workSettings).Field("priorities").GetValue<DefMap<WorkTypeDef, int>>() != null)
                 {
@@ -437,6 +638,7 @@ namespace MakaiTechPsycast
                 {
                     soul.faction = pawn.Faction;
                 }
+                soul.isPrisoner = pawn.IsPrisoner;
                 if (ModsConfig.IdeologyActive)
                 {
                     if (pawn.ideo != null && pawn.Ideo != null)
@@ -460,6 +662,7 @@ namespace MakaiTechPsycast
                     {
                         soul.favColor = pawn.story.favoriteColor.Value;
                     }
+                    soul.isSlave = pawn.IsSlave;
                 }
                 return soul;
             }
@@ -467,7 +670,6 @@ namespace MakaiTechPsycast
         }
         public static Pawn applySoulData(Soul soul,Pawn pawn)
         {
-            pawn.Name = soul.name;
             pawn.skills.skills.Clear();
             if (soul.skills != null)
             {
@@ -490,114 +692,51 @@ namespace MakaiTechPsycast
                 pawn.story.Adulthood = soul.adulthood;
             }
             pawn.story.traits.allTraits = soul.traits;
-            /*foreach (DirectPawnRelation rel in pawn.relations.DirectRelations)
+            if (soul.relatedPawns != null)
             {
-                pawn.relations.DirectRelations.Remove(rel);
+                foreach (var otherPawn in soul.relatedPawns)
+                {
+                    if (otherPawn != null)
+                    {
+                        foreach (var rel in otherPawn.relations.DirectRelations)
+                        {
+                            if (soul.name == rel.otherPawn?.Name)
+                            {
+                                rel.otherPawn = pawn;
+                            }
+                        }
+                    }
+                }
+                foreach (var otherPawn in soul.relatedPawns)
+                {
+                    if (otherPawn != null)
+                    {
+                        foreach (var rel in soul.relations)
+                        {
+                            foreach (var rel2 in otherPawn.relations.DirectRelations)
+                            {
+                                if (rel.def == rel2.def && rel2.otherPawn?.Name == pawn.Name)
+                                {
+                                    rel2.otherPawn = pawn;
+                                }
+                            }
+                        }
+                    }
+                }
+                foreach (var rel in soul.relations)
+                {
+                    if (rel.otherPawn != null)
+                    {
+                        var oldRelation = rel.otherPawn.relations.DirectRelations.Where(r => r.def == rel.def && r.otherPawn.Name == pawn.Name).FirstOrDefault();
+                        if (oldRelation != null)
+                        {
+                            oldRelation.otherPawn = pawn;
+                        }
+                    }
+                    pawn.relations.AddDirectRelation(rel.def, rel.otherPawn);
+                }
             }
-            foreach (DirectPawnRelation rel in soul.relations)
-            {
-                pawn.relations.DirectRelations.Add(rel);
-            }*/
-            /*foreach (Pawn relatedPawn in soul.relatedPawns)
-            {
-                if(relatedPawn.Name == soul.name)
-                {
-                    continue;
-                }
-                if(relatedPawn.needs?.mood?.thoughts?.memories != null)
-                {
-                    foreach (Thought_Memory memory in relatedPawn.needs.mood.thoughts.memories.Memories)
-                    {
-                        if (memory?.otherPawn != null)
-                        {
-                            Pawn otherPawn = memory.otherPawn;
-                            if (otherPawn != null && otherPawn.Name?.ToStringFull.Length > 0 && memory.otherPawn.Name.ToStringFull == pawn.Name?.ToStringFull && memory.otherPawn != pawn)
-                            {
-                                memory.otherPawn = pawn;
-                            }
-                        }
-                    }
-                }
-                if (relatedPawn.relations != null)
-                {
-                    foreach (DirectPawnRelation directRelation in relatedPawn.relations.DirectRelations)
-                    {
-                        Name obj = soul.name;
-                        if (obj != null && obj.ToStringFull.Length > 0 && soul.name.ToStringFull == directRelation.otherPawn?.Name?.ToStringFull && directRelation.otherPawn != pawn)
-                        {
-                            directRelation.otherPawn = pawn;
-                            if (pawn.relations.GetDirectRelation(directRelation.def, relatedPawn) == null)
-                            {
-                                pawn.relations.AddDirectRelation(directRelation.def, relatedPawn);
-                            }
-                        }
-                    }
-                }
-                if (soul.relations == null)
-                {
-                    continue;
-                }
-                foreach (DirectPawnRelation relation in soul.relations)
-                {
-                    foreach (DirectPawnRelation directRelation2 in relatedPawn.relations.DirectRelations)
-                    {
-                        if (relation.def != directRelation2.def)
-                        {
-                            continue;
-                        }
-                        Pawn otherPawn3 = directRelation2.otherPawn;
-                        if (otherPawn3 != null && otherPawn3.Name?.ToStringFull.Length > 0 && directRelation2.otherPawn.Name.ToStringFull == pawn.Name.ToStringFull && directRelation2.otherPawn != pawn)
-                        {
-                            directRelation2.otherPawn = pawn;
-                            if (pawn.relations.GetDirectRelation(directRelation2.def, relatedPawn) == null)
-                            {
-                                pawn.relations.AddDirectRelation(directRelation2.def, relatedPawn);
-                            }
-                        }
-                    }
-                }
-                if(soul.originalPawn != null)
-                {
-                    foreach (Pawn potentiallyRelatedPawn in pawn.relations.PotentiallyRelatedPawns)
-                    {
-                        if (potentiallyRelatedPawn.needs?.mood?.thoughts?.memories != null)
-                        {
-                            foreach (Thought_Memory memory3 in potentiallyRelatedPawn.needs.mood.thoughts.memories.Memories)
-                            {
-                                if (memory3.otherPawn != null)
-                                {
-                                    Pawn otherPawn4 = memory3.otherPawn;
-                                    if (otherPawn4 != null && otherPawn4.Name?.ToStringFull.Length > 0 && memory3.otherPawn.Name.ToStringFull == pawn.Name?.ToStringFull && memory3.otherPawn != pawn)
-                                    {
-                                        memory3.otherPawn = pawn;
-                                    }
-                                }
-                            }
-                        }
-                        if (potentiallyRelatedPawn?.relations != null)
-                        {
-                            foreach (DirectPawnRelation directRelation3 in potentiallyRelatedPawn.relations.DirectRelations)
-                            {
-                                if (directRelation3.otherPawn == pawn && directRelation3.otherPawn != pawn)
-                                {
-                                    directRelation3.otherPawn = pawn;
-                                }
-                            }
-                        }
-                        if (potentiallyRelatedPawn.needs?.mood?.thoughts == null)
-                        {
-                            continue;
-                        }
-                        foreach (Thought_Memory memory4 in potentiallyRelatedPawn.needs.mood.thoughts.memories.Memories)
-                        {
-                            if (memory4 is Thought_MemorySocial && memory4.otherPawn == soul.originalPawn && memory4.otherPawn != pawn)
-                            {
-                                memory4.otherPawn = pawn;
-                            }
-                        }
-                    }
-                }
-            }*/
+            pawn.Name = soul.name;
             Traverse traverse = Traverse.Create(pawn.workSettings).Field("pawn");
             if (traverse.GetValue() == null)
             {
@@ -610,9 +749,9 @@ namespace MakaiTechPsycast
             }
             if (soul.priorities != null)
             {
-                foreach (KeyValuePair<WorkTypeDef, int> priority in soul.priorities)
+                foreach (WorkTypeDef item in soul.priorities.Keys)
                 {
-                    pawn.workSettings.SetPriority(priority.Key, priority.Value);
+                    pawn.workSettings.SetPriority(item, soul.priorities[item]);
                 }
             }
             if (pawn.records == null)
@@ -623,9 +762,25 @@ namespace MakaiTechPsycast
             {
                 Traverse.Create(pawn.records).Field("records").SetValue(soul.records);
             }
-            if (soul.faction != null)
+            if (soul.faction != null && pawn.Faction != soul.faction)
             {
                 pawn.SetFaction(soul.faction);
+            }
+            if (soul.isPrisoner)
+            {
+                if (pawn.guest.Released)
+                {
+                    pawn.guest.Released = false;
+                    GenGuest.RemoveHealthyPrisonerReleasedThoughts(pawn);
+                }
+                if (!pawn.IsPrisonerOfColony)
+                {
+                    pawn.guest.SetGuestStatus(soul.faction, GuestStatus.Prisoner);
+                }
+            }
+            else if (!soul.isPrisoner && pawn.IsPrisoner)
+            {
+                GenGuest.PrisonerRelease(pawn);
             }
             if (ModsConfig.IdeologyActive)
             {
@@ -657,6 +812,14 @@ namespace MakaiTechPsycast
                 if (soul.favColor.HasValue)
                 {
                     pawn.story.favoriteColor = soul.favColor.Value;
+                }
+                if (soul.isSlave)
+                {
+                    pawn.guest.SetGuestStatus(soul.faction, GuestStatus.Slave);
+                }
+                else if (pawn.IsSlave && !soul.isSlave)
+                {
+                    InteractionWorker_RecruitAttempt.DoRecruit(null, pawn);
                 }
             }
             return pawn;

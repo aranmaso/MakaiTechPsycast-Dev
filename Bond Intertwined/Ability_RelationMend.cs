@@ -9,7 +9,7 @@ namespace MakaiTechPsycast.BondIntertwined
 {
     public class Ability_RelationMend : VFECore.Abilities.Ability
     {
-		private static readonly AccessTools.FieldRef<Pawn_PsychicEntropyTracker, float> currentEntropy = AccessTools.FieldRefAccess<Pawn_PsychicEntropyTracker, float>("currentEntropy");
+		//private static readonly AccessTools.FieldRef<Pawn_PsychicEntropyTracker, float> currentEntropy = AccessTools.FieldRefAccess<Pawn_PsychicEntropyTracker, float>("currentEntropy");
 		public override void Cast(params GlobalTargetInfo[] targets)
 		{
 			base.Cast(targets);
@@ -54,7 +54,7 @@ namespace MakaiTechPsycast.BondIntertwined
 						pawn1.needs.mood.thoughts.memories.TryGainMemory(modExtension.memoryDefWhenGreatSuccess, pawn2);
 						pawn2.needs.mood.thoughts.memories.TryGainMemory(modExtension.memoryDefWhenGreatSuccess, pawn1);
 						pawn.psychicEntropy.OffsetPsyfocusDirectly(0.5f);
-						currentEntropy(pawn.psychicEntropy) -= 5f;
+						pawn.psychicEntropy.currentEntropy -= 5f;
 						Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 						Messages.Message("Makai_GreatPassArollcheckMendRelation".Translate(pawn1.LabelShort, pawn2.LabelShort,pawn1.Named("USER1"), pawn2.Named("USER2")), pawn2, MessageTypeDefOf.PositiveEvent);
 					}

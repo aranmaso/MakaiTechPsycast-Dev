@@ -10,7 +10,7 @@ namespace MakaiTechPsycast.CorruptedProphet
 {
     public class Ability_SiphonFocus : VFECore.Abilities.Ability
     {
-		private static readonly AccessTools.FieldRef<Pawn_PsychicEntropyTracker, float> currentEntropy = AccessTools.FieldRefAccess<Pawn_PsychicEntropyTracker, float>("currentEntropy");
+		//private static readonly AccessTools.FieldRef<Pawn_PsychicEntropyTracker, float> currentEntropy = AccessTools.FieldRefAccess<Pawn_PsychicEntropyTracker, float>("currentEntropy");
 		public override void Cast(params GlobalTargetInfo[] targets)
         {
 			base.Cast(targets);
@@ -42,7 +42,7 @@ namespace MakaiTechPsycast.CorruptedProphet
 						float targetFocus = pawn2.psychicEntropy.CurrentPsyfocus;
 						pawn.psychicEntropy.OffsetPsyfocusDirectly(targetFocus);
 						pawn2.psychicEntropy.OffsetPsyfocusDirectly(-targetFocus);
-						currentEntropy(pawn2.psychicEntropy) += targetFocus;
+						pawn2.psychicEntropy.currentEntropy += targetFocus;
 						Taint += 2f;
 						pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel).Severity -= Taint;
 						Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
@@ -56,7 +56,7 @@ namespace MakaiTechPsycast.CorruptedProphet
 						float targetFocus = pawn2.psychicEntropy.CurrentPsyfocus;
 						pawn.psychicEntropy.OffsetPsyfocusDirectly(targetFocus*2);
 						pawn2.psychicEntropy.OffsetPsyfocusDirectly(-targetFocus);
-						currentEntropy(pawn2.psychicEntropy) += targetFocus*2;
+						pawn2.psychicEntropy.currentEntropy += targetFocus*2;
 						Taint += 1f;
 						pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel).Severity -= Taint;
 						Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
@@ -70,7 +70,7 @@ namespace MakaiTechPsycast.CorruptedProphet
 						float targetFocus = pawn2.psychicEntropy.CurrentPsyfocus;
 						pawn.psychicEntropy.OffsetPsyfocusDirectly(targetFocus * 0.5f);
 						pawn2.psychicEntropy.OffsetPsyfocusDirectly(-targetFocus * 0.5f);
-						currentEntropy(pawn2.psychicEntropy) += targetFocus * 0.5f;
+						pawn2.psychicEntropy.currentEntropy += targetFocus * 0.5f;
 						Taint += 3f;
 						pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel).Severity -= Taint;
 						Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);

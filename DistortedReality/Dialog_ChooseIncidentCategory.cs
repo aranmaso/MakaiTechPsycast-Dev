@@ -62,7 +62,7 @@ namespace MakaiTechPsycast.DistortedReality
 				{
 					choose.Add(DefDatabase<IncidentCategoryDef>.AllDefs.Where(x => !choose.Contains(x) && x == IncidentCategoryDefOf.ShipChunkDrop || x == IncidentCategoryDefOf.AllyAssistance || x == IncidentCategoryDefOf.OrbitalVisitor || x == IncidentCategoryDefOf.GiveQuest).FirstOrDefault());
 				}*/
-				foreach (IncidentCategoryDef item in DefDatabase<IncidentCategoryDef>.AllDefs.Where(x => !choose.Contains(x) && x == IncidentCategoryDefOf.ShipChunkDrop || x == IncidentCategoryDefOf.AllyAssistance || x == IncidentCategoryDefOf.OrbitalVisitor || x == IncidentCategoryDefOf.GiveQuest))
+				foreach (IncidentCategoryDef item in DefDatabase<IncidentCategoryDef>.AllDefs.Where(x => !choose.Contains(x) && x == MakaiTechPsy_DefOf.ShipChunkDrop || x == MakaiTechPsy_DefOf.AllyAssistance || x == MakaiTechPsy_DefOf.OrbitalVisitor || x == IncidentCategoryDefOf.GiveQuest))
                 {
 					choose.Add(item);
                 }
@@ -80,7 +80,7 @@ namespace MakaiTechPsycast.DistortedReality
 				{
 					choose.Add(DefDatabase<IncidentCategoryDef>.AllDefs.Where(x => !choose.Contains(x) && x == IncidentCategoryDefOf.ThreatBig || x == IncidentCategoryDefOf.DeepDrillInfestation || x == IncidentCategoryDefOf.DiseaseAnimal || x == IncidentCategoryDefOf.DiseaseHuman).FirstOrDefault());
 				}*/
-				foreach(IncidentCategoryDef item in DefDatabase<IncidentCategoryDef>.AllDefs.Where(x => !choose.Contains(x) && x == IncidentCategoryDefOf.ThreatBig || x == IncidentCategoryDefOf.DeepDrillInfestation || x == IncidentCategoryDefOf.DiseaseAnimal || x == IncidentCategoryDefOf.DiseaseHuman))
+				foreach(IncidentCategoryDef item in DefDatabase<IncidentCategoryDef>.AllDefs.Where(x => !choose.Contains(x) && x == IncidentCategoryDefOf.ThreatBig || x == IncidentCategoryDefOf.DeepDrillInfestation || x == MakaiTechPsy_DefOf.DiseaseAnimal || x == IncidentCategoryDefOf.DiseaseHuman))
                 {
 					choose.Add(item);
                 }

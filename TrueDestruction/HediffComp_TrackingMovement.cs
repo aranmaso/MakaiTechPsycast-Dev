@@ -8,18 +8,12 @@ namespace MakaiTechPsycast.TrueDestruction
     public class HediffComp_BlazingTrail : HediffComp
     {
 
-        public int interval;
         public HediffCompProperties_BlazingTrail Props => (HediffCompProperties_BlazingTrail)props;
 
-        public override void CompExposeData()
-        {
-            Scribe_Values.Look(ref interval, "interval", 0);
-        }
         public override void CompPostTick(ref float severityAdjustment)
         {
             base.CompPostTick(ref severityAdjustment);
-            interval++;
-            if (interval >= 10)
+            if (Pawn.IsHashIntervalTick(10))
             {
                 if (Pawn.jobs.curJob.def == JobDefOf.Goto
                 || Pawn.jobs.curJob.def == JobDefOf.Follow
@@ -35,10 +29,9 @@ namespace MakaiTechPsycast.TrueDestruction
                     }
                     foreach(Pawn hostile in MakaiUtility.GetNearbyPawnFoeOnly(Pawn.Position,Pawn.Faction,Pawn.Map,1f))
                     {
-                        hostile.TryAttachFire(1f);
+                        hostile.TryAttachFire(1f,Pawn);
                     }
                 }
-                interval = 0;
             }            
         }
 

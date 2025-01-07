@@ -13,6 +13,8 @@ namespace MakaiTechPsycast.PerfectKnowledge
 
 		public float radius;
 
+		public int maxLevel = 999;
+
 		public List<StatDef> stats;
 
 		public int tickRate = 500;

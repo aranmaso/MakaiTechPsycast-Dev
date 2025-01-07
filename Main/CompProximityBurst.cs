@@ -10,7 +10,7 @@ namespace MakaiTechPsycast
 {
     public class CompProximityBurst : ThingComp
     {
-        private static readonly AccessTools.FieldRef<Projectile, int> ticksToImpact = AccessTools.FieldRefAccess<Projectile, int>("ticksToImpact");
+        //private static readonly AccessTools.FieldRef<Projectile, int> ticksToImpact = AccessTools.FieldRefAccess<Projectile, int>("ticksToImpact");
         public CompProperties_ProximityBurst Props => (CompProperties_ProximityBurst)props;
 
         private IEnumerable<ThingDef> shrapnel;
@@ -21,9 +21,11 @@ namespace MakaiTechPsycast
         private bool hasBursted = false;
         private int timer;
         private int distanceToProx;
+        private Map spawnMap;
         public override void PostPostMake()
         {
             base.PostPostMake();
+            spawnMap = parent.Map;
             shrapnel = Props.shrapnelBulletDef;
             shrapnelCount = Props.shrapnelCount;
             range = Props.range;
@@ -96,7 +98,7 @@ namespace MakaiTechPsycast
         {
             if(parent is Projectile projectile)
             {
-                int ToImpact = ticksToImpact(projectile);
+                int ToImpact = projectile.ticksToImpact;
                 /*if (projectile.Position.DistanceToSquared(projectile.usedTarget.Cell) <= distanceToProx * distanceToProx)
                 {
                     BurstNowFromDistance(projectile.usedTarget.Cell);
@@ -185,9 +187,9 @@ namespace MakaiTechPsycast
                     IntVec3 offsetCell = possibleTargetCell[i];
                     offsetCell.x -= targetOriginal.x - targetCell.x;
                     offsetCell.z -= targetOriginal.z - targetCell.z;
-                    Projectile shrapnelThing = (Projectile)GenSpawn.Spawn(shrapnel.RandomElement(), projectile.Position, projectile.Launcher.Map);
-                    Thing possibleThing = possibleTargetCell[i].GetFirstPawn(projectile.Launcher.Map);
-                    Thing possibleBuilding = possibleTargetCell[i].GetFirstBuilding(projectile.Launcher.Map);
+                    Projectile shrapnelThing = (Projectile)GenSpawn.Spawn(shrapnel.RandomElement(), projectile.Position, projectile.Launcher.Map ?? projectile.Map ?? spawnMap);
+                    Thing possibleThing = possibleTargetCell[i].GetFirstPawn(projectile.Launcher.Map ?? projectile.Map ?? spawnMap);
+                    Thing possibleBuilding = possibleTargetCell[i].GetFirstBuilding(projectile.Launcher.Map ?? spawnMap);
                     if (possibleThing != null)
                     {
                         shrapnelThing.Launch(projectile, possibleThing, possibleThing, ProjectileHitFlags.IntendedTarget);

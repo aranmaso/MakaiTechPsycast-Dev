@@ -13,10 +13,10 @@ namespace MakaiTechPsycast.GoldenOrder
 {
 	public class Dialog_ChooseTraitToRemove : Window
 	{
-		private static readonly AccessTools.FieldRef<TraitDef, float> commonality = AccessTools.FieldRefAccess<TraitDef, float>("commonality");
+		//private static readonly AccessTools.FieldRef<TraitDef, float> commonality = AccessTools.FieldRefAccess<TraitDef, float>("commonality");
 		private Pawn targetPawn;
 		private bool roll;
-		private List<TraitDef> preOpenGetTraitFromBase = DefDatabase<TraitDef>.AllDefs.Where(x => commonality(x) > 0).ToList();
+		private List<TraitDef> preOpenGetTraitFromBase = DefDatabase<TraitDef>.AllDefs.Where(x => x.commonality > 0).ToList();
 
 		private Vector2 scrollPos;
 

@@ -34,6 +34,10 @@ namespace MakaiTechPsycast
         public Vector3 drawOffset2 = Vector3.zero;
         public Vector3 drawOffset3 = Vector3.zero;
 
+        public Vector3 drawPosOffset = Vector3.zero;
+        public Vector3 drawPosOffset2 = Vector3.zero;
+        public Vector3 drawPosOffset3 = Vector3.zero;
+
         public float rotateSpeed = 1f;
         public float rotateSpeed2 = 1f;
         public float rotateSpeed3 = 1f;

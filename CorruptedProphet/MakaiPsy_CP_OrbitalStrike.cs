@@ -36,11 +36,6 @@ namespace MakaiTechPsycast.CorruptedProphet
 			Scribe_Values.Look(ref startTick, "startTick", 0);
 		}
 
-		public override void Draw()
-		{
-			Comps_PostDraw();
-		}
-
 		public virtual void StartStrike()
 		{
 			if (!base.Spawned)

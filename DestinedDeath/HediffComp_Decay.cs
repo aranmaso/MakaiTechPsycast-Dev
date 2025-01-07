@@ -28,7 +28,7 @@ namespace MakaiTechPsycast.DestinedDeath
                 tickSinceTrigger += Props.interval;
             }
         }
-        public override void Notify_PawnDied()
+        public override void Notify_PawnDied(DamageInfo? dinfo, Hediff culprit = null)
         {
             List<BodyPartRecord> list = new List<BodyPartRecord>(parent.pawn.RaceProps.body.AllParts.Where((BodyPartRecord part) => parent.pawn.health.hediffSet.PartIsMissing(part)));
             int partCount = 0;

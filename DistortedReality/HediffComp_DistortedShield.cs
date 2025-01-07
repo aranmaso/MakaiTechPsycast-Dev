@@ -51,7 +51,8 @@ namespace MakaiTechPsycast.DistortedReality
                     }
                     if(stopOnlyEnemy && (projectile.Launcher.Faction.HostileTo(Pawn.Faction) || projectile.Launcher.HostileTo(Pawn)))
                     {
-                        projectile.Destroy();
+                        projectile.Launch(parent.pawn, projectile.Launcher, projectile.Launcher, ProjectileHitFlags.IntendedTarget);
+                        //projectile.Destroy();
                         Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_DD_Suck.Spawn(item.Position, Pawn.Map, 1);
                         effect.Cleanup();
                         defenseCount--;

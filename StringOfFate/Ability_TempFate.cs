@@ -32,7 +32,7 @@ namespace MakaiTechPsycast.StringOfFate
                             {
                                 if ((hediffs[i] is Hediff_Injury || hediffs[i] is Hediff_MissingPart) && hediffs[i].TendableNow())
                                 {
-                                    hediffs[i].Tended(Rand.Range(0.4f, 0.8f), 1f, 1);
+                                    hediffs[i].Tended(Rand.Range(0.8f, 2f), 1f, 1);
                                     num++;
                                 }
                             }
@@ -58,7 +58,7 @@ namespace MakaiTechPsycast.StringOfFate
                 {
                     if (targetPawn.health.hediffSet.hediffs.Where(x => x is Hediff_Injury || x is Hediff_MissingPart).FirstOrFallback() != null)
                     {
-                        if (rand <= 0.5f)
+                        if (rand <= 1f)
                         {
                             List<Hediff> hediffs = targetPawn.health.hediffSet.hediffs.Where(MakaiUtility.FindBadHediff).ToList();
                             for (int i = hediffs.Count - 1; i >= 0; i--)

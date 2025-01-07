@@ -53,7 +53,7 @@ namespace MakaiTechPsycast.StringOfFate
 			{
 				if (mirrorFate.reflectCount > 0)
                 {
-					if (minfo.reflectOnlyEnemies && pawn2.Faction.HostileTo(__instance.Faction) && !minfo.reflectOnlyFriendly)
+					if (minfo.reflectOnlyEnemies && MakaiUtility.GetPawnIsHostileToFaction(pawn2,__instance.Faction) && !minfo.reflectOnlyFriendly)
 					{
 						ThingDef projectile = dinfo.Weapon.Verbs[0].defaultProjectile;
 						if (!minfo.userTakeDamage)

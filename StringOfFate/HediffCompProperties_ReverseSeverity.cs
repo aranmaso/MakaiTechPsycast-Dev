@@ -7,9 +7,13 @@ namespace MakaiTechPsycast.StringOfFate
     {
         public int interval = 250;
 
-        public int tickIncrease = 1000;
+        public IntRange tickIncrease;
 
-        public float severityToReverse = 0.1f;
+        //public int tickIncrease = 1000;
+
+        public FloatRange severityToReverse;
+
+        //public float severityToReverse = 0.1f;
 
         public HediffCompProperties_ReverseSeverity()
         {

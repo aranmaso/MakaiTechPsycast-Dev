@@ -7,7 +7,7 @@ namespace MakaiTechPsycast.DestinedDeath
     {
         public int ShieldStack;
 
-        public bool countOnlyEnemyAttack = true;
+        public bool countOnlyEnemyAttack = false;
 
         public HediffCompProperties_HelheimStrength()
         {
