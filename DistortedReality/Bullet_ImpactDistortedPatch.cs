@@ -11,30 +11,21 @@ namespace MakaiTechPsycast.DistortedReality
     [HarmonyPatch("Impact")]
     public class Bullet_ImpactDistortedPatch
     {
-        private static void Postfix(ref Thing hitThing, ref Bullet __instance)
+        private static void Postfix(Thing hitThing, ref Bullet __instance)
         {
             Thing thing = __instance.Launcher;
-            Thing hitThing2 = hitThing;
-            if(thing == null || !(thing is Pawn pawn) || !(pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DR_DistortBulletBounce)))
+            if(thing == null || thing is not Pawn pawn || !(pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DR_DistortBulletBounce)))
             {
                 return;
             }
-            /*if(!(hitThing is Pawn pawnEnemy))
-            {
-
-            }*/
             HediffComp_BouncingBullet Hediff = pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiTechPsy_DR_DistortBulletBounce).TryGetComp<HediffComp_BouncingBullet>();
             if (Hediff != null && pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiTechPsy_DR_DistortBulletBounce))
             {
                 if (Hediff.bouncingCountLeft > 0)
                 {
-                    int count = 0;
-                    foreach (Thing item in GenRadial.RadialDistinctThingsAround(__instance.Position, pawn.Map, 20f, true))
+                    int count = 0;                    
+                    foreach (var pawnEn in MakaiUtility.GetNearbyPawnFriendAndFoe(__instance.PositionHeld, pawn.MapHeld, 20f).InRandomOrder())
                     {
-                        if (!(item is Pawn pawnEn))
-                        {
-                            continue;
-                        }
                         if(pawnEn == __instance.intendedTarget)
                         {
                             continue;
@@ -43,18 +34,17 @@ namespace MakaiTechPsycast.DistortedReality
                         {
                             continue;
                         }
-                        float rand = Rand.Value;
-                        if (rand < Hediff.Props.chance && pawnEn.Faction != thing.Faction && pawnEn.Faction.HostileTo(thing.Faction))
+                        if (Rand.Value < Hediff.Props.chance && pawnEn.Faction != thing.Faction && pawnEn.Faction.HostileTo(thing.Faction))
                         {
                             Projectile projectile = (Projectile)GenSpawn.Spawn(__instance.def, __instance.Position, pawn.Map);
-                            projectile.Launch(__instance.Launcher, item, item, ProjectileHitFlags.IntendedTarget);
+                            projectile.Launch(__instance.Launcher, pawnEn, pawnEn, ProjectileHitFlags.IntendedTarget);
                             Hediff.bouncingCountLeft -= 1;
                             count++;
                         }
                         else if(pawnEn.Faction != thing.Faction && pawnEn.Faction.HostileTo(thing.Faction))
                         {
                             Projectile projectile = (Projectile)GenSpawn.Spawn(__instance.def, __instance.Position, pawn.Map);
-                            projectile.Launch(__instance.Launcher, item.Position, item, ProjectileHitFlags.IntendedTarget);
+                            projectile.Launch(__instance.Launcher, pawnEn.Position, pawnEn, ProjectileHitFlags.IntendedTarget);
                             Hediff.bouncingCountLeft -= 1;
                             count++;
                         }

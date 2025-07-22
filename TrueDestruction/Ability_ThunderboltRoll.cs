@@ -2,11 +2,11 @@
 using RimWorld.Planet;
 using Verse;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 
 namespace MakaiTechPsycast.TrueDestruction
 {
-	public class Ability_ThunderboltRoll : VFECore.Abilities.Ability
+	public class Ability_ThunderboltRoll : VEF.Abilities.Ability
 	{
 		public override void Cast(params GlobalTargetInfo[] targets)
 		{

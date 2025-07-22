@@ -4,7 +4,7 @@ using Verse;
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using VFECore;
+using VEF;
 
 namespace MakaiTechPsycast.TrueDestruction
 {

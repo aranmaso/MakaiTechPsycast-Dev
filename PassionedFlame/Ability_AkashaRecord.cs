@@ -1,13 +1,13 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using Verse;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 
 namespace MakaiTechPsycast.PassionedFlame
 {
-    public class Ability_AkashaRecord : VFECore.Abilities.Ability
+    public class Ability_AkashaRecord : VEF.Abilities.Ability
     {
         private AbilityExtension_Roll1D20 modExtension => def.GetModExtension<AbilityExtension_Roll1D20>();
         public override void Cast(params GlobalTargetInfo[] targets)

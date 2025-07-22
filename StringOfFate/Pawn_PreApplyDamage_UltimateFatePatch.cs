@@ -17,8 +17,12 @@ namespace MakaiTechPsycast.StringOfFate
             {
                 return;
             }
+            if (dinfo.Def == DamageDefOf.SurgicalCut) return;
             HediffComp_UltimateFate hediff = MakaiUtility.GetFirstHediffOfDef(__instance, MakaiTechPsy_DefOf.MakaiPsy_SF_UltimateFate).TryGetComp<HediffComp_UltimateFate>();
-            dinfo.SetAmount(hediff.maxThresholdPerHit);
+            if(dinfo.Amount > hediff.maxThresholdPerHit)
+            {
+                dinfo.SetAmount(hediff.maxThresholdPerHit);
+            }
             if (hediff.totalDamage < hediff.threshold)
             {
                 return;
@@ -29,7 +33,7 @@ namespace MakaiTechPsycast.StringOfFate
                 absorbed = true;
                 if (hediff.fatedCount > 0)
                 {
-                    List<Hediff> list = __instance.health.hediffSet.hediffs.Where(MakaiUtility.FindBadHediff).ToList();
+                    IReadOnlyList<Hediff> list = __instance.health.hediffSet.hediffs.Where(MakaiUtility.FindBadHediff).ToList();
                     foreach (Hediff item in list)
                     {
                         __instance.health.RemoveHediff(item);

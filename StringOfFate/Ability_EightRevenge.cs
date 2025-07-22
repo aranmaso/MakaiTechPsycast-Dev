@@ -1,13 +1,13 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using Verse;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 
 namespace MakaiTechPsycast.StringOfFate
 {
-    public class Ability_EightRevenge : VFECore.Abilities.Ability
+    public class Ability_EightRevenge : VEF.Abilities.Ability
     {
         public override void Cast(params GlobalTargetInfo[] targets)
         {

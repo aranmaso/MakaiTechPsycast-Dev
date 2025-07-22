@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using RimWorld;
 using Verse;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using System.Collections.Generic;
 

@@ -3,13 +3,13 @@ using RimWorld.Planet;
 using Verse;
 using System.Collections.Generic;
 using System.Linq;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 
 namespace MakaiTechPsycast.DistortedReality
 {
-    public class Ability_DistortedShield : VFECore.Abilities.Ability
+    public class Ability_DistortedShield : VEF.Abilities.Ability
     {
         public override void Cast(params GlobalTargetInfo[] targets)
         {

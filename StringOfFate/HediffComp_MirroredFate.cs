@@ -30,6 +30,8 @@ namespace MakaiTechPsycast.StringOfFate
 		public override void CompExposeData()
 		{
 			Scribe_Values.Look(ref reflectCount, "reflectCount", 1);
+			Scribe_Values.Look(ref info, "info", "null");
+			Scribe_Deep.Look(ref mirrorInfo, "mirrorInfo");
 		}
     }
 }

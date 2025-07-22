@@ -2,7 +2,7 @@
 using RimWorld;
 using UnityEngine;
 using Verse;
-using VFECore;
+using VEF;
 
 namespace MakaiTechPsycast.TrueDestruction
 {

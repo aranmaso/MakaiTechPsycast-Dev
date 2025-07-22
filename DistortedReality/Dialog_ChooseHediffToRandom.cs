@@ -3,8 +3,8 @@ using System.Linq;
 using UnityEngine;
 using Verse;
 using RimWorld;
-using VFECore.Abilities;
-using VFECore.UItils;
+using VEF.Abilities;
+using VEF.Utils;
 using Verse.Sound;
 
 namespace MakaiTechPsycast.DistortedReality

@@ -1,13 +1,13 @@
 ﻿using RimWorld.Planet;
 using HarmonyLib;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 using RimWorld;
 using Verse;
 
 namespace MakaiTechPsycast.BondIntertwined
 {
-    public class Ability_RelationMend : VFECore.Abilities.Ability
+    public class Ability_RelationMend : VEF.Abilities.Ability
     {
 		//private static readonly AccessTools.FieldRef<Pawn_PsychicEntropyTracker, float> currentEntropy = AccessTools.FieldRefAccess<Pawn_PsychicEntropyTracker, float>("currentEntropy");
 		public override void Cast(params GlobalTargetInfo[] targets)

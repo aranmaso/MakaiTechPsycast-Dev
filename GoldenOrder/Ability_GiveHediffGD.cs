@@ -1,13 +1,13 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using Verse;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 
 namespace MakaiTechPsycast.GoldenOrder
 {
-    public class Ability_GiveHediffGD : VFECore.Abilities.Ability
+    public class Ability_GiveHediffGD : VEF.Abilities.Ability
     {
         public AbilityExtension_Roll1D20 modExtension => def.GetModExtension<AbilityExtension_Roll1D20>();
 

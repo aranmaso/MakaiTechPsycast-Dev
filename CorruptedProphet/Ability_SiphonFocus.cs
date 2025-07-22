@@ -2,13 +2,13 @@
 using HarmonyLib;
 using System.Collections.Generic;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 using RimWorld;
 using Verse;
 
 namespace MakaiTechPsycast.CorruptedProphet
 {
-    public class Ability_SiphonFocus : VFECore.Abilities.Ability
+    public class Ability_SiphonFocus : VEF.Abilities.Ability
     {
 		//private static readonly AccessTools.FieldRef<Pawn_PsychicEntropyTracker, float> currentEntropy = AccessTools.FieldRefAccess<Pawn_PsychicEntropyTracker, float>("currentEntropy");
 		public override void Cast(params GlobalTargetInfo[] targets)
@@ -17,24 +17,12 @@ namespace MakaiTechPsycast.CorruptedProphet
 			AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
 			if (pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel) && targets[0].Thing is Pawn pawn2)
             {
-				SkillRecord bonus = pawn.skills.GetSkill(modExtension.skillBonus);
-				System.Random rand = new System.Random();
-				int roll = rand.Next(1, 21);
-				int rollBonus = bonus.Level / 5;
-				int baseRoll = roll;
-				int rollBonusLucky = 0;
-				int rollBonusUnLucky = 0;
-				if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_Lucky))
-				{
-					rollBonusLucky = 20;
-				}
-				if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_UnLucky))
-				{
-					rollBonusUnLucky = -20;
-				}
-				roll += rollBonus + rollBonusLucky + rollBonusUnLucky;
-				int cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
-				float Taint = 0f;
+                RollInfo rollInfo = new RollInfo();
+                rollInfo = pawn.R1D20(modExtension.skillBonus, modExtension.skillBonus2 ?? null);
+                int baseRoll = rollInfo.baseRoll;
+                int roll = rollInfo.roll;
+                int cumulativeBonusRoll = rollInfo.cumulativeBonusRoll;
+                float Taint = 0f;
 				if (roll >= modExtension.successThreshold && roll < modExtension.greatSuccessThreshold && pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel).Severity >= modExtension.costs)
 				{
 					if (pawn2.psychicEntropy.CurrentPsyfocus > 0)

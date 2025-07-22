@@ -2,13 +2,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 using RimWorld;
 using Verse;
 
 namespace MakaiTechPsycast.CorruptedProphet
 {
-    public class Ability_TargetCorrupted : VFECore.Abilities.Ability
+    public class Ability_TargetCorrupted : VEF.Abilities.Ability
     {
 		public IntVec3 targetCell;
 

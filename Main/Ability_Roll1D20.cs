@@ -2,13 +2,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 using RimWorld;
 using Verse;
 
 namespace MakaiTechPsycast
 {
-    public class Ability_Roll1D20 : VFECore.Abilities.Ability
+    public class Ability_Roll1D20 : VEF.Abilities.Ability
     {
         public override void Cast(params GlobalTargetInfo[] targets)
         {

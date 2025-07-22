@@ -4,11 +4,11 @@ using VanillaPsycastsExpanded;
 using RimWorld;
 using System.Collections.Generic;
 using Verse;
-using VFECore.Abilities;
+using VEF.Abilities;
 
 namespace MakaiTechPsycast.CorruptedProphet
 {
-	public class Ability_SpawnThingWithRollTaintCost : VFECore.Abilities.Ability
+	public class Ability_SpawnThingWithRollTaintCost : VEF.Abilities.Ability
 	{
 		public override bool CanAutoCast => false;
 

@@ -2,14 +2,14 @@
 using RimWorld.Planet;
 using Verse;
 using Verse.Sound;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 using Verse.AI;
 
 namespace MakaiTechPsycast.TrueDestruction
 {
-    public class Ability_HeavenlyChain : VFECore.Abilities.Ability
+    public class Ability_HeavenlyChain : VEF.Abilities.Ability
     {
         public int shotLeft;
 

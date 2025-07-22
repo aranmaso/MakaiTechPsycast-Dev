@@ -21,7 +21,7 @@ namespace MakaiTechPsycast.TrueDestruction
 
             HediffComp_WillOfTheFallen comps = MakaiUtility.GetFirstHediffOfDef(instigator, MakaiTechPsy_DefOf.MakaiTechPsy_TD_WillOfTheFallen).TryGetComp<HediffComp_WillOfTheFallen>();
             float originalDamage = dinfo.Amount;
-            dinfo.SetAmount(originalDamage + comps.count * 0.05f);
+            dinfo.SetAmount(originalDamage + (comps.count * 0.1f));
         }
     }
 }

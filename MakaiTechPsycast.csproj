@@ -21,7 +21,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>none</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\MakaiTech Psycast\1.5\Assemblies\</OutputPath>
+    <OutputPath>..\..\..\MakaiTech Psycast\1.6\Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -64,11 +64,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="VanillaPsycastsExpanded">
-      <HintPath>..\..\..\..\..\..\workshop\content\294100\2842502659\1.4\Assemblies\VanillaPsycastsExpanded.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\2842502659\1.6\Assemblies\VanillaPsycastsExpanded.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="VFECore">
-      <HintPath>..\..\..\..\..\..\workshop\content\294100\2023507013\1.4\Assemblies\VFECore.dll</HintPath>
+    <Reference Include="VEF">
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\2023507013\1.6\Assemblies\VEF.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -103,6 +103,7 @@
     <Compile Include="GoldenOrder\Dialog_ChooseTraitToAddThree.cs" />
     <Compile Include="GoldenOrder\Projectile_BlackThread.cs" />
     <Compile Include="Main\Ability_GiveHediffTemplateNoMultiplier.cs" />
+    <Compile Include="Main\GameComponent_DrawAt.cs" />
     <Compile Include="Main\HediffCompProperties_DrawShadowUnderFeet.cs" />
     <Compile Include="Main\CompNearbyDamager.cs" />
     <Compile Include="Main\CompProperties_NearbyDamager.cs" />
@@ -110,7 +111,6 @@
     <Compile Include="GoldenOrder\HediffComp_PathOfNaraka.cs" />
     <Compile Include="Main\Ability_GiveHediffTemplate.cs" />
     <Compile Include="Main\Pawn_DrawAtMainPatch.cs" />
-    <Compile Include="Main\Pawn_DrawAtPatchFate.cs" />
     <Compile Include="PassionedFlame\Ability_GiveHediffPassion.cs" />
     <Compile Include="PassionedFlame\Ability_ShootFromAroundTarget.cs" />
     <Compile Include="PassionedFlame\Ability_GiveHediffPassionCurved.cs" />

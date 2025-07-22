@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using VanillaPsycastsExpanded;
 using Verse;
-using VFECore.Abilities;
+using VEF.Abilities;
 
 namespace MakaiTechPsycast
 {

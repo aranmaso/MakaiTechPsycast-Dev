@@ -1,12 +1,12 @@
 ﻿using RimWorld.Planet;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 using Verse;
 using RimWorld;
 
 namespace MakaiTechPsycast.PerfectKnowledge
 {
-	public class Ability_StealAllIntellectual : VFECore.Abilities.Ability
+	public class Ability_StealAllIntellectual : VEF.Abilities.Ability
     {
 		public override void Cast(params GlobalTargetInfo[] targets)
 		{

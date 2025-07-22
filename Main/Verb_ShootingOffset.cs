@@ -64,7 +64,7 @@ namespace MakaiTechPsycast
 			ThingDef targetCoverDef = randomCoverToMissInto?.def;
 			if (!Rand.Chance(shotReport.AimOnTargetChance_IgnoringPosture))
 			{
-				resultingLine.ChangeDestToMissWild_NewTemp(shotReport.AimOnTargetChance_StandardTarget,projectile.projectile.flyOverhead,projectile2.Map);
+				resultingLine.ChangeDestToMissWild(shotReport.AimOnTargetChance_StandardTarget,projectile.projectile.flyOverhead,projectile2.Map);
 				ProjectileHitFlags projectileHitFlags2 = ProjectileHitFlags.NonTargetWorld;
 				if (Rand.Chance(0.5f) && canHitNonTargetPawnsNow)
 				{

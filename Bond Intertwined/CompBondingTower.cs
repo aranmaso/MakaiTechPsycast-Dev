@@ -3,99 +3,102 @@ using RimWorld;
 using Verse;
 using Verse.AI;
 using UnityEngine;
-using VFECore;
+using VEF;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MakaiTechPsycast.BondIntertwined
 {
 	public class CompBondingTower : ThingComp
 	{
-		private int nextTest = 0;
-
-		private int pawnCount = 0;
-
-		JobDef currentJob = JobDefOf.FleeAndCower;
-
-		[MayRequireIdeology]
-		JobDef danceJob = JobDefOf.Dance;
-
-		
-
+	
 		public CompProperties_BondingTower Props => (CompProperties_BondingTower)props;
 
-		public override void PostExposeData()
+		public void DoTrigger()
 		{
-			Scribe_Values.Look(ref nextTest, "nextTest", 0);
-			base.PostExposeData();
-		}
-
-		public override void PostPostMake()
-		{
-			nextTest = Find.TickManager.TicksGame + Props.tickRate;
-			base.PostPostMake();
-		}
-
-		public override void CompTick()
-		{
-			base.CompTick();
-			if(this.Props != null)
-            {
-				if (Find.TickManager.TicksGame != nextTest)
+			IReadOnlyList<Pawn> pawns = MakaiUtility.GetNearbyPawnFriendAndFoe(parent.PositionHeld, parent.MapHeld, Props.radius).ToList();
+			if(!pawns.EnumerableNullOrEmpty())
+			{
+				foreach(var item in  pawns)
 				{
-					return;
-				}
-				foreach (Pawn pawn in MakaiUtility.GetNearbyPawnFriendAndFoe(parent.Position, parent.Map, Props.radius))
-				{
-					foreach (HediffDef hediffDef in Props.hediff)
+					if(!Props.hediff.NullOrEmpty())
 					{
-						float num = Props.severityAmount;
-						float dur = Props.durationInHour * 2500f;
-						if (pawn.Faction == Faction.OfPlayer || !pawn.HostileTo(Faction.OfPlayer))
+						float severity = Props.severityAmount;
+                        float dur = Props.durationInHour * 2500f;
+						if(!Props.stats.NullOrEmpty())
 						{
-							if (!Props.stats.NullOrEmpty())
+							foreach(var statDef in Props.stats)
 							{
-								foreach (StatDef stat in Props.stats)
+								severity *= item.GetStatValueForPawn(statDef,item);
+								dur *= item.GetStatValueForPawn(statDef,item);
+							}
+						}
+
+                        foreach (var hediffDef in Props.hediff)
+						{
+                            if (item.Faction == Faction.OfPlayer || !item.HostileTo(parent.Faction))
+                            {
+                                Hediff hediff = item.health.hediffSet.GetFirstHediffOfDef(hediffDef);
+								if(hediff != null)
 								{
-									num *= pawn.GetStatValue(stat);
-									dur *= pawn.GetStatValue(stat);
-								}
-							}
-							if (pawn.health.hediffSet.HasHediff(hediffDef) && num > 0f && hediffDef.initialSeverity > 0f)
+									hediff.Severity += severity;
+									hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.RoundToInt(dur);
+                                }
+								else
+								{
+                                    Hediff hediff2 = HediffMaker.MakeHediff(hediffDef, item);
+                                    hediff2.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.RoundToInt(dur);
+                                    item.health.AddHediff(hediff2);
+                                }
+                            }
+                        }
+						
+					}
+					if (item.HostileTo(parent)
+						|| item.HostileTo(parent.Faction)
+						|| item.AnimalOrWildMan() && item.HostileTo(parent.Faction)
+						|| item.RaceProps.Animal && item.mindState.mentalStateHandler.CurStateDef == MentalStateDefOf.Manhunter
+						|| item.mindState.mentalStateHandler.InMentalState && item.mindState.mentalStateHandler.CurStateDef == MentalStateDefOf.Berserk)
+					{
+                        float factionRelationMend = Rand.Value;
+                        if (!item.RaceProps.Animal && item.Faction.HasGoodwill && factionRelationMend <= 0.1f && item.Faction != null)
+                        {
+							if(item.Faction != Faction.OfPlayer)
 							{
-								pawn.health.hediffSet.GetFirstHediffOfDef(hediffDef).Severity += num;
-							}
+                                Faction.OfPlayer.TryAffectGoodwillWith(item.Faction, 2);
+                            }
+                        }
+						if(Rand.Chance(0.3f))
+						{
+							if(ModsConfig.IdeologyActive)
+							{
+                                if (item.CurJob.def != JobDefOf.Dance && !item.Downed)
+                                {
+									item.pather.StopDead();
+									item.jobs.StopAll();
+                                    item.jobs.StartJob(JobMaker.MakeJob(JobDefOf.Dance), JobCondition.InterruptForced, null, resumeCurJobAfterwards: false);
+                                }
+                            }    
 							else
 							{
-								Hediff hediff = HediffMaker.MakeHediff(hediffDef, pawn);
-								hediff.TryGetComp<HediffComp_Disappears>().ticksToDisappear = Mathf.FloorToInt(dur);
-								pawn.health.AddHediff(hediff);
-							}
-						}
-					}
-					if (pawn.HostileTo(Faction.OfPlayer) || (pawn.HostileTo(Faction.OfPlayer) && pawn.AnimalOrWildMan()) && (pawn.Faction != Faction.OfMechanoids || pawn.Faction != Faction.OfInsects))
-					{
-						float factionRelationMend = Rand.Value;
-						if (!(pawn.RaceProps.Animal) && pawn.Faction.HasGoodwill && factionRelationMend <= 0.1f && pawn.Faction != null)
-						{
-							Faction.OfPlayer.TryAffectGoodwillWith(pawn.Faction, 2);
-						}
-						if (danceJob != null)
-						{
-							currentJob = danceJob;
-						}
-						float danceChance = Rand.Value;
-						if (pawn.CurJob.def != currentJob && danceChance <= 0.3f && !pawn.Downed)
-						{
-							pawn.jobs.StartJob(JobMaker.MakeJob(currentJob), JobCondition.InterruptForced, null, resumeCurJobAfterwards: false);
-						}
-						/*if (pawn.CurJob.def == JobDefOf.Dance)
-						{
-							pawn.jobs.EndCurrentJob(JobCondition.InterruptForced);
-						}*/
-
-					}
+                                if (item.CurJob.def != JobDefOf.FleeAndCower && !item.Downed)
+                                {
+                                    item.pather.StopDead();
+                                    item.jobs.StopAll();
+                                    item.jobs.StartJob(JobMaker.MakeJob(JobDefOf.FleeAndCower), JobCondition.InterruptForced, null, resumeCurJobAfterwards: false);
+                                }
+                            }
+                        }
+                    }
 				}
-				nextTest += Props.tickRate;
 			}
+		}
+		public override void CompTick()
+		{
+			if(parent.IsHashIntervalTick(Props.tickRate))
+			{
+				DoTrigger();
+			}			
 		}
 	}
 }

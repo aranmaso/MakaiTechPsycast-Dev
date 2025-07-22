@@ -3,14 +3,14 @@ using UnityEngine;
 using HarmonyLib;
 using System.Collections.Generic;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 using RimWorld;
 using Verse;
 using System.Linq;
 
 namespace MakaiTechPsycast.DestinedDeath
 {
-    public class Ability_CollectSoul : VFECore.Abilities.Ability
+    public class Ability_CollectSoul : VEF.Abilities.Ability
     {
 		public IntVec3 targetCell;
         AbilityExtension_Roll1D20 modExtension => def.GetModExtension<AbilityExtension_Roll1D20>();
@@ -35,24 +35,10 @@ namespace MakaiTechPsycast.DestinedDeath
 		public override void Cast(params GlobalTargetInfo[] targets)
         {
 			base.Cast(targets);
-			SkillRecord bonus = pawn.skills.GetSkill(modExtension.skillBonus);
-			System.Random rand = new System.Random();
-			int roll = rand.Next(1, 21);
-			int rollBonus = bonus.Level / 5;
-			int baseRoll = roll;
-			int rollBonusLucky = 0;
-			int rollBonusUnLucky = 0;
-			if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_Lucky))
-			{
-				rollBonusLucky = 20;
-			}
-			if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_UnLucky))
-			{
-				rollBonusUnLucky = -20;
-			}
-			roll += rollBonus + rollBonusLucky + rollBonusUnLucky;
-			int cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
-			if(roll >= modExtension.successThreshold && roll < modExtension.greatSuccessThreshold)
+            RollInfo rollinfo = new RollInfo();
+            rollinfo = MakaiUtility.Roll1D20(pawn, modExtension.skillBonus, rollinfo);
+            int roll = rollinfo.roll;
+            if (roll >= modExtension.successThreshold && roll < modExtension.greatSuccessThreshold)
             {
                 for (int i = 0; i < targets.Length; i++)
                 {
@@ -119,7 +105,7 @@ namespace MakaiTechPsycast.DestinedDeath
                         Messages.Message("Makai_PassArollcheckCollectSoul".Translate(pawn.LabelShort, name, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
                     }
                 }*/
-                Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+                Messages.Message("Makai_PassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 			}
 			if (roll >= modExtension.greatSuccessThreshold)
 			{
@@ -169,7 +155,7 @@ namespace MakaiTechPsycast.DestinedDeath
                     }                    
                 }
                 
-                Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
+                Messages.Message("Makai_GreatPassArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.PositiveEvent);
 			}
 			if (roll < modExtension.successThreshold)
 			{
@@ -219,7 +205,7 @@ namespace MakaiTechPsycast.DestinedDeath
                     }
                 }
                 
-                Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, baseRoll, cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
+                Messages.Message("Makai_FailArollcheck".Translate(pawn.LabelShort, rollinfo.baseRoll, rollinfo.cumulativeBonusRoll, pawn.Named("USER")), pawn, MessageTypeDefOf.NegativeEvent);
 			}
 		}
     }

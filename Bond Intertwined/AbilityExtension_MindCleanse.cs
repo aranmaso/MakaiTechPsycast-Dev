@@ -1,6 +1,6 @@
 ﻿using RimWorld.Planet;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 using UnityEngine;
 using Verse;
 using RimWorld;
@@ -23,7 +23,7 @@ namespace MakaiTechPsycast.BondIntertwined
 		public int ticks;
 
 		public SkillDef skillBonus;
-		public override void Cast(GlobalTargetInfo[] targets, VFECore.Abilities.Ability ability)
+		public override void Cast(GlobalTargetInfo[] targets, VEF.Abilities.Ability ability)
 		{
 			base.Cast(targets, ability);
 			if (targets[0].Thing is Pawn pawn2)

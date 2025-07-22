@@ -4,11 +4,11 @@ using VanillaPsycastsExpanded;
 using RimWorld;
 using System.Collections.Generic;
 using Verse;
-using VFECore.Abilities;
+using VEF.Abilities;
 
 namespace MakaiTechPsycast.GoldenOrder
 {
-	public class Ability_SpawnThingGD : VFECore.Abilities.Ability
+	public class Ability_SpawnThingGD : VEF.Abilities.Ability
 	{
 		public override bool CanAutoCast => false;
 

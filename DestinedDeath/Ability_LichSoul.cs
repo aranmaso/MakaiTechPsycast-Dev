@@ -1,14 +1,14 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using Verse;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 using System.Linq;
 
 namespace MakaiTechPsycast.DestinedDeath
 {
-	public class Ability_LichSoul : VFECore.Abilities.Ability
+	public class Ability_LichSoul : VEF.Abilities.Ability
 	{
 		AbilityExtension_Roll1D20 modExtension => def.GetModExtension<AbilityExtension_Roll1D20>();
 		public override bool ValidateTarget(LocalTargetInfo target, bool showMessages = true)

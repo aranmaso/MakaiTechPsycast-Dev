@@ -3,13 +3,13 @@ using RimWorld.Planet;
 using Verse;
 using System.Collections.Generic;
 using System.Linq;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 
 namespace MakaiTechPsycast.PassionedFlame
 {
-    public class Ability_GiveHediffPassionCurved : VFECore.Abilities.Ability
+    public class Ability_GiveHediffPassionCurved : VEF.Abilities.Ability
     {
         public AbilityExtension_Roll1D20 modExtension => def.GetModExtension<AbilityExtension_Roll1D20>();
         public override void Cast(params GlobalTargetInfo[] targets)

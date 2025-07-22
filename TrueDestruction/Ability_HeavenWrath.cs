@@ -1,13 +1,13 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using Verse;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 
 namespace MakaiTechPsycast.TrueDestruction
 {
-    public class Ability_HeavenWrath : VFECore.Abilities.Ability
+    public class Ability_HeavenWrath : VEF.Abilities.Ability
     {
         public int counter;
 

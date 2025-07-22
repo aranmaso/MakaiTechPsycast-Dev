@@ -2,13 +2,13 @@
 using RimWorld.Planet;
 using Verse;
 using Verse.Sound;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 
 namespace MakaiTechPsycast.TrueDestruction
 {
-    public class Ability_SwordRain : VFECore.Abilities.Ability
+    public class Ability_SwordRain : VEF.Abilities.Ability
     {
         public int shotLeft;
 

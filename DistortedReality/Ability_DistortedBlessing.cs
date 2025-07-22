@@ -1,7 +1,7 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using Verse;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace MakaiTechPsycast.DistortedReality
 {
-    public class Ability_DistortedBlessing : VFECore.Abilities.Ability
+    public class Ability_DistortedBlessing : VEF.Abilities.Ability
     {
         public override void Cast(params GlobalTargetInfo[] targets)
         {

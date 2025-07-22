@@ -2,13 +2,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 using RimWorld;
 using Verse;
 
 namespace MakaiTechPsycast.BondIntertwined
 {
-    public class Ability_BondAffectFactionRelation : VFECore.Abilities.Ability
+    public class Ability_BondAffectFactionRelation : VEF.Abilities.Ability
     {
         public override bool CanAutoCast => false;
 

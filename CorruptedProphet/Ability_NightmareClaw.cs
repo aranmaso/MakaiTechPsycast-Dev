@@ -2,36 +2,24 @@
 using UnityEngine;
 using System.Collections.Generic;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 using RimWorld;
 using Verse;
 
 namespace MakaiTechPsycast.CorruptedProphet
 {
-    public class Ability_NightmareClaw : VFECore.Abilities.Ability
+    public class Ability_NightmareClaw : VEF.Abilities.Ability
     {
 		public override void Cast(params GlobalTargetInfo[] targets)
 		{
 			base.Cast(targets);
 			AbilityExtension_Roll1D20 modExtension = def.GetModExtension<AbilityExtension_Roll1D20>();
-			SkillRecord bonus = pawn.skills.GetSkill(modExtension.skillBonus);
-			System.Random rand = new System.Random();
-			int roll = rand.Next(1, 21);
-			int rollBonus = bonus.Level / 5;
-			int baseRoll = roll;
-			int rollBonusLucky = 0;
-			int rollBonusUnLucky = 0;
-			if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_Lucky))
-			{
-				rollBonusLucky = 20;
-			}
-			if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_UnLucky))
-			{
-				rollBonusUnLucky = -20;
-			}
-			roll += rollBonus + rollBonusLucky + rollBonusUnLucky;
-			int cumulativeBonusRoll = rollBonus + rollBonusLucky + rollBonusUnLucky;
-			if (pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel) && roll >= modExtension.successThreshold && roll < modExtension.greatSuccessThreshold && pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel).Severity >= modExtension.costs)
+            RollInfo rollInfo = new RollInfo();
+            rollInfo = pawn.R1D20(modExtension.skillBonus, modExtension.skillBonus2 ?? null);
+            int baseRoll = rollInfo.baseRoll;
+            int roll = rollInfo.roll;
+            int cumulativeBonusRoll = rollInfo.cumulativeBonusRoll;
+            if (pawn.health.hediffSet.HasHediff(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel) && roll >= modExtension.successThreshold && roll < modExtension.greatSuccessThreshold && pawn.health.hediffSet.GetFirstHediffOfDef(MakaiTechPsy_DefOf.MakaiPsy_CP_TaintLevel).Severity >= modExtension.costs)
             {
 				foreach (GlobalTargetInfo globalTargetInfo in targets)
 				{

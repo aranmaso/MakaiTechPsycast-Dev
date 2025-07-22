@@ -124,19 +124,17 @@ namespace MakaiTechPsycast.StringOfFate
                         item.Severity -= Rand.Range(1f, 20f);
                     }
                 }
-                /*if (pawn.health.hediffSet.GetInjuriesTendable().EnumerableCount() > 0)
+                if (pawn.health.hediffSet.GetTendableNonInjuryNonMissingPartHediffs().EnumerableCount() > 0)
                 {
-                    Hediff_Injury inju = MakaiUtility.FindInjury(pawn);
-                    pawn.health.RemoveHediff(inju);
+                    Hediff_Injury hediff = MakaiUtility.FindInjury(pawn);
+                    pawn.health.RemoveHediff(hediff);
                     parent.TryGetComp<HediffComp_Disappears>().ticksToDisappear -= 250;
-                }*/
-                if(pawn.health.hediffSet.GetMissingPartsCommonAncestors().Count > 0)
+                }
+                if (pawn.health.hediffSet.GetMissingPartsCommonAncestors().Count > 0)
                 {
-                    MakaiUtility.RestorePart(MakaiUtility.FindSmallestMissingBodyPart(pawn),pawn);
+                    MakaiUtility.RestorePart(MakaiUtility.FindSmallestMissingBodyPart(pawn), pawn);
                     parent.TryGetComp<HediffComp_Disappears>().ticksToDisappear -= 1000;
                 }
-                /*Effecter effect = MakaiTechPsy_DefOf.MakaiPsy_Ring_ExpandY.Spawn(pawn.Position, pawn.Map, 0.5f);
-                effect.Cleanup();*/
             }
         }
     }

@@ -2,7 +2,7 @@
 using Verse;
 using UnityEngine;
 using System;
-using VFECore;
+using VEF;
 
 namespace MakaiTechPsycast.TrueDestruction
 {

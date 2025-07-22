@@ -2,13 +2,13 @@
 using RimWorld.Planet;
 using Verse;
 using Verse.Sound;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 
 namespace MakaiTechPsycast.PassionedFlame
 {
-    public class Ability_ShootFromAroundTarget : VFECore.Abilities.Ability
+    public class Ability_ShootFromAroundTarget : VEF.Abilities.Ability
     {
         public int shotLeft = 0;
 

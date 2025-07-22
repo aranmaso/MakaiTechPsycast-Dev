@@ -1,11 +1,11 @@
 ﻿using VanillaPsycastsExpanded;
 using Verse;
 using RimWorld;
-using VFECore.Abilities;
+using VEF.Abilities;
 
 namespace MakaiTechPsycast.BondIntertwined
 {
-	public class Ability_BondLink : VFECore.Abilities.Ability
+	public class Ability_BondLink : VEF.Abilities.Ability
     {
 		public override Hediff ApplyHediff(Pawn targetPawn, HediffDef hediffDef, BodyPartRecord bodyPart, int duration, float severity)
 		{

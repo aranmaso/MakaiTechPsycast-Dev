@@ -1,13 +1,13 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using Verse;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 
 namespace MakaiTechPsycast.GoldenOrder
 {
-    public class Ability_PathOfNaraka : VFECore.Abilities.Ability
+    public class Ability_PathOfNaraka : VEF.Abilities.Ability
     {
         public AbilityExtension_Roll1D20 modExtension => def.GetModExtension<AbilityExtension_Roll1D20>();
         public override void Cast(params GlobalTargetInfo[] targets)

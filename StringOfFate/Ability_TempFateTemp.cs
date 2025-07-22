@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 using RimWorld;
 using Verse;
 using System;
@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace MakaiTechPsycast.StringOfFate
 {
-	public class Ability_TempFateTemp : VFECore.Abilities.Ability
+	public class Ability_TempFateTemp : VEF.Abilities.Ability
 	{
 		public override void Cast(params GlobalTargetInfo[] targets)
 		{

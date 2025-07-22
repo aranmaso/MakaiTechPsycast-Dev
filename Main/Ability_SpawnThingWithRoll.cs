@@ -4,11 +4,11 @@ using VanillaPsycastsExpanded;
 using RimWorld;
 using System.Collections.Generic;
 using Verse;
-using VFECore.Abilities;
+using VEF.Abilities;
 
 namespace MakaiTechPsycast
 {
-	public class Ability_SpawnThingWithRoll : VFECore.Abilities.Ability
+	public class Ability_SpawnThingWithRoll : VEF.Abilities.Ability
     {
 		public override bool CanAutoCast => false;
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using RimWorld;
 using Verse;
-using VFECore;
+using VEF;
 
 namespace MakaiTechPsycast.BondIntertwined
 {

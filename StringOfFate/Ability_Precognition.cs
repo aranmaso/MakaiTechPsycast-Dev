@@ -1,14 +1,14 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using Verse;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 using System.Collections.Generic;
 
 namespace MakaiTechPsycast.StringOfFate
 {
-    public class Ability_Precognition : VFECore.Abilities.Ability
+    public class Ability_Precognition : VEF.Abilities.Ability
     {
         public override void Cast(params GlobalTargetInfo[] targets)
         {

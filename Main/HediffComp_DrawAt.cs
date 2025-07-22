@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MakaiTechPsycast.Main;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -9,7 +10,18 @@ namespace MakaiTechPsycast
 {
     public class HediffComp_DrawAt : HediffComp
     {
-        public HediffCompProperties_DrawAt Props => (HediffCompProperties_DrawAt)props;
+        public HediffCompProperties_DrawAt PropsCached;
+        public HediffCompProperties_DrawAt Props
+        {
+            get
+            {
+                if(PropsCached == null)
+                {
+                    PropsCached = (HediffCompProperties_DrawAt)props;
+                }
+                return PropsCached;
+            }
+        }
 
         public GraphicData graphicData => Props.graphicData;
 
@@ -113,7 +125,23 @@ namespace MakaiTechPsycast
                 return textureMat3;
             }
         }
+        public override void CompPostPostAdd(DamageInfo? dinfo)
+        {
+            base.CompPostPostAdd(dinfo);
+            Current.Game.GetComponent<GameComponent_DrawAt>().AddToList(Pawn);
+        }
 
+        public override void CompPostPostRemoved()
+        {
+            base.CompPostPostRemoved();
+            Current.Game.GetComponent<GameComponent_DrawAt>().RemoveFromList(Pawn);
+        }
+
+        public override void Notify_PawnDied(DamageInfo? dinfo, Hediff culprit = null)
+        {
+            base.Notify_PawnDied(dinfo, culprit);
+            Current.Game.GetComponent<GameComponent_DrawAt>().RemoveFromList(Pawn);
+        }
         public virtual void DrawAt(Vector3 drawPos)
         {
             if (Props.graphicData != null)

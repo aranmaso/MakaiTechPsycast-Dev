@@ -2,7 +2,7 @@
 using RimWorld.Planet;
 using VanillaPsycastsExpanded;
 using Verse;
-using VFECore.Abilities;
+using VEF.Abilities;
 
 namespace MakaiTechPsycast.BondIntertwined
 {

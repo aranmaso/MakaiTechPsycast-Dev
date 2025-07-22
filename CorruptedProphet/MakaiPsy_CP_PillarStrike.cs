@@ -49,7 +49,7 @@ namespace MakaiTechPsycast.CorruptedProphet
 			GetComp<MakaiPsy_CP_CompPillarBeam>().StartAnimation(duration, 10, angle);
 		}
 
-		public override void Tick()
+		protected override void Tick()
 		{
 			base.Tick();
 			if (TicksPassed >= duration)

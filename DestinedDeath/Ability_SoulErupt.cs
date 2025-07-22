@@ -3,14 +3,14 @@ using UnityEngine;
 using HarmonyLib;
 using System.Collections.Generic;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 using RimWorld;
 using Verse;
 using System.Linq;
 
 namespace MakaiTechPsycast.DestinedDeath
 {
-    public class Ability_SoulErupt : VFECore.Abilities.Ability
+    public class Ability_SoulErupt : VEF.Abilities.Ability
     {
         public override void Cast(params GlobalTargetInfo[] targets)
         {

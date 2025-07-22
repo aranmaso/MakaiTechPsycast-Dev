@@ -22,7 +22,7 @@ namespace MakaiTechPsycast
 		public DefMap<RecordDef, float> records = new DefMap<RecordDef, float>();
 		public Faction faction;
 		public Ideo ideo;
-		public Color? favColor;
+		public ColorDef favColor;
 		public float certainty;
 		public Precept_RoleMulti precept_RoleMulti;
 		public Precept_RoleSingle precept_RoleSingle;

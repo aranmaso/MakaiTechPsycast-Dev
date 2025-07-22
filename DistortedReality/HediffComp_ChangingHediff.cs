@@ -31,10 +31,11 @@ namespace MakaiTechPsycast.DistortedReality
             HediffDef x = null;
             foreach(HediffDef item in Props.hediffList)
             {
-                if(pawn.health.hediffSet.HasHediff(item))
+                Hediff h = pawn.health.hediffSet.GetFirstHediffOfDef(item);
+                if (h != null)
                 {
-                    x = item;
-                    pawn.health.RemoveHediff(pawn.health.hediffSet.GetFirstHediffOfDef(item));
+                    x = h.def;
+                    pawn.health.RemoveHediff(h);
                 }
             }
             /*Hediff hediff = HediffMaker.MakeHediff((from h in Props.hediffList

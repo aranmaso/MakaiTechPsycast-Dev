@@ -1,12 +1,12 @@
 ﻿using RimWorld.Planet;
 using VanillaPsycastsExpanded;
-using VFECore.Abilities;
+using VEF.Abilities;
 using RimWorld;
 using Verse;
 
 namespace MakaiTechPsycast.PerfectKnowledge
 {
-	public class Ability_XpToCaster : VFECore.Abilities.Ability
+	public class Ability_XpToCaster : VEF.Abilities.Ability
     {
 		public override void Cast(params GlobalTargetInfo[] targets)
 		{

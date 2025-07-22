@@ -238,6 +238,38 @@ namespace MakaiTechPsycast
             return Rinfo;
         }
 
+        public static RollInfo R1D20(this Pawn pawn,SkillDef skillBonus,SkillDef skillBonus2 = null)
+        {
+            RollInfo Rinfo = new RollInfo();
+            SkillRecord bonus = pawn.skills.GetSkill(skillBonus);
+            SkillRecord bonus2 = null;
+            if (skillBonus2 != null)
+            {
+                bonus2 = pawn.skills.GetSkill(skillBonus2);
+            }
+            System.Random rand = new System.Random();
+            Rinfo.roll = rand.Next(1, 21);
+            int rollBonus = bonus.Level / 5;
+            int rollBonus2 = 0;
+            if (skillBonus2 != null)
+            {
+                rollBonus2 = bonus2.Level / 5;
+            }
+            Rinfo.baseRoll = Rinfo.roll;
+            int rollBonusLucky = 0;
+            int rollBonusUnLucky = 0;
+            if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_Lucky))
+            {
+                rollBonusLucky = 20;
+            }
+            if (pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_UnLucky))
+            {
+                rollBonusUnLucky = -20;
+            }
+            Rinfo.roll += rollBonus + rollBonus2 + rollBonusLucky + rollBonusUnLucky;
+            Rinfo.cumulativeBonusRoll = rollBonus + rollBonus2 + rollBonusLucky + rollBonusUnLucky;
+            return Rinfo;
+        }
         public static RollInfo Roll1D20PassionCount(Pawn pawn, RollInfo Rinfo)
         {
             int count = 0;
@@ -658,9 +690,9 @@ namespace MakaiTechPsycast
                         }
                     }
                     Pawn_StoryTracker story = pawn.story;
-                    if (story != null && story.favoriteColor.HasValue)
+                    if (story != null && story.favoriteColor != null)
                     {
-                        soul.favColor = pawn.story.favoriteColor.Value;
+                        soul.favColor = pawn.story.favoriteColor;
                     }
                     soul.isSlave = pawn.IsSlave;
                 }
@@ -809,9 +841,9 @@ namespace MakaiTechPsycast
                     pawn.ideo.SetIdeo(soul.ideo);
                     Traverse.Create(pawn.ideo).Field("certainty").SetValue(soul.certainty);
                 }
-                if (soul.favColor.HasValue)
+                if (soul.favColor != null)
                 {
-                    pawn.story.favoriteColor = soul.favColor.Value;
+                    pawn.story.favoriteColor = soul.favColor;
                 }
                 if (soul.isSlave)
                 {

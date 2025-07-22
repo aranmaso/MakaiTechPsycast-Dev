@@ -4,11 +4,11 @@ using VanillaPsycastsExpanded;
 using RimWorld;
 using System.Collections.Generic;
 using Verse;
-using VFECore.Abilities;
+using VEF.Abilities;
 
 namespace MakaiTechPsycast.PassionedFlame
 {
-	public class Ability_SpawnThing : VFECore.Abilities.Ability
+	public class Ability_SpawnThing : VEF.Abilities.Ability
 	{
 		public override bool CanAutoCast => false;
 

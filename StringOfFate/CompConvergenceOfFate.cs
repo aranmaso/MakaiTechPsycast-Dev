@@ -2,7 +2,7 @@
 using RimWorld;
 using System.Collections.Generic;
 using UnityEngine;
-using VFECore.Abilities;
+using VEF.Abilities;
 
 namespace MakaiTechPsycast.StringOfFate
 {

@@ -2,7 +2,8 @@
 using System.Linq;
 using RimWorld;
 using Verse;
-using VFECore;
+using VEF;
+using VEF.Weapons;
 
 namespace MakaiTechPsycast
 {

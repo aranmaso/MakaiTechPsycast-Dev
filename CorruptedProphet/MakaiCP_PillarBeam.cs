@@ -24,7 +24,7 @@ namespace MakaiTechPsycast.CorruptedProphet
 			base.StartStrike();
 		}
 
-		public override void Tick()
+		protected override void Tick()
 		{
 			base.Tick();
 			if (!base.Destroyed)

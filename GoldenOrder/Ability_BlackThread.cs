@@ -1,13 +1,13 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using Verse;
-using VFECore;
+using VEF;
 using VanillaPsycastsExpanded;
 using UnityEngine;
 
 namespace MakaiTechPsycast.GoldenOrder
 {
-    public class Ability_BlackThread : VFECore.Abilities.Ability
+    public class Ability_BlackThread : VEF.Abilities.Ability
     {
         AbilityExtension_Roll1D20 modExtension => def.GetModExtension<AbilityExtension_Roll1D20>();
         public override bool ValidateTarget(LocalTargetInfo target, bool showMessages = true)

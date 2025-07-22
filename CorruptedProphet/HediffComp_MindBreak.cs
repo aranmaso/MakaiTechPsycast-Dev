@@ -11,17 +11,17 @@ namespace MakaiTechPsycast.CorruptedProphet
 		public override void CompPostPostAdd(DamageInfo? dinfo)
 		{
 			base.CompPostPostAdd(dinfo);
-			oldLord = base.Pawn.GetLord();
-			oldLord?.RemovePawn(base.Pawn);
-			base.Pawn.SetFaction(Faction.OfPlayer);
+			oldLord = Pawn.GetLord();
+			oldLord?.RemovePawn(Pawn);
+			Pawn.SetFaction(Faction.OfPlayer);
 		}
 
 		public override void CompPostPostRemoved()
 		{
 			base.CompPostPostRemoved();
-			base.Pawn.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrike(base.Pawn.Map, base.Pawn.Position));
-			GenExplosion.DoExplosion(base.Pawn.Position, base.Pawn.Map, 2f, DamageDefOf.EMP, null, 10);
-			base.Pawn.Kill(new DamageInfo(DamageDefOf.ExecutionCut,13));
+			Pawn.Map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrike(Pawn.Map, Pawn.Position));
+			GenExplosion.DoExplosion(Pawn.Position, Pawn.Map, 2f, DamageDefOf.EMP, null, 10);
+			Pawn.Kill(new DamageInfo(DamageDefOf.ExecutionCut,13));
 		}
 	}
 }
